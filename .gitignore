@@ -1,0 +1,11 @@
+# Project exclude paths
+/.gradle/
+gradle.properties
+# Project exclude paths
+/build/
+/build/classes/kotlin/iosArm32/main/
+/build/classes/kotlin/iosArm64/main/
+/build/classes/kotlin/iosX64/main/
+/build/classes/kotlin/jvm/main/
+/build/classes/kotlin/macosX64/main/
+/build/js/packages/engineEmi/kotlin/
