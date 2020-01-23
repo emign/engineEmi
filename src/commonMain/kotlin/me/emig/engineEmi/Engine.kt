@@ -32,6 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import me.emig.engineEmi.input.Keyboard
 
 
+val engine = Engine()
 /**
  * Die Game-Engine. Sie ist ein Singleton und wird mit [Engine.run] gestartet.
  * @property canvasElements Alle registrieten Objekte vom Typ [CanvasElement]
