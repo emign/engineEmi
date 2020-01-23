@@ -73,12 +73,12 @@ kotlin {
             jvmTarget = "1.8"
         }
     }
-    js {
+   /* js {
         browser {
         }
         nodejs {
         }
-    }
+    } */
     // For ARM, should be changed to iosArm32 or iosArm64
     // For Linux, should be changed to e.g. linuxX64
     // For MacOS, should be changed to e.g. macosX64
@@ -88,7 +88,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
-               // api ('com.soywiz.korlibs.korge:korge-metadata:1.5.5')
+
                // api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
                 api ('com.soywiz.korlibs.korge:korge:1.5.5')
                 api ('com.soywiz.korlibs.korge:korge-box2d:1.5.5')
@@ -104,6 +104,7 @@ kotlin {
             dependencies {
                 implementation kotlin('stdlib-jdk8')
                 api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
+                api ('com.soywiz.korlibs.korge:korge-box2d-jvm:1.5.5')
             }
         }
         jvmTest {
@@ -116,6 +117,7 @@ kotlin {
             dependencies {
                 implementation kotlin('stdlib-js')
                 api ('com.soywiz.korlibs.korge:korge-js:1.5.5')
+                api ('com.soywiz.korlibs.korge:korge-box2d-js:1.5.5')
             }
         }
         jsTest {
@@ -165,6 +167,9 @@ bintray {
         }
     }
 }
+
+
+
 bintrayUpload.doFirst {
     publications = publishing.publications.collect {
         it.name
