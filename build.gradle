@@ -1,6 +1,3 @@
-
-
-
 buildscript {
     repositories {
         maven { url = uri("https://plugins.gradle.org/m2/") }
@@ -73,7 +70,8 @@ kotlin {
             jvmTarget = "1.8"
         }
     }
-   /* js {
+    /*
+   js {
         browser {
         }
         nodejs {
@@ -103,8 +101,9 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation kotlin('stdlib-jdk8')
-                api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
-                api ('com.soywiz.korlibs.korge:korge-box2d-jvm:1.5.5')
+              //  api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
+               // api ('com.soywiz.korlibs.korge:korge-box2d-jvm:1.5.5')
+
             }
         }
         jvmTest {
@@ -113,11 +112,13 @@ kotlin {
                 implementation kotlin('test-junit')
             }
         }
+
+
         jsMain {
             dependencies {
                 implementation kotlin('stdlib-js')
-                api ('com.soywiz.korlibs.korge:korge-js:1.5.5')
-                api ('com.soywiz.korlibs.korge:korge-box2d-js:1.5.5')
+               // api ('com.soywiz.korlibs.korge:korge-js:1.5.5')
+               // api ('com.soywiz.korlibs.korge:korge-box2d-js:1.5.5')
             }
         }
         jsTest {
@@ -133,7 +134,7 @@ kotlin {
 }
 
 
-
+/*
 afterEvaluate {
     project.publishing.publications.all {
         // rename artifacts
@@ -145,12 +146,13 @@ afterEvaluate {
         }
     }
 }
-
+*/
 
 bintray {
     user = bintrayUser
     key = bintrayApiKey
     publish = true
+    publications = ["myPublication"]
     pkg {
         repo = BINTRAY_REPOSITORY
         name = ARTIFACT_ID
@@ -168,7 +170,15 @@ bintray {
     }
 }
 
-
+/*
+publishing {
+    publications {
+        kotlinMultiplatform {
+            artifactId = ARTIFACT_ID
+        }
+    }
+}
+*/
 
 bintrayUpload.doFirst {
     publications = publishing.publications.collect {
@@ -181,3 +191,35 @@ bintrayUpload.doFirst {
 //The task of bintrayUpload depends on publishToMavenLocal set in the previous section.
 // This will create maven artifacts when running bintrayUplaod's task.
 bintrayUpload.dependsOn publishToMavenLocal
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = ARTIFACT_ID
+                description = 'A concise description of my library'
+                url = SITE_URL
+
+                licenses {
+                    license {
+                        name = 'MIT'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'emign'
+                        name = 'Nicolai Emig'
+                        email = 'nicolai@emig.me'
+                    }
+                }
+                scm {
+                    connection = VCS_URL
+                    developerConnection = VCS_URL
+                    url = 'emig.me'
+                }
+            }
+        }
+    }
+}
