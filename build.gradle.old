@@ -9,23 +9,35 @@ buildscript {
         classpath 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
     }
 }
+
 plugins {
     id 'org.jetbrains.kotlin.multiplatform' version '1.3.61'
     id "maven-publish"
+    id "com.jfrog.bintray" version "1.8.4"
 }
+
+
+apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 //apply plugin : "korge"
 apply plugin : "org.jetbrains.dokka"
+
 def GROUP_ID = "me.emig"
 def ARTIFACT_ID = "engineEmi"
+
 def BINTRAY_REPOSITORY="engineEmi"
 def BINTRAY_ORGINIZATION="emign"
+
 def ISSUE_URL="https://github.com/emign/engineEmi/issues"
 def SITE_URL="https://emig.me"
 def VCS_URL="https://github.com/emign/engineEmi.git"
 def LIBRARY_VERSION_NAME=engineEmiVersion
+
 group GROUP_ID
 version LIBRARY_VERSION_NAME
+
+
+
 /*
 korge {
     id = "me.emig.engineEmi"
@@ -40,6 +52,9 @@ dokka {
     outputFormat = "html"
     outputDirectory = "dokka"
 }
+
+
+
 repositories {
     jcenter()
     mavenCentral()
@@ -47,6 +62,7 @@ repositories {
         url "https://dl.bintray.com/korlibs/korlibs"
     }
 }
+
 kotlin {
     jvm {
         compilations.main.kotlinOptions {
@@ -54,19 +70,24 @@ kotlin {
             jvmTarget = "1.8"
         }
     }
-    js {
+    /*
+   js {
         browser {
         }
-    }
+        nodejs {
+        }
+    } */
     // For ARM, should be changed to iosArm32 or iosArm64
     // For Linux, should be changed to e.g. linuxX64
     // For MacOS, should be changed to e.g. macosX64
     // For Windows, should be changed to e.g. mingwX64
+
     sourceSets {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
-                // api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
+
+               // api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
                 api ('com.soywiz.korlibs.korge:korge:1.5.5')
                 api ('com.soywiz.korlibs.korge:korge-box2d:1.5.5')
             }
@@ -80,6 +101,9 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation kotlin('stdlib-jdk8')
+              //  api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
+               // api ('com.soywiz.korlibs.korge:korge-box2d-jvm:1.5.5')
+
             }
         }
         jvmTest {
@@ -88,9 +112,13 @@ kotlin {
                 implementation kotlin('test-junit')
             }
         }
+
+
         jsMain {
             dependencies {
                 implementation kotlin('stdlib-js')
+               // api ('com.soywiz.korlibs.korge:korge-js:1.5.5')
+               // api ('com.soywiz.korlibs.korge:korge-box2d-js:1.5.5')
             }
         }
         jsTest {
@@ -104,6 +132,77 @@ kotlin {
         }
     }
 }
+
+
+/*
+
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+    publish = true
+    publications = ["myPublication"]
+    pkg {
+        repo = BINTRAY_REPOSITORY
+        name = ARTIFACT_ID
+        userOrg = BINTRAY_ORGINIZATION
+        licenses = ['MIT']
+        vcsUrl = VCS_URL
+        websiteUrl = SITE_URL
+        issueTrackerUrl = ISSUE_URL
+
+        version {
+            name = LIBRARY_VERSION_NAME
+            vcsTag = LIBRARY_VERSION_NAME
+            released = new Date()
+        }
+    }
+}
+
+/*
+bintrayUpload.doFirst {
+    publications = publishing.publications.collect {
+        it.name
+    }.findAll {
+        it != "kotlinMultiplatform"
+    }
+}
+
+//The task of bintrayUpload depends on publishToMavenLocal set in the previous section.
+// This will create maven artifacts when running bintrayUplaod's task.
+bintrayUpload.dependsOn publishToMavenLocal
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = ARTIFACT_ID
+                description = 'A concise description of my library'
+                url = SITE_URL
+
+                licenses {
+                    license {
+                        name = 'MIT'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'emign'
+                        name = 'Nicolai Emig'
+                        email = 'nicolai@emig.me'
+                    }
+                }
+                scm {
+                    connection = VCS_URL
+                    developerConnection = VCS_URL
+                    url = 'emig.me'
+                }
+            }
+        }
+    }
+}*/
+
 publishing {
     repositories {
         maven {
