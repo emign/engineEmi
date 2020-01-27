@@ -1,7 +1,7 @@
 # Installation/Setup
 
 ## Template Projekt
-Am einfachsten ist es, wenn man sich das Template Projekte von https://github.com/emign/engineEmi_Template herunter lädt.
+Am einfachsten ist es, wenn man sich das Template Projekte von [https://github.com/emign/engineEmi_Template](Github/engineEmi_Template) herunter lädt.
 Dieses sorgt für die komplette Einrichtung der Engine.
 
 ## Einbinden des Gradle Plugins
@@ -20,10 +20,10 @@ buildscript {
 apply plugin: me.emig.engineEmi.gradle.EngineEmiGradlePlugin
 ```
 Der String ENGINEEMIVERSION ist mit der aktuellen Version zu ersetzen. Diese kann auf 
-der https://bintray.com/beta/#/emign/engineEmi/engineEmi eingesehen werden.
+der [https://bintray.com/beta/#/emign/engineEmi/engineEmi](Bintray Seite des Maven-Repositories) der Engine eingesehen werden.
 
 ## Direktes einbinden der Engine-Library
-Es ist auch möglich, die Engine direkt als Library einzubinden: https://bintray.com/beta/#/emign/engineEmi/engineEmi
+Es ist auch möglich, die Engine direkt als Library einzubinden: [https://bintray.com/beta/#/emign/engineEmi/engineEmi](Bintray Seite des Maven-Repositories)
 
 # Changelog`
 
@@ -32,7 +32,7 @@ Engine ist nun eine library und verfügt über ein Gradle plugin
 
 ### Added
 - Korge 1.5.6
-- Fix für Tilemap Bug https://github.com/emign/engineEmi/issues/1
+- Fix für Tilemap Bug [https://github.com/emign/engineEmi/issues/1](https://github.com/emign/engineEmi/issues/1)
 
 ## v0.21 2020-01-15
 
