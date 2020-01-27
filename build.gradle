@@ -58,6 +58,12 @@ kotlin {
         browser {
         }
     }
+    macosX64()
+    iosArm32()
+    iosArm64()
+    iosX64()
+    mingwX64()
+
     // For ARM, should be changed to iosArm32 or iosArm64
     // For Linux, should be changed to e.g. linuxX64
     // For MacOS, should be changed to e.g. macosX64
@@ -67,8 +73,8 @@ kotlin {
             dependencies {
                 implementation kotlin('stdlib-common')
                 // api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
-                api ('com.soywiz.korlibs.korge:korge:1.5.5')
-                api ('com.soywiz.korlibs.korge:korge-box2d:1.5.5')
+                api ("com.soywiz.korlibs.korge:korge:$korgeVersion")
+                api ("com.soywiz.korlibs.korge:korge-box2d:$korgeVersion")
             }
         }
         commonTest {
@@ -98,10 +104,12 @@ kotlin {
                 implementation kotlin('test-js')
             }
         }
-        macosMain {
+        iosArm32Main{
+            dependencies {
+                implementation kotlin('stdlib-native')
+            }
         }
-        macosTest {
-        }
+
     }
 }
 publishing {
@@ -125,5 +133,23 @@ publishing {
                 }
             }
         }
+    }
+}
+
+task release(type: Task) {
+    dependsOn("publish")
+    group="publishing"
+    doLast {
+
+        ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGINIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiVersion/publish").openConnection()).with({
+            requestMethod = 'POST'
+            doOutput = true
+
+            setRequestProperty("Authorization", "Basic " + "$bintrayUser:$bintrayApiKey".bytes.encodeBase64().toString())
+            outputStream.withPrintWriter({printWriter ->
+                printWriter.write('{"discard": false, "publish_wait_for_secs": -1}')
+            })
+            System.out.println(inputStream.text)
+        })
     }
 }
