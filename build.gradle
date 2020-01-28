@@ -99,7 +99,7 @@ publishing {
                 //username = "$System.env.bintrayUser"
                 username = "emign"
                 //password = bintrayApiKey
-                password = username = "$System.env.bintrayApiKey"
+                password = "$System.env.bintrayApiKey"
             }
             url = uri("https://api.bintray.com/maven/${BINTRAY_ORGINIZATION}/${BINTRAY_REPOSITORY}/${ARTIFACT_ID}/")
         }
@@ -125,7 +125,7 @@ task release(type: Task) {
 
     doLast {
 
-        ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGINIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiAndPluginVersion/publish").openConnection()).with({
+        ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGANIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiAndPluginVersion/publish").openConnection()).with({
             requestMethod = 'POST'
             doOutput = true
 
