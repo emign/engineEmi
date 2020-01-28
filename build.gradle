@@ -121,15 +121,14 @@ task release(type: Task) {
     dependsOn("publishAllPublicationsToMavenRepository")
     group="publishing"
 
-    println ("user: $System.env.bintrayUser")
-    println ("key: $System.env.bintrayApiKey")
+
     doLast {
 
         ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGINIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiAndPluginVersion/publish").openConnection()).with({
             requestMethod = 'POST'
             doOutput = true
 
-            setRequestProperty("Authorization", "Basic " + "$bintrayUser:$bintrayApiKey".bytes.encodeBase64().toString())
+            setRequestProperty("Authorization", "Basic " + "$System.env.bintrayUser:$System.env.bintrayApiKey".bytes.encodeBase64().toString())
             outputStream.withPrintWriter({printWriter ->
                 printWriter.write('{"discard": false, "publish_wait_for_secs": -1}')
             })
