@@ -96,7 +96,8 @@ publishing {
         maven {
             credentials {
                // username = bintrayUser
-                username = "$System.env.bintrayUser"
+                //username = "$System.env.bintrayUser"
+                username = emign
                 //password = bintrayApiKey
                 password = username = "$System.env.bintrayApiKey"
             }
@@ -106,7 +107,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             pom {
-                name = "${name}"
+               // name = "${name}"
                 description = "${description}"
                 url = VCS_URL
                 scm {
