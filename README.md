@@ -1,3 +1,4 @@
+![](https://img.shields.io/github/v/release/emign/engineEmi?labelColor=262B30)
 # Installation/Setup
 
 ## Template Projekt
