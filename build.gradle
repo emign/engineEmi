@@ -97,7 +97,7 @@ publishing {
             credentials {
                // username = bintrayUser
                 //username = "$System.env.bintrayUser"
-                username = emign
+                username = "emign"
                 //password = bintrayApiKey
                 password = username = "$System.env.bintrayApiKey"
             }
