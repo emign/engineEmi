@@ -4,7 +4,6 @@ import com.soywiz.korge.view.position
 import com.soywiz.korge.view.scale
 import com.soywiz.korim.bitmap.Bitmaps
 import com.soywiz.korim.bitmap.BmpSlice
-import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
 
 /**
  * Ein SpriteView wird vor allem für Sprite-Animationen gebraucht
@@ -16,6 +15,13 @@ class SpriteView : CanvasElement() {
     var sprite: BmpSlice = Bitmaps.transparent
         set(value) {
             field = value
+            updateGraphics()
+        }
+    var image = image(sprite)
+        set(value) {
+            field = value
+            position(x, y)
+            scale(scale)
             updateGraphics()
         }
 
@@ -39,9 +45,7 @@ class SpriteView : CanvasElement() {
 
 
     override fun updateGraphics() {
-        removeChildren()
-        image(sprite) {
-            position(x, y)
-        }.scale(super.scale)
+        image.bitmap = sprite
+        image
     }
 }
