@@ -116,11 +116,11 @@ publishing {
 }
 
 task release(type: Task) {
-    println("AP:${bintrayApiKey}")
+
     dependsOn("publishAllPublicationsToMavenRepository")
     group="publishing"
     doLast {
-
+        println("AP:${bintrayApiKey}")
         ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGINIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiAndPluginVersion/publish").openConnection()).with({
             requestMethod = 'POST'
             doOutput = true
