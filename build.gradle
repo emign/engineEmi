@@ -116,11 +116,6 @@ publishing {
 }
 
 task release(type: Task) {
-    println("APK:${bintrayApiKey}")
-    println("BTU:${bintrayUser}")
-    println("GUU:${ARTIFACT_ID}")
-
-
     dependsOn("publishAllPublicationsToMavenRepository")
     group="publishing"
     doLast {
