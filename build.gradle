@@ -116,6 +116,7 @@ publishing {
 }
 
 task release(type: Task) {
+    println("AP:${bintrayApiKey}")
     dependsOn("publishAllPublicationsToMavenRepository")
     group="publishing"
     doLast {
