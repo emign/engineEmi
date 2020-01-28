@@ -117,6 +117,8 @@ publishing {
 
 task release(type: Task) {
     println("APK:${bintrayApiKey}")
+    println("BTU:${bintrayUser}")
+    println("G:${gradle.publish.secret}")
     dependsOn("publishAllPublicationsToMavenRepository")
     group="publishing"
     doLast {
