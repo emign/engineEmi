@@ -95,8 +95,10 @@ publishing {
     repositories {
         maven {
             credentials {
-                username = bintrayUser
-                password = bintrayApiKey
+               // username = bintrayUser
+                username = "$System.env.bintrayUser"
+                //password = bintrayApiKey
+                password = username = "$System.env.bintrayApiKey"
             }
             url = uri("https://api.bintray.com/maven/${BINTRAY_ORGINIZATION}/${BINTRAY_REPOSITORY}/${ARTIFACT_ID}/")
         }
