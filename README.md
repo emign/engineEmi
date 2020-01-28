@@ -22,6 +22,11 @@ apply plugin: me.emig.engineEmi.gradle.EngineEmiGradlePlugin
 Der String ENGINEEMIVERSION ist mit der aktuellen Version zu ersetzen. Diese kann auf 
 der https://bintray.com/beta/#/emign/engineEmi/engineEmi eingesehen werden.
 
+Wichtig ist es, gradle ab Version 5.6.4 einzusetzen. Am besten mit einem Wrapper. Dies gelingt durch
+den Befehl im Terminal (entweder in der IDE/IntelliJ oder im regulären Terminal, im Ordner
+des engineEmi-Projektes): `gradle wrapper --gradle-version=5.6.4`.
+Zudem muss in der `settings.gradle` die Zeile `enableFeaturePreview('GRADLE_METADATA')` ergänzt werden
+
 ## Direktes einbinden der Engine-Library
 Es ist auch möglich, die Engine direkt als Library einzubinden: https://bintray.com/beta/#/emign/engineEmi/engineEmi
 

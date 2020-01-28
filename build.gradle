@@ -14,28 +14,11 @@ plugins {
     id "maven-publish"
 }
 apply plugin: 'maven-publish'
-//apply plugin : "korge"
 apply plugin : "org.jetbrains.dokka"
-def GROUP_ID = "me.emig"
-def ARTIFACT_ID = "engineEmi"
-def BINTRAY_REPOSITORY="engineEmi"
-def BINTRAY_ORGINIZATION="emign"
-def ISSUE_URL="https://github.com/emign/engineEmi/issues"
-def SITE_URL="https://emig.me"
-def VCS_URL="https://github.com/emign/engineEmi.git"
-def LIBRARY_VERSION_NAME=engineEmiVersion
+
 group GROUP_ID
-version LIBRARY_VERSION_NAME
-/*
-korge {
-    id = "me.emig.engineEmi"
-    name = "EngineEmi"
-    description = ""
-    jvmMainClassName = "MainKt"
-    entryPoint = "me.emig.engineEmi.main"
-    supportBox2d()
-}
-*/
+version engineEmiAndPluginVersion
+
 dokka {
     outputFormat = "html"
     outputDirectory = "dokka"
@@ -50,7 +33,6 @@ repositories {
 kotlin {
     jvm {
         compilations.main.kotlinOptions {
-            // Setup the Kotlin compiler options for the 'main' compilation:
             jvmTarget = "1.8"
         }
     }
@@ -72,7 +54,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
-                // api ('com.soywiz.korlibs.korge:korge-jvm:1.5.5')
                 api ("com.soywiz.korlibs.korge:korge:$korgeVersion")
                 api ("com.soywiz.korlibs.korge:korge-box2d:$korgeVersion")
             }
@@ -107,9 +88,9 @@ kotlin {
         iosArm32Main{
             dependsOn commonMain
         }
-
     }
 }
+
 publishing {
     repositories {
         maven {
@@ -123,11 +104,11 @@ publishing {
     publications {
         maven(MavenPublication) {
             pom {
-                name = "${name}";
-                description = "${description}";
-                url = VCS_URL;
+                name = "${name}"
+                description = "${description}"
+                url = VCS_URL
                 scm {
-                    url = VCS_URL;
+                    url = VCS_URL
                 }
             }
         }
@@ -135,12 +116,11 @@ publishing {
 }
 
 task release(type: Task) {
-   // dependsOn("publish")
     dependsOn("publishAllPublicationsToMavenRepository")
     group="publishing"
     doLast {
 
-        ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGINIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiVersion/publish").openConnection()).with({
+        ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGINIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiAndPluginVersion/publish").openConnection()).with({
             requestMethod = 'POST'
             doOutput = true
 
