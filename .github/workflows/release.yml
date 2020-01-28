@@ -12,5 +12,5 @@ jobs:
       - uses: actions/checkout@v1
       - uses: eskatos/gradle-command-action@v1
         with:
-          arguments: release -Pgradle.publish.key=secrets. gradlePublishKey -Pgradle.publish.secret= gradlePublishSecret -PbintrayUser=emign -PbintrayApiKey=bintrayApiKey -PbintrayPassword=bintrayPassword -PGROUP_ID=emig.me -PARTIFACT_ID=engineEmi -PBINTRAY_REPOSITORY=engineEmi -PBINTRAY_ORGINIZATION=emign -PISSUE_URL=https://github.com/emign/engineEmi/issues -PSITE_URL=https://emig.me -PVCS_URL=https://github.com/emign/engineEmi.git
+          arguments: release -Pgradle.publish.key=secrets.gradlePublishKey -Pgradle.publish.secret=secrets.gradlePublishSecret -PbintrayUser=emign -PbintrayApiKey=bintrayApiKey -PbintrayPassword=bintrayPassword -PGROUP_ID=emig.me -PARTIFACT_ID=engineEmi -PBINTRAY_REPOSITORY=engineEmi -PBINTRAY_ORGINIZATION=emign -PISSUE_URL=https://github.com/emign/engineEmi/issues -PSITE_URL=https://emig.me -PVCS_URL=https://github.com/emign/engineEmi.git
           gradle-version: 5.6.4
