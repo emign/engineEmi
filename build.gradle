@@ -102,7 +102,7 @@ publishing {
                 password = "$System.env.bintrayApiKey"
 
             }
-            url = uri("https://api.bintray.com/maven/${BINTRAY_ORGINIZATION}/${BINTRAY_REPOSITORY}/${ARTIFACT_ID}/")
+            url = uri("https://api.bintray.com/maven/${BINTRAY_ORGANIZATION}/${BINTRAY_REPOSITORY}/${ARTIFACT_ID}/")
         }
     }
     publications {
