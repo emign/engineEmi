@@ -120,6 +120,9 @@ publishing {
 task release(type: Task) {
     dependsOn("publishAllPublicationsToMavenRepository")
     group="publishing"
+
+    println ("user: $System.env.bintrayUser")
+    println ("key: $System.env.bintrayApiKey")
     doLast {
 
         ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGINIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiAndPluginVersion/publish").openConnection()).with({
