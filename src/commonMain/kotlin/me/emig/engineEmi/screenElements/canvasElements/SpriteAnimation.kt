@@ -146,7 +146,8 @@ class SpriteAnimation(
      */
     fun play(times: Int = 1, spriteDisplayTime: TimeSpan = 25.milliseconds) {
         CoroutineScope(Dispatchers.Default).launch {
-            while (cycles < cycles + times) {
+            val currentCycles = cycles
+            while (cycles < currentCycles + times) {
                 nextSprite()
                 delay(spriteDisplayTime)
             }
