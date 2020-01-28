@@ -1,6 +1,6 @@
 # Project exclude paths
 /.gradle/
-gradle.properties
+/.github/
 # Project exclude paths
 /build/
 /build/classes/kotlin/iosArm32/main/
