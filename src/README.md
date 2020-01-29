@@ -25,7 +25,12 @@ der [https://bintray.com/beta/#/emign/engineEmi/engineEmi](Bintray Seite des Mav
 ## Direktes einbinden der Engine-Library
 Es ist auch möglich, die Engine direkt als Library einzubinden: [https://bintray.com/beta/#/emign/engineEmi/engineEmi](Bintray Seite des Maven-Repositories)
 
-# Changelog`
+# Changelog
+
+## v.0.32 2020-01-29
+
+### Added
+- Animationscontroller
 
 ## v0.29 2020-01-28
 Engine ist nun eine library und verfügt über ein Gradle plugin

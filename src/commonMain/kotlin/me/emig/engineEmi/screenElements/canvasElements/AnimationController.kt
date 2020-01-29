@@ -46,4 +46,12 @@ class AnimationController : Controller {
         }
     }
 
+    /**
+     * Hält die benannte Animation an
+     * @param name String
+     */
+    fun stop(name: String) {
+        animations[name]?.stop()
+    }
+
 }

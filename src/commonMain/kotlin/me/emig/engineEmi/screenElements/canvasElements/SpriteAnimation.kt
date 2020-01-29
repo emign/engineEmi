@@ -58,7 +58,8 @@ class SpriteAnimation(
     private val currentSprite: BmpSlice
         get() = sprites[currentSpriteIndex]
 
-    var cycles = 0
+    private var cycles = 0
+    private var stop = false
 
     init {
         CoroutineScope(Dispatchers.Default).launch {
@@ -123,7 +124,7 @@ class SpriteAnimation(
      * @param spriteDisplayTime Dauer der Anzeige jedes einzelnen Frames (Animationsschrittes)
      * @param duration Dauer der gesamten Animation
      */
-    fun playForDuration(duration: TimeSpan = 0.milliseconds, spriteDisplayTime: TimeSpan = 25.milliseconds) {
+    fun playForDuration(duration: TimeSpan, spriteDisplayTime: TimeSpan = 25.milliseconds) {
         if (duration > 0.milliseconds) {
             CoroutineScope(Dispatchers.Default).launch {
                 var timeCounter = duration
@@ -159,8 +160,9 @@ class SpriteAnimation(
      * @param spriteDisplayTime So lange wird ein Animationsschritt angezeigt
      */
     fun playLooped(spriteDisplayTime: TimeSpan = 25.milliseconds) {
+        stop = false
         CoroutineScope(Dispatchers.Default).launch {
-            while (true) {
+            while (!stop) {
                 nextSprite()
                 delay(spriteDisplayTime)
             }
@@ -176,6 +178,13 @@ class SpriteAnimation(
             nextSprite()
             delay(spriteDisplayTime)
         }
+    }
+
+    /**
+     * Stoppt Animationen, die mit [playLooped] gestartet wurden
+     */
+    fun stop() {
+        stop = true
     }
 
 }
