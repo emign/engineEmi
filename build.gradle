@@ -52,6 +52,7 @@ kotlin {
     // For Linux, should be changed to e.g. linuxX64
     // For MacOS, should be changed to e.g. macosX64
     // For Windows, should be changed to e.g. mingwX64
+
     sourceSets {
         commonMain {
             dependencies {
@@ -91,16 +92,15 @@ kotlin {
             dependsOn commonMain
         }
     }
+
+
 }
 
 publishing {
     repositories {
         maven {
             credentials {
-               // username = bintrayUser
-                //username = "$System.env.bintrayUser"
                 username = "emign"
-                //password = bintrayApiKey
                 password = "$System.env.bintrayApiKey"
 
             }
@@ -131,8 +131,6 @@ task release(type: Task) {
         ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGANIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineEmiAndPluginVersion/publish").openConnection()).with({
             requestMethod = 'POST'
             doOutput = true
-
-           // setRequestProperty("Authorization", "Basic " + "${System.env.bintrayUser}:${System.env.bintrayApiKey}".bytes.encodeBase64().toString())
             setRequestProperty("Authorization", "Basic " + "emign:${System.env.bintrayApiKey}".bytes.encodeBase64().toString())
             outputStream.withPrintWriter({printWriter ->
                 printWriter.write('{"discard": false, "publish_wait_for_secs": -1}')
