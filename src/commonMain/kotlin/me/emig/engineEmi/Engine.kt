@@ -23,13 +23,10 @@ import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.delay
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.std.resourcesVfs
-
+import me.emig.engineEmi.input.Keyboard
+import me.emig.engineEmi.screenElements.ScreenElement
 import me.emig.engineEmi.screenElements.bodies.Ebody
 import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
-import me.emig.engineEmi.screenElements.ScreenElement
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import me.emig.engineEmi.input.Keyboard
 
 
 val engine = Engine()
@@ -155,10 +152,10 @@ class Engine {
      * Registriert eine Map bei der Engine
      * @param pathToMap String zum Pfad der Tiledmap (im Resources Ordner)
      */
-    fun registerMap(pathToMap: String) {
-        CoroutineScope(Dispatchers.Default).launch {
-            this.map = resourcesVfs[pathToMap].readTiledMap()
-        }
+    suspend fun registerMap(pathToMap: String) {
+        // CoroutineScope(Dispatchers.Default).launch {
+        this.map = resourcesVfs[pathToMap].readTiledMap()
+        // }
     }
 
 
