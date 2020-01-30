@@ -3,7 +3,7 @@ name: release
 on: [push]
 
 jobs:
-  build:
+  build-mac-jvm:
     runs-on: [macos-10.15]
     steps:
       - uses: actions/checkout@v1
@@ -12,3 +12,16 @@ jobs:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
+
+  build-windows:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v1
+      - run: CALL gradlew.bat publishMingwX64PublicationToMavenRepository
+        shell: cmd
+        env:
+          bintrayUser: ${{ secrets.bintrayUser }}
+          bintrayApiKey: ${{ secrets.bintrayApiKey }}
+          bintrayPassword: ${{ secrets.bintrayPassword }}
+      - run: CALL gradlew.bat --stop
+        shell: cmd
