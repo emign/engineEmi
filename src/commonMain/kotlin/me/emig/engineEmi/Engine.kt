@@ -11,7 +11,6 @@ import com.soywiz.korge.box2d.worldView
 import com.soywiz.korge.input.onDown
 import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.input.onKeyUp
-import com.soywiz.korge.tiled.TiledMap
 import com.soywiz.korge.tiled.readTiledMap
 import com.soywiz.korge.tiled.tiledMapView
 import com.soywiz.korge.view.Camera
@@ -22,6 +21,7 @@ import com.soywiz.korgw.GameWindow
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.delay
 import com.soywiz.korio.async.launch
+import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
 import me.emig.engineEmi.input.Keyboard
 import me.emig.engineEmi.screenElements.ScreenElement
@@ -50,12 +50,12 @@ class Engine {
     var title = "Engine Emi"
     var delay = 16.milliseconds
     var camera = Camera()
-    var map: TiledMap? = null
+    var map: VfsFile? = null
 
     fun init(initBody: () -> Unit) = this.apply {
         view.width = 1280
         view.height = 720
-        view.scale = 100
+        view.scale = 1
         initBody()
     }
 
@@ -72,8 +72,8 @@ class Engine {
 
 
             camera = camera {
-                map?.let { tiledMapView(it) }
-                // BOX2D
+                map?.let { tiledMapView(it.readTiledMap()) }
+
                 worldView {
                     position(view.width / 2, view.height / 2).scale(view.scale)
                     if (bodies.isNotEmpty()) {
@@ -152,10 +152,8 @@ class Engine {
      * Registriert eine Map bei der Engine
      * @param pathToMap String zum Pfad der Tiledmap (im Resources Ordner)
      */
-    suspend fun registerMap(pathToMap: String) {
-        // CoroutineScope(Dispatchers.Default).launch {
-        this.map = resourcesVfs[pathToMap].readTiledMap()
-        // }
+    fun registerMap(pathToMap: String) {
+        this.map = resourcesVfs[pathToMap]
     }
 
 
