@@ -55,7 +55,7 @@ class Engine {
     fun init(initBody: () -> Unit) = this.apply {
         view.width = 1280
         view.height = 720
-        view.scale = 1
+        view.scale = 100
         initBody()
     }
 
