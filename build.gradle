@@ -88,9 +88,6 @@ kotlin {
                 implementation kotlin('test-js')
             }
         }
-        iosArm32Main{
-            dependsOn commonMain
-        }
     }
 
 
@@ -138,4 +135,12 @@ task release(type: Task) {
             System.out.println(inputStream.text)
         })
     }
+}
+
+
+task testLocal(type : Task){
+    group="publishing"
+    dependsOn("publishKotlinMultiplatformPublicationToMavenLocal")
+    dependsOn("publishMetadataPublicationToMavenLocal")
+    dependsOn("publishJvmPublicationToMavenLocal")
 }
