@@ -52,6 +52,7 @@ class Engine {
     var camera = Camera()
     var map: VfsFile? = null
 
+
     fun init(initBody: () -> Unit) = this.apply {
         view.width = 1280
         view.height = 720
@@ -100,7 +101,6 @@ class Engine {
                 }
 
             }
-
 
             // GLOBAL (CANVAS AND BOX2D)
             addEventListener<MouseEvent> { controllers.onEach { element -> element.reactToMouseEvent(it) } }
