@@ -35,6 +35,8 @@ import kotlinx.coroutines.launch
  * @property spriteView Der View des Sprites. Muss vor der Initialisierung manuell erstellt werden
  * @constructor
  */
+
+
 class SpriteAnimation(
     var x: Number = 100.0,
     var y: Number = 100.0,
@@ -79,11 +81,7 @@ class SpriteAnimation(
     private suspend fun prepareElement() {
         var line = 0
         repeat(columns) { spalte ->
-            val resourceBitmap: Bitmap = if (bitmap is Bitmap) {
-                bitmap
-            } else {
-                resourcesVfs[bildDatei].readBitmap()
-            }
+            val resourceBitmap = bitmap ?: resourcesVfs[bildDatei].readBitmap()
             addSpriteToList(
                 resourceBitmap.sliceWithSize(
                     marginLeft + (spriteWidth + offsetBetweenColumns) * spalte,
