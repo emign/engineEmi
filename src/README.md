@@ -1,3 +1,4 @@
+![version](https://img.shields.io/bintray/v/emign/engineEmi/engineEmi?color=blue&label=latest%20version&style=flat-square)
 # Installation/Setup
 
 ## Template Projekt

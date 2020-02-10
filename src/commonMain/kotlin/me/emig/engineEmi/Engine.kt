@@ -13,10 +13,7 @@ import com.soywiz.korge.input.onKeyDown
 import com.soywiz.korge.input.onKeyUp
 import com.soywiz.korge.tiled.readTiledMap
 import com.soywiz.korge.tiled.tiledMapView
-import com.soywiz.korge.view.Camera
-import com.soywiz.korge.view.camera
-import com.soywiz.korge.view.position
-import com.soywiz.korge.view.scale
+import com.soywiz.korge.view.*
 import com.soywiz.korgw.GameWindow
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.delay
@@ -51,6 +48,7 @@ class Engine {
     var delay = 16.milliseconds
     var camera = Camera()
     var map: VfsFile? = null
+    lateinit var stage : Stage
 
 
     fun init(initBody: () -> Unit) = this.apply {
@@ -67,7 +65,7 @@ class Engine {
             width = view.width,
             height = view.height
         ) {
-
+            initStage(this)
             views.clearColor = Colors.WHITE
             viewWillLoadBody()
 
@@ -113,6 +111,7 @@ class Engine {
             mouse {
                 onDown { }
             }
+
             viewDidLoadBody()
         }
 
@@ -174,6 +173,10 @@ class Engine {
             registerCanvasElement(o)
         if (o is Controller)
             registerController(o)
+    }
+
+    private fun initStage(stage : Stage){
+        this.stage = stage
     }
 }
 
