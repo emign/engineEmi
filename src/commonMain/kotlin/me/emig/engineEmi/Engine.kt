@@ -1,27 +1,18 @@
 package me.emig.engineEmi
 
+
+import DefaultScene
 import com.soywiz.klock.milliseconds
-import com.soywiz.korev.MouseEvent
-import com.soywiz.korev.addEventListener
-import com.soywiz.korev.keys
-import com.soywiz.korev.mouse
 import com.soywiz.korge.Korge
 import com.soywiz.korge.box2d.WorldView
-import com.soywiz.korge.box2d.worldView
-import com.soywiz.korge.input.onDown
-import com.soywiz.korge.input.onKeyDown
-import com.soywiz.korge.input.onKeyUp
-import com.soywiz.korge.tiled.readTiledMap
-import com.soywiz.korge.tiled.tiledMapView
-import com.soywiz.korge.view.*
+import com.soywiz.korge.view.Camera
+import com.soywiz.korge.view.Stage
 import com.soywiz.korgw.GameWindow
-import com.soywiz.korim.color.Colors
-import com.soywiz.korio.async.delay
-import com.soywiz.korio.async.launch
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
-import me.emig.engineEmi.input.Keyboard
-import me.emig.engineEmi.screenElements.ScreenElement
+import com.soywiz.korma.geom.SizeInt
+import me.emig.engineEmi.module.DefaultModule
+import me.emig.engineEmi.module.EngineModuleDependency
 import me.emig.engineEmi.screenElements.bodies.Ebody
 import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
 
@@ -34,13 +25,7 @@ val engine = Engine()
  *
  */
 class Engine {
-    var canvasElements = mutableListOf<CanvasElement>()
-    var bodies = mutableListOf<Ebody>()
-    val allScreenElements: List<ScreenElement>
-        get() {
-            return canvasElements.plus(bodies).map { it }
-        }
-    var controllers = mutableListOf<Controller>()
+
     var view = ViewWindow()
     var viewWillLoadBody: suspend () -> Unit = {}
     var viewDidLoadBody: suspend () -> Unit = {}
@@ -48,7 +33,14 @@ class Engine {
     var delay = 16.milliseconds
     var camera = Camera()
     var map: VfsFile? = null
-    lateinit var stage : Stage
+    lateinit var stage: Stage
+
+    val scene = DefaultScene(
+        camera = camera,
+        viewWillLoadBody = viewWillLoadBody,
+        viewDidLoadBody = viewDidLoadBody,
+        myDependency = EngineModuleDependency(title)
+    )
 
 
     fun init(initBody: () -> Unit) = this.apply {
@@ -58,69 +50,26 @@ class Engine {
         initBody()
     }
 
-    suspend fun start() =
-        Korge(
-            quality = GameWindow.Quality.PERFORMANCE,
-            title = title,
-            width = view.width,
-            height = view.height
-        ) {
-            initStage(this)
-            views.clearColor = Colors.WHITE
-            viewWillLoadBody()
+    suspend fun start() = Korge(
+        Korge.Config(
+            module = DefaultModule(
+                quality = GameWindow.Quality.QUALITY,
+                size = SizeInt.invoke(view.width, view.height),
+                title = title,
+                camera = camera,
+                viewWillLoadBody = viewWillLoadBody,
+                viewDidLoadBody = viewDidLoadBody
+            )
+        )
+    )
 
-
-            camera = camera {
-                map?.let { tiledMapView(it.readTiledMap()) }
-
-                worldView {
-                    position(view.width / 2, view.height / 2).scale(view.scale)
-                    if (bodies.isNotEmpty()) {
-                        bodies.run {
-                            map { registerBodyWithWorld(it) }
-                            map { it.body }
-                        }
-                    }
-                }
-
-                // CANVAS
-                if (!canvasElements.isEmpty()) {
-
-                    canvasElements.run {
-                        map { it.prepareElement() }
-                        map { addChild(it) }
-                    }
-                    launch {
-                        while (true) {
-                            canvasElements.onEach { it.onEveryFrame() }
-                            delay(delay)
-                        }
-                    }
-                }
-
-            }
-
-            // GLOBAL (CANVAS AND BOX2D)
-            addEventListener<MouseEvent> { controllers.onEach { element -> element.reactToMouseEvent(it) } }
-
-            keys {
-                onKeyDown { Keyboard.keyDown(it.key); controllers.onEach { element -> element.reactToKeyEvent(it) } }
-                onKeyUp { Keyboard.keyReleased(it.key); controllers.onEach { element -> element.reactToKeyEvent(it) } }
-            }
-
-            mouse {
-                onDown { }
-            }
-
-            viewDidLoadBody()
-        }
 
     fun viewWillLoad(viewWillLoadBody: suspend () -> Unit = {}) {
-        this.viewWillLoadBody = viewWillLoadBody
+        scene.viewWillLoadBody = viewWillLoadBody
     }
 
     fun viewDidLoad(viewDidLoadBody: suspend () -> Unit = {}) {
-        this.viewDidLoadBody = viewDidLoadBody
+        scene.viewDidLoadBody = viewDidLoadBody
     }
 
     /**
@@ -128,7 +77,7 @@ class Engine {
      * @param canvasElement CanvasElement
      */
     fun registerCanvasElement(canvasElement: CanvasElement) {
-        canvasElements.add(canvasElement)
+        scene.canvasElements.add(canvasElement)
     }
 
     /**
@@ -136,7 +85,7 @@ class Engine {
      * @param body Ebody
      */
     fun registerBody(body: Ebody) {
-        bodies.add(body)
+        scene.bodies.add(body)
     }
 
     /**
@@ -144,7 +93,7 @@ class Engine {
      * @param controller Controller
      */
     fun registerController(controller: Controller) {
-        controllers.add(controller)
+        scene.controllers.add(controller)
     }
 
     /**
@@ -152,7 +101,7 @@ class Engine {
      * @param pathToMap String zum Pfad der Tiledmap (im Resources Ordner)
      */
     fun registerMap(pathToMap: String) {
-        this.map = resourcesVfs[pathToMap]
+        scene.map = resourcesVfs[pathToMap]
     }
 
 
@@ -175,9 +124,6 @@ class Engine {
             registerController(o)
     }
 
-    private fun initStage(stage : Stage){
-        this.stage = stage
-    }
 }
 
 class ViewWindow {
