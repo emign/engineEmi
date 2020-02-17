@@ -1,0 +1,1 @@
+class GameScene2 : GameScene()
