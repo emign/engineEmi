@@ -1,18 +1,16 @@
 package me.emig.engineEmi
 
 
-import DefaultScene
+import GameScene
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.Korge
 import com.soywiz.korge.box2d.WorldView
 import com.soywiz.korge.view.Camera
-import com.soywiz.korge.view.Stage
 import com.soywiz.korgw.GameWindow
 import com.soywiz.korio.file.VfsFile
-import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.SizeInt
-import me.emig.engineEmi.module.DefaultModule
 import me.emig.engineEmi.module.EngineModuleDependency
+import me.emig.engineEmi.module.GameModule
 import me.emig.engineEmi.screenElements.bodies.Ebody
 import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
 
@@ -29,18 +27,20 @@ class Engine {
     var view = ViewWindow()
     var viewWillLoadBody: suspend () -> Unit = {}
     var viewDidLoadBody: suspend () -> Unit = {}
-    var title = "Engine Emi"
+    var title = "EngineEmi"
     var delay = 16.milliseconds
     var camera = Camera()
     var map: VfsFile? = null
-    lateinit var stage: Stage
 
-    val scene = DefaultScene(
+
+    val scene = GameScene(
         camera = camera,
         viewWillLoadBody = viewWillLoadBody,
         viewDidLoadBody = viewDidLoadBody,
-        myDependency = EngineModuleDependency(title)
+        dependency = EngineModuleDependency(title)
     )
+
+    var scenes: MutableList<GameScene> = mutableListOf(scene)
 
 
     fun init(initBody: () -> Unit) = this.apply {
@@ -52,17 +52,22 @@ class Engine {
 
     suspend fun start() = Korge(
         Korge.Config(
-            module = DefaultModule(
+            module = GameModule(
                 quality = GameWindow.Quality.QUALITY,
                 size = SizeInt.invoke(view.width, view.height),
                 title = title,
                 camera = camera,
                 viewWillLoadBody = viewWillLoadBody,
-                viewDidLoadBody = viewDidLoadBody
+                viewDidLoadBody = viewDidLoadBody,
+                scenes = scenes
             )
         )
     )
 
+
+    fun registerGameScenes(vararg scenes: GameScene) {
+        this.scenes = scenes.toMutableList()
+    }
 
     fun viewWillLoad(viewWillLoadBody: suspend () -> Unit = {}) {
         scene.viewWillLoadBody = viewWillLoadBody
@@ -77,7 +82,7 @@ class Engine {
      * @param canvasElement CanvasElement
      */
     fun registerCanvasElement(canvasElement: CanvasElement) {
-        scene.canvasElements.add(canvasElement)
+        scene.registerCanvasElement(canvasElement)
     }
 
     /**
@@ -85,7 +90,7 @@ class Engine {
      * @param body Ebody
      */
     fun registerBody(body: Ebody) {
-        scene.bodies.add(body)
+        scene.registerBody(body)
     }
 
     /**
@@ -93,7 +98,7 @@ class Engine {
      * @param controller Controller
      */
     fun registerController(controller: Controller) {
-        scene.controllers.add(controller)
+        scene.registerController(controller)
     }
 
     /**
@@ -101,7 +106,7 @@ class Engine {
      * @param pathToMap String zum Pfad der Tiledmap (im Resources Ordner)
      */
     fun registerMap(pathToMap: String) {
-        scene.map = resourcesVfs[pathToMap]
+        scene.registerMap(pathToMap)
     }
 
 

@@ -39,9 +39,9 @@ object Keyboard {
 }
 
 interface MouseEventReacteable {
-    fun reactToMouseEvent(event: MouseEvent)
+    suspend fun reactToMouseEvent(event: MouseEvent)
 }
 
 interface KeyEventReacteable {
-    fun reactToKeyEvent(event: KeyEvent)
+    suspend fun reactToKeyEvent(event: KeyEvent)
 }

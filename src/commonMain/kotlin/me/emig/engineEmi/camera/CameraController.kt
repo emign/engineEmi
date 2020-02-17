@@ -15,11 +15,11 @@ import me.emig.engineEmi.Controller
 
 abstract class CameraController(val camera: Camera) : Controller {
 
-    override fun reactToKeyEvent(event: KeyEvent) {
+    override suspend fun reactToKeyEvent(event: KeyEvent) {
 
     }
 
-    override fun reactToMouseEvent(event: MouseEvent) {
+    override suspend fun reactToMouseEvent(event: MouseEvent) {
 
     }
 

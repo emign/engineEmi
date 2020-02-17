@@ -8,7 +8,7 @@ import me.emig.engineEmi.camera.CameraController
 
 class CamController(camera: Camera) : CameraController(camera) {
 
-    override fun reactToKeyEvent(event: KeyEvent) {
+    override suspend fun reactToKeyEvent(event: KeyEvent) {
         when (event.key) {
             Key.RIGHT -> moveCameraBy(-16, 0, 0.25.seconds)
             Key.LEFT -> moveCameraBy(+16, 0, 0.25.seconds)

@@ -11,11 +11,11 @@ import me.emig.engineEmi.input.MouseEventReacteable
  * Natürlich können auch [ScreenElement]e Controller sein
  */
 interface Controller : MouseEventReacteable, KeyEventReacteable {
-    override fun reactToMouseEvent(event: MouseEvent) {
+    override suspend fun reactToMouseEvent(event: MouseEvent) {
 
     }
 
-    override fun reactToKeyEvent(event: KeyEvent) {
+    override suspend fun reactToKeyEvent(event: KeyEvent) {
 
     }
 }
