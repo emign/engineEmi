@@ -8,6 +8,7 @@ import com.soywiz.korge.box2d.WorldView
 import com.soywiz.korge.view.Camera
 import com.soywiz.korge.view.Stage
 import com.soywiz.korgw.GameWindow
+import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.SizeInt
@@ -42,6 +43,9 @@ class Engine {
         myDependency = EngineModuleDependency(title)
     )
 
+    val scenes = mutableListOf(scene)
+    var activeScene = scene
+
 
     fun init(initBody: () -> Unit) = this.apply {
         view.width = 1280
@@ -63,6 +67,9 @@ class Engine {
         )
     )
 
+    fun register(scene: DefaultScene) {
+        scenes.add(scene)
+    }
 
     fun viewWillLoad(viewWillLoadBody: suspend () -> Unit = {}) {
         scene.viewWillLoadBody = viewWillLoadBody
@@ -76,7 +83,7 @@ class Engine {
      * Registriert ein [CanvasElement] bei der Engine (reguläre Objekte)
      * @param canvasElement CanvasElement
      */
-    fun registerCanvasElement(canvasElement: CanvasElement) {
+    fun registerCanvasElement(canvasElement: CanvasElement, scene: DefaultScene = engine.scene) {
         scene.canvasElements.add(canvasElement)
     }
 
@@ -84,7 +91,7 @@ class Engine {
      * Registriert einen [Ebody] bei der Engine (Physikobjekte)
      * @param body Ebody
      */
-    fun registerBody(body: Ebody) {
+    fun registerBody(body: Ebody, scene: DefaultScene = engine.scene) {
         scene.bodies.add(body)
     }
 
@@ -92,7 +99,7 @@ class Engine {
      * Registriert einen [Controller] bei der Engine
      * @param controller Controller
      */
-    fun registerController(controller: Controller) {
+    fun registerController(controller: Controller, scene: DefaultScene = engine.scene) {
         scene.controllers.add(controller)
     }
 
@@ -100,10 +107,9 @@ class Engine {
      * Registriert eine Map bei der Engine
      * @param pathToMap String zum Pfad der Tiledmap (im Resources Ordner)
      */
-    fun registerMap(pathToMap: String) {
+    fun registerMap(pathToMap: String, scene: DefaultScene = engine.scene) {
         scene.map = resourcesVfs[pathToMap]
     }
-
 
     /**
      * Registriert einen [Ebody] oder ein [CanvasElement] bei der Engine
@@ -111,17 +117,24 @@ class Engine {
      * [Ebody] und [CanvasElement] dürfen in den Arrays oder Collections nicht gemischt vorkommen
      * @param o Any
      */
-    fun register(o: Any) {
+    fun register(o: Any, scene: DefaultScene = engine.scene) {
         if (o is Array<*>)
             o.map { it?.let { register(it) } }
         if (o is Collection<*>)
             o.map { it?.let { register(it) } }
         if (o is Ebody)
-            registerBody(o)
+            registerBody(o, scene)
         if (o is CanvasElement)
-            registerCanvasElement(o)
+            registerCanvasElement(o, scene)
         if (o is Controller)
-            registerController(o)
+            registerController(o, scene)
+    }
+
+    fun switchSceneTo(targetScene: DefaultScene) {
+        scene.sceneContainer.launchImmediately {
+            scene.sceneContainer.changeTo(targetScene::class)
+        }
+        activeScene = targetScene
     }
 
 }
