@@ -1,4 +1,3 @@
-import com.soywiz.korge.view.Camera
 import com.soywiz.korim.color.Colors
 import me.emig.engineEmi.engine
 import me.emig.engineEmi.module.EngineModuleDependency
@@ -17,31 +16,25 @@ suspend fun main() {
         init {
 
 
-            val scene = DefaultScene(
-                camera = Camera(),
-                viewWillLoadBody = viewWillLoadBody,
-                viewDidLoadBody = viewDidLoadBody,
-                myDependency = EngineModuleDependency(title)
+            val scene1 = DefaultScene(
+                EngineModuleDependency(title)
             )
-
-            scene.canvasElements.add(Kreis(50, 50, 50, Colors.RED))
+            scene1.canvasElements.add(Kreis(50, 50, 50, Colors.RED))
 
 
             val scene2 = DefaultScene(
-                camera = Camera(),
-                viewWillLoadBody = viewWillLoadBody,
-                viewDidLoadBody = viewDidLoadBody,
-                myDependency = EngineModuleDependency(title)
+                EngineModuleDependency(title)
             )
 
             scene2.canvasElements.add(Kreis(50, 50, 50, Colors.BLUE))
+            val sceneController = SceneController(scene1, scene2)
 
 
-            val sceneController = SceneController(scene, scene2)
-
-            engine.registerController(sceneController, scene)
+            engine.registerController(sceneController, engine.scene)
+            engine.registerController(sceneController, scene1)
             engine.registerController(sceneController, scene2)
-            engine.scenes.add(scene)
+
+            engine.scenes.add(scene1)
             engine.scenes.add(scene2)
 
 

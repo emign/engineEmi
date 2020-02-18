@@ -8,7 +8,6 @@ import com.soywiz.korge.box2d.WorldView
 import com.soywiz.korge.view.Camera
 import com.soywiz.korge.view.Stage
 import com.soywiz.korgw.GameWindow
-import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.SizeInt
@@ -131,9 +130,7 @@ class Engine {
     }
 
     fun switchSceneTo(targetScene: DefaultScene) {
-        scene.sceneContainer.launchImmediately {
-            scene.sceneContainer.changeTo(targetScene::class)
-        }
+        activeScene.switchSceneTo(targetScene)
         activeScene = targetScene
     }
 

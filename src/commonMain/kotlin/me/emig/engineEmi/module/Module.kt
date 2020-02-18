@@ -23,7 +23,7 @@ class DefaultModule(
 
     override suspend fun AsyncInjector.configure() {
         mapInstance(EngineModuleDependency(title))
-        // mapPrototype { engine.scene }
+
         engine.scenes.forEach {
             mapPrototype { it }
         }

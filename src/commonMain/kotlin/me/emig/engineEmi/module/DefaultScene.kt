@@ -11,6 +11,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.delay
 import com.soywiz.korio.async.launch
+import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.VfsFile
 import me.emig.engineEmi.Controller
 import me.emig.engineEmi.engine
@@ -21,9 +22,9 @@ import me.emig.engineEmi.screenElements.ScreenElement
 import me.emig.engineEmi.screenElements.bodies.Ebody
 import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
 
-class DefaultScene(
+open class DefaultScene(
     val myDependency: EngineModuleDependency,
-    var camera: Camera,
+    var camera: Camera = Camera(),
     var viewWillLoadBody: suspend () -> Unit = {},
     var viewDidLoadBody: suspend () -> Unit = {}
 ) : Scene() {
@@ -38,6 +39,7 @@ class DefaultScene(
     var map: VfsFile? = null
 
     override suspend fun Container.sceneInit() {
+
         views.clearColor = Colors.WHITE
         viewWillLoadBody()
 
@@ -86,6 +88,13 @@ class DefaultScene(
         }
 
         viewDidLoadBody()
+
+    }
+
+    fun switchSceneTo(targetScene: DefaultScene) {
+        launchImmediately {
+            sceneContainer.changeTo<DefaultScene>(targetScene)
+        }
     }
 }
 
