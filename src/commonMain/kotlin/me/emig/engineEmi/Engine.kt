@@ -6,7 +6,6 @@ import com.soywiz.klock.milliseconds
 import com.soywiz.korge.Korge
 import com.soywiz.korge.box2d.WorldView
 import com.soywiz.korge.view.Camera
-import com.soywiz.korge.view.Stage
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
 import me.emig.engineEmi.screenElements.ScreenElement
@@ -28,9 +27,6 @@ class Engine {
     var title = "Engine Emi"
     var delay = 16.milliseconds
     var camera = Camera()
-    lateinit var stage: Stage
-
-    var scenes = mutableListOf<Any>()
 
     var canvasElements = mutableListOf<CanvasElement>()
     var bodies = mutableListOf<Ebody>()
@@ -52,7 +48,6 @@ class Engine {
         Korge.Config(module = EngineModule)
     )
 
-
     fun viewWillLoad(viewWillLoadBody: suspend () -> Unit = {}) {
         this.viewWillLoadBody = viewWillLoadBody
     }
@@ -61,17 +56,13 @@ class Engine {
         this.viewDidLoadBody = viewDidLoadBody
     }
 
-
-    fun registerScene(scene: Any) {
-        scenes.add(scene)
-    }
-
     /**
      * Registriert ein [CanvasElement] bei der Engine (reguläre Objekte)
      * @param canvasElement CanvasElement
      */
     fun registerCanvasElement(canvasElement: CanvasElement) {
         canvasElements.add(canvasElement)
+
     }
 
     /**
@@ -81,6 +72,7 @@ class Engine {
 
     fun registerBody(body: Ebody) {
         bodies.add(body)
+
     }
 
     /**

@@ -2,6 +2,7 @@ import me.emig.engineEmi.engine
 import me.emig.engineEmi.module.SceneTemplate
 
 open class DefaultScene : SceneTemplate() {
+
     override val viewDidLoad = engine.viewDidLoadBody
     override val viewWillLoad = engine.viewWillLoadBody
     override var canvasElements = engine.canvasElements
@@ -10,5 +11,7 @@ open class DefaultScene : SceneTemplate() {
     override var controllers = engine.controllers
     override var map = engine.map
     override var camera = engine.camera
+
+
 }
 

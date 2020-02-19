@@ -1,6 +1,6 @@
 package me.emig.engineEmi.module
 
-import MyDependency
+
 import MyScene2
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korev.addEventListener
@@ -18,6 +18,7 @@ import com.soywiz.korio.async.delay
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.VfsFile
+import com.soywiz.korio.file.std.resourcesVfs
 import me.emig.engineEmi.Controller
 import me.emig.engineEmi.engine
 import me.emig.engineEmi.input.Keyboard
@@ -25,8 +26,9 @@ import me.emig.engineEmi.registerBodyWithWorld
 import me.emig.engineEmi.screenElements.ScreenElement
 import me.emig.engineEmi.screenElements.bodies.Ebody
 import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
+import kotlin.reflect.KClass
 
-open class SceneTemplate(val myDependency: MyDependency = MyDependency(engine.title)) : Scene() {
+open class SceneTemplate : Scene(), Controller {
 
     open val viewWillLoad: suspend () -> Unit = {}
 
@@ -61,9 +63,6 @@ open class SceneTemplate(val myDependency: MyDependency = MyDependency(engine.ti
                 }
             }
 
-            canvasElements.forEach {
-                println(it)
-            }
 
             // CANVAS
             if (canvasElements.isNotEmpty()) {
@@ -98,7 +97,6 @@ open class SceneTemplate(val myDependency: MyDependency = MyDependency(engine.ti
             }
         }
 
-
         engine.viewDidLoadBody()
     }
 
@@ -110,5 +108,58 @@ open class SceneTemplate(val myDependency: MyDependency = MyDependency(engine.ti
     fun registerCanvasElement(canvasElement: CanvasElement) {
         canvasElements.add(canvasElement)
     }
+
+    /**
+     * Registriert einen [Ebody] bei der Engine (Physikobjekte)
+     * @param body Ebody
+     */
+
+    fun registerBody(body: Ebody) {
+        bodies.add(body)
+    }
+
+    /**
+     * Registriert einen [Controller] bei der Engine
+     * @param controller Controller
+     */
+    fun registerController(controller: Controller) {
+        controllers.add(controller)
+    }
+
+    /**
+     * Registriert eine Map bei der Engine
+     * @param pathToMap String zum Pfad der Tiledmap (im Resources Ordner)
+     */
+    fun registerMap(pathToMap: String) {
+        map = resourcesVfs[pathToMap]
+    }
+
+    /**
+     * Registriert einen [Ebody] oder ein [CanvasElement] bei der Engine
+     * Es ist auch möglich Arrays und Collections zu registrieren.
+     * [Ebody] und [CanvasElement] dürfen in den Arrays oder Collections nicht gemischt vorkommen
+     * @param o Any
+     */
+    fun register(o: Any) {
+        if (o is Array<*>)
+            o.map { it?.let { register(it) } }
+        if (o is Collection<*>)
+            o.map { it?.let { register(it) } }
+        if (o is Ebody)
+            registerBody(o)
+        if (o is CanvasElement)
+            registerCanvasElement(o)
+        if (o is Controller)
+            registerController(o)
+    }
+
+    inline fun <reified T : Scene> changeSceneTo(clazz: KClass<T>) {
+        sceneContainer.changeToAsync<T>()
+    }
+
+    inline fun <reified T : Scene> changeSceneTo() {
+        sceneContainer.changeToAsync<T>()
+    }
+
 
 }
