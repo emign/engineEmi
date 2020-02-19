@@ -1,7 +1,7 @@
 package me.emig.engineEmi
 
 
-import TestModule
+import EngineModule
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.Korge
 import com.soywiz.korge.box2d.WorldView
@@ -30,6 +30,7 @@ class Engine {
     var camera = Camera()
     lateinit var stage: Stage
 
+    var scenes = mutableListOf<Any>()
 
     var canvasElements = mutableListOf<CanvasElement>()
     var bodies = mutableListOf<Ebody>()
@@ -48,8 +49,7 @@ class Engine {
     }
 
     suspend fun start() = Korge(
-        Korge.Config(module = TestModule)
-
+        Korge.Config(module = EngineModule)
     )
 
 
@@ -59,6 +59,11 @@ class Engine {
 
     fun viewDidLoad(viewDidLoadBody: suspend () -> Unit = {}) {
         this.viewDidLoadBody = viewDidLoadBody
+    }
+
+
+    fun registerScene(scene: Any) {
+        scenes.add(scene)
     }
 
     /**

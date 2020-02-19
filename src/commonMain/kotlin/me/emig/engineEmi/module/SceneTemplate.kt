@@ -1,11 +1,13 @@
 package me.emig.engineEmi.module
 
 import MyDependency
+import MyScene2
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korev.addEventListener
 import com.soywiz.korev.mouse
 import com.soywiz.korge.box2d.worldView
 import com.soywiz.korge.input.keys
+import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onDown
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.tiled.readTiledMap
@@ -14,6 +16,7 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.delay
 import com.soywiz.korio.async.launch
+import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.VfsFile
 import me.emig.engineEmi.Controller
 import me.emig.engineEmi.engine
@@ -23,21 +26,21 @@ import me.emig.engineEmi.screenElements.ScreenElement
 import me.emig.engineEmi.screenElements.bodies.Ebody
 import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
 
-open class SceneTemplate(val myDependency: MyDependency) : Scene() {
+open class SceneTemplate(val myDependency: MyDependency = MyDependency(engine.title)) : Scene() {
 
     open val viewWillLoad: suspend () -> Unit = {}
 
     open val viewDidLoad: suspend () -> Unit = {}
 
-    var canvasElements = mutableListOf<CanvasElement>()
-    var bodies = mutableListOf<Ebody>()
-    val allScreenElements: List<ScreenElement>
+    open var canvasElements = mutableListOf<CanvasElement>()
+    open var bodies = mutableListOf<Ebody>()
+    open val allScreenElements: List<ScreenElement>
         get() {
             return canvasElements.plus(bodies).map { it }
         }
-    var controllers = mutableListOf<Controller>()
-    var map: VfsFile? = null
-    var camera = Camera()
+    open var controllers = mutableListOf<Controller>()
+    open var map: VfsFile? = null
+    open var camera = Camera()
 
     override suspend fun Container.sceneInit() {
 
@@ -58,7 +61,7 @@ open class SceneTemplate(val myDependency: MyDependency) : Scene() {
                 }
             }
 
-            engine.canvasElements.forEach {
+            canvasElements.forEach {
                 println(it)
             }
 
@@ -88,13 +91,15 @@ open class SceneTemplate(val myDependency: MyDependency) : Scene() {
 
         mouse {
             onDown { }
-
+            onClick {
+                launchImmediately {
+                    sceneContainer.changeTo<MyScene2>()
+                }
+            }
         }
 
 
-
         engine.viewDidLoadBody()
-
     }
 
 
@@ -105,4 +110,5 @@ open class SceneTemplate(val myDependency: MyDependency) : Scene() {
     fun registerCanvasElement(canvasElement: CanvasElement) {
         canvasElements.add(canvasElement)
     }
+
 }

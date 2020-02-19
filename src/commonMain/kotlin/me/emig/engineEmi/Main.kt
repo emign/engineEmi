@@ -13,6 +13,7 @@ suspend fun main() {
          */
         init {
             register(Rechteck(100, 100, 100, 100, Colors.BLUE))
+
         }
 
         /**
