@@ -1,8 +1,6 @@
 import com.soywiz.korim.color.Colors
 import me.emig.engineEmi.engine
-import me.emig.engineEmi.module.EngineModuleDependency
-import me.emig.engineEmi.module.SceneController
-import me.emig.engineEmi.screenElements.canvasElements.Kreis
+import me.emig.engineEmi.screenElements.canvasElements.Rechteck
 
 
 suspend fun main() {
@@ -14,30 +12,7 @@ suspend fun main() {
          * Code um die Engine zu konfigurieren.
          */
         init {
-
-
-            val scene1 = DefaultScene(
-                EngineModuleDependency(title)
-            )
-            scene1.canvasElements.add(Kreis(50, 50, 50, Colors.RED))
-
-
-            val scene2 = DefaultScene(
-                EngineModuleDependency(title)
-            )
-
-            scene2.canvasElements.add(Kreis(50, 50, 50, Colors.BLUE))
-            val sceneController = SceneController(scene1, scene2)
-
-
-            engine.registerController(sceneController, engine.scene)
-            engine.registerController(sceneController, scene1)
-            engine.registerController(sceneController, scene2)
-
-            engine.scenes.add(scene1)
-            engine.scenes.add(scene2)
-
-
+            register(Rechteck(100, 100, 100, 100, Colors.BLUE))
         }
 
         /**

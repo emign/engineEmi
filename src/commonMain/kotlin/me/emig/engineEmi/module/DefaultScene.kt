@@ -3,72 +3,56 @@ import com.soywiz.korev.addEventListener
 import com.soywiz.korev.mouse
 import com.soywiz.korge.box2d.worldView
 import com.soywiz.korge.input.keys
+import com.soywiz.korge.input.onClick
 import com.soywiz.korge.input.onDown
-import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.tiled.readTiledMap
 import com.soywiz.korge.tiled.tiledMapView
-import com.soywiz.korge.view.*
+import com.soywiz.korge.view.Container
+import com.soywiz.korge.view.camera
+import com.soywiz.korge.view.position
+import com.soywiz.korge.view.scale
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.delay
 import com.soywiz.korio.async.launch
 import com.soywiz.korio.async.launchImmediately
-import com.soywiz.korio.file.VfsFile
-import me.emig.engineEmi.Controller
 import me.emig.engineEmi.engine
 import me.emig.engineEmi.input.Keyboard
-import me.emig.engineEmi.module.EngineModuleDependency
+import me.emig.engineEmi.module.SceneTemplate
 import me.emig.engineEmi.registerBodyWithWorld
-import me.emig.engineEmi.screenElements.ScreenElement
-import me.emig.engineEmi.screenElements.bodies.Ebody
-import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
 
-open class DefaultScene(
-    val myDependency: EngineModuleDependency,
-    var camera: Camera = Camera(),
-    var viewWillLoadBody: suspend () -> Unit = {},
-    var viewDidLoadBody: suspend () -> Unit = {}
-) : Scene() {
-
-    var canvasElements = mutableListOf<CanvasElement>()
-    var bodies = mutableListOf<Ebody>()
-    val allScreenElements: List<ScreenElement>
-        get() {
-            return canvasElements.plus(bodies).map { it }
-        }
-    var controllers = mutableListOf<Controller>()
-    var map: VfsFile? = null
+open class DefaultScene(dependency: MyDependency) : SceneTemplate(dependency) {
 
     override suspend fun Container.sceneInit() {
 
         views.clearColor = Colors.WHITE
-        viewWillLoadBody()
+        engine.viewWillLoadBody()
 
-        camera = camera {
-            map?.let { tiledMapView(it.readTiledMap()) }
+        engine.camera = camera {
+            engine.map?.let { tiledMapView(it.readTiledMap()) }
 
             worldView {
                 position(engine.view.width / 2, engine.view.height / 2).scale(engine.view.scale)
-                if (bodies.isNotEmpty()) {
-                    bodies.run {
+                if (engine.bodies.isNotEmpty()) {
+                    engine.bodies.run {
                         map { registerBodyWithWorld(it) }
                         map { it.body }
                     }
                 }
             }
 
-            canvasElements.forEach {
+            engine.canvasElements.forEach {
                 println(it)
             }
 
             // CANVAS
-            if (canvasElements.isNotEmpty()) {
-                canvasElements.run {
+            if (engine.canvasElements.isNotEmpty()) {
+                engine.canvasElements.run {
                     map { it.prepareElement() }
                     map { addChild(it) }
                 }
                 launch {
                     while (true) {
-                        canvasElements.onEach { it.onEveryFrame() }
+                        engine.canvasElements.onEach { it.onEveryFrame() }
                         delay(engine.delay)
                     }
                 }
@@ -76,25 +60,25 @@ open class DefaultScene(
         }
 
         // GLOBAL (CANVAS AND BOX2D)
-        addEventListener<MouseEvent> { controllers.onEach { element -> element.reactToMouseEvent(it) } }
+        addEventListener<MouseEvent> { engine.controllers.onEach { element -> element.reactToMouseEvent(it) } }
 
         keys {
-            onKeyDown { Keyboard.keyDown(it.key); controllers.onEach { element -> element.reactToKeyEvent(it) } }
-            onKeyUp { Keyboard.keyReleased(it.key); controllers.onEach { element -> element.reactToKeyEvent(it) } }
+            onKeyDown { Keyboard.keyDown(it.key); engine.controllers.onEach { element -> element.reactToKeyEvent(it) } }
+            onKeyUp { Keyboard.keyReleased(it.key); engine.controllers.onEach { element -> element.reactToKeyEvent(it) } }
         }
 
         mouse {
             onDown { }
         }
-
-        viewDidLoadBody()
-
-    }
-
-    fun switchSceneTo(targetScene: DefaultScene) {
-        launchImmediately {
-            sceneContainer.changeTo<DefaultScene>(targetScene)
+        onClick {
+            launchImmediately {
+                println("CLICKED")
+                sceneContainer.changeTo<MyScene1>()
+            }
         }
+
+        engine.viewDidLoadBody()
+
     }
 }
 
