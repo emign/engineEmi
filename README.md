@@ -33,6 +33,12 @@ Es ist auch möglich, die Engine direkt als Library einzubinden: https://bintray
 
 # Changelog`
 
+## v.040 2020-02-19
+
+### Added
+- Scenen werden unterstützt
+- Kleine Verbesserungen
+
 ## v0.29 2020-01-28
 Engine ist nun eine library und verfügt über ein Gradle plugin
 

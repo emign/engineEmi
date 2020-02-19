@@ -34,7 +34,7 @@ class MyScene1 : SceneTemplate() {
 
     override fun reactToKeyEvent(event: KeyEvent) {
         if (event.key == Key.SPACE) {
-            changeSceneTo<MyScene2>()
+          //  changeSceneTo<MyScene2>()
         }
     }
 }
@@ -47,7 +47,7 @@ class MyScene2 : SceneTemplate() {
 
     override fun reactToKeyEvent(event: KeyEvent) {
         if (event.key == Key.K) {
-            changeSceneTo<DefaultScene>()
+            //  changeSceneTo<DefaultScene>()
         }
     }
 }
