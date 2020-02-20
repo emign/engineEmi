@@ -5,8 +5,8 @@
       <configuration version="3" platform="Native " allPlatforms="Native []" useProjectSettings="false" isTestModule="true" externalProjectId="engineEmi">
         <dependsOnModuleNames>engineEmi_commonTest</dependsOnModuleNames>
         <sourceSets>
-          <sourceSet>me.emig.engineEmi.commonMain</sourceSet>
           <sourceSet>me.emig.engineEmi.iosX64Main</sourceSet>
+          <sourceSet>me.emig.engineEmi.commonMain</sourceSet>
           <sourceSet>me.emig.engineEmi.commonTest</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
