@@ -1,13 +1,12 @@
 package me.emig.engineEmi
 
-
-import EngineModule
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.Korge
 import com.soywiz.korge.box2d.WorldView
 import com.soywiz.korge.view.Camera
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
+import me.emig.engineEmi.module.EngineModule
 import me.emig.engineEmi.screenElements.ScreenElement
 import me.emig.engineEmi.screenElements.bodies.Ebody
 import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
@@ -21,6 +20,7 @@ val engine = Engine()
  *
  */
 class Engine {
+    var module = EngineModule
     var view = ViewWindow()
     var viewWillLoadBody: suspend () -> Unit = {}
     var viewDidLoadBody: suspend () -> Unit = {}
@@ -45,7 +45,7 @@ class Engine {
     }
 
     suspend fun start() = Korge(
-        Korge.Config(module = EngineModule)
+        Korge.Config(module = module)
     )
 
     fun viewWillLoad(viewWillLoadBody: suspend () -> Unit = {}) {

@@ -1,5 +1,6 @@
+package me.emig.engineEmi.module
+
 import me.emig.engineEmi.engine
-import me.emig.engineEmi.module.SceneTemplate
 
 open class DefaultScene : SceneTemplate() {
 

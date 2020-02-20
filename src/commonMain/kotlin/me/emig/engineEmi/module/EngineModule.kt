@@ -1,16 +1,15 @@
+package me.emig.engineEmi.module
+
 import com.soywiz.korev.Key
 import com.soywiz.korev.KeyEvent
 import com.soywiz.korge.scene.Module
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korim.color.Colors
 import com.soywiz.korinject.AsyncInjector
-import me.emig.engineEmi.module.SceneTemplate
 import me.emig.engineEmi.screenElements.canvasElements.Rechteck
 import kotlin.reflect.KClass
 
 object EngineModule : Module() {
-
-
     override val mainScene: KClass<out Scene> = DefaultScene::class
 
     override suspend fun AsyncInjector.configure() {
@@ -34,7 +33,7 @@ class MyScene1 : SceneTemplate() {
 
     override fun reactToKeyEvent(event: KeyEvent) {
         if (event.key == Key.SPACE) {
-          //  changeSceneTo<MyScene2>()
+            //  changeSceneTo<MyScene2>()
         }
     }
 }
