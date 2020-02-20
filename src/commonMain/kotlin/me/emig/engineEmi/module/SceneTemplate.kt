@@ -1,7 +1,5 @@
 package me.emig.engineEmi.module
 
-
-import MyScene2
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korev.addEventListener
 import com.soywiz.korev.mouse
