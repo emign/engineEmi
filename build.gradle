@@ -27,6 +27,7 @@ dokka {
     outputFormat = "html"
     outputDirectory = "dokka"
 }
+
 repositories {
     jcenter()
     mavenCentral()
