@@ -70,7 +70,6 @@ class Engine {
      * Registriert einen [Ebody] bei der Engine (Physikobjekte)
      * @param body Ebody
      */
-
     fun registerBody(body: Ebody) {
         bodies.add(body)
 
