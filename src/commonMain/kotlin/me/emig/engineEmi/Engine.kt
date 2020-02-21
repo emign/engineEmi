@@ -21,11 +21,13 @@ val engine = Engine()
  *
  */
 class Engine {
+
+    var title = "Engine Emi"
     var module: Module = EngineModule
     var view = ViewWindow()
     var viewWillLoadBody: suspend () -> Unit = {}
     var viewDidLoadBody: suspend () -> Unit = {}
-    var title = "Engine Emi"
+
     var delay = 16.milliseconds
     var camera = Camera()
 

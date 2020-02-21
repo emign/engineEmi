@@ -5,9 +5,9 @@
       <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="engineEmi">
         <dependsOnModuleNames>engineEmi_commonTest</dependsOnModuleNames>
         <sourceSets>
+          <sourceSet>me.emig.engineEmi.commonTest</sourceSet>
           <sourceSet>me.emig.engineEmi.commonMain</sourceSet>
           <sourceSet>me.emig.engineEmi.jsMain</sourceSet>
-          <sourceSet>me.emig.engineEmi.commonTest</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>jsBrowserTest|engineEmi:jsTest|js</externalSystemTestTasks>

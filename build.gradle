@@ -40,6 +40,10 @@ kotlin {
         compilations.main.kotlinOptions {
             jvmTarget = "1.8"
         }
+        compilations.test.kotlinOptions{
+            jvmTarget = "1.8"
+        }
+
     }
     js {
         browser {
@@ -122,6 +126,8 @@ publishing {
         }
     }
 }
+
+
 
 task release(type: Task) {
     dependsOn("publishAllPublicationsToMavenRepository")
