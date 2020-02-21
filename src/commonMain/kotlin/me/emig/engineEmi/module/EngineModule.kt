@@ -15,6 +15,7 @@ object EngineModule : Module() {
     override val mainScene: KClass<out Scene> = DefaultScene::class
 
     override val windowSize = SizeInt(engine.view.width, engine.view.height)
+
     override suspend fun AsyncInjector.configure() {
         mapPrototype { DefaultScene() }
 
