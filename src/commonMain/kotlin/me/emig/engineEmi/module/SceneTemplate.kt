@@ -2,11 +2,8 @@ package me.emig.engineEmi.module
 
 import com.soywiz.korev.MouseEvent
 import com.soywiz.korev.addEventListener
-import com.soywiz.korev.mouse
 import com.soywiz.korge.box2d.worldView
 import com.soywiz.korge.input.keys
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.input.onDown
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korge.tiled.readTiledMap
 import com.soywiz.korge.tiled.tiledMapView
@@ -14,7 +11,6 @@ import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korio.async.delay
 import com.soywiz.korio.async.launch
-import com.soywiz.korio.async.launchImmediately
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
 import me.emig.engineEmi.Controller
@@ -84,15 +80,6 @@ open class SceneTemplate : Scene(), Controller {
         keys {
             onKeyDown { Keyboard.keyDown(it.key); controllers.onEach { element -> element.reactToKeyEvent(it) } }
             onKeyUp { Keyboard.keyReleased(it.key); controllers.onEach { element -> element.reactToKeyEvent(it) } }
-        }
-
-        mouse {
-            onDown { }
-            onClick {
-                launchImmediately {
-                    sceneContainer.changeTo<MyScene2>()
-                }
-            }
         }
 
         engine.viewDidLoadBody()
