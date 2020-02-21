@@ -6,12 +6,15 @@ import com.soywiz.korge.scene.Module
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korim.color.Colors
 import com.soywiz.korinject.AsyncInjector
+import com.soywiz.korma.geom.SizeInt
+import me.emig.engineEmi.engine
 import me.emig.engineEmi.screenElements.canvasElements.Rechteck
 import kotlin.reflect.KClass
 
 object EngineModule : Module() {
     override val mainScene: KClass<out Scene> = DefaultScene::class
 
+    override val windowSize = SizeInt(engine.view.width, engine.view.height)
     override suspend fun AsyncInjector.configure() {
         mapPrototype { DefaultScene() }
 
