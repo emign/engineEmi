@@ -20,7 +20,6 @@ import me.emig.engineEmi.registerBodyWithWorld
 import me.emig.engineEmi.screenElements.ScreenElement
 import me.emig.engineEmi.screenElements.bodies.Ebody
 import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
-import kotlin.reflect.KClass
 
 open class SceneTemplate : Scene(), Controller {
 
@@ -138,13 +137,7 @@ open class SceneTemplate : Scene(), Controller {
             registerController(o)
     }
 
-    inline fun <reified T : Scene> changeSceneTo(clazz: KClass<T>) {
-        sceneContainer.changeToAsync<T>()
-    }
-
     inline fun <reified T : Scene> changeSceneTo() {
         sceneContainer.changeToAsync<T>()
     }
-
-
 }

@@ -1,13 +1,10 @@
 package me.emig.engineEmi.module
 
-import com.soywiz.korev.Key
 import com.soywiz.korev.KeyEvent
 import com.soywiz.korge.scene.Module
 import com.soywiz.korge.scene.Scene
 import com.soywiz.korim.color.Colors
 import com.soywiz.korinject.AsyncInjector
-import com.soywiz.korma.geom.Anchor
-import com.soywiz.korma.geom.ScaleMode
 import com.soywiz.korma.geom.SizeInt
 import me.emig.engineEmi.engine
 import me.emig.engineEmi.screenElements.canvasElements.Rechteck
@@ -16,14 +13,11 @@ import kotlin.reflect.KClass
 object EngineModule : Module() {
     override val mainScene: KClass<out Scene> = DefaultScene::class
 
-    override val windowSize: SizeInt
+    override val size: SizeInt
         get() = SizeInt(engine.view.width, engine.view.height)
 
-    override val scaleMode: ScaleMode
-        get() = ScaleMode.SHOW_ALL
-
-    override val scaleAnchor: Anchor
-        get() = Anchor.MIDDLE_CENTER
+    override val windowSize: SizeInt
+        get() = SizeInt(engine.view.width, engine.view.height)
 
 
     override suspend fun AsyncInjector.configure() {
@@ -48,9 +42,7 @@ class MyScene1 : SceneTemplate() {
     }
 
     override fun reactToKeyEvent(event: KeyEvent) {
-        if (event.key == Key.SPACE) {
-            //  changeSceneTo<MyScene2>()
-        }
+
     }
 }
 
@@ -61,8 +53,6 @@ class MyScene2 : SceneTemplate() {
     }
 
     override fun reactToKeyEvent(event: KeyEvent) {
-        if (event.key == Key.K) {
-            //  changeSceneTo<DefaultScene>()
-        }
+
     }
 }
