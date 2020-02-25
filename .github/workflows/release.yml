@@ -6,7 +6,7 @@ on:
       - 'master'
 
 jobs:
-  build-mac-jvm:
+  build-mac:
     runs-on: [macos-10.15]
     steps:
       - uses: actions/checkout@v1
@@ -28,3 +28,13 @@ jobs:
           bintrayPassword: ${{ secrets.bintrayPassword }}
       - run: CALL gradlew.bat --stop
         shell: cmd
+
+  build-linux:
+    needs: [build-windows, build-mac]
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - run: ./gradlew publishLinuxX64PublicationToMavenRepository
+        env:
+          BINTRAY_USER: ${{ secrets.bintrayUser }}
+          BINTRAY_KEY: ${{ secrets.bintrayApiKey }}
