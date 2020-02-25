@@ -84,7 +84,6 @@ open class SceneTemplate : Scene(), Controller {
         engine.viewDidLoadBody()
     }
 
-
     /**
      * Registriert ein [CanvasElement] bei der Engine (reguläre Objekte)
      * @param canvasElement CanvasElement
