@@ -7,6 +7,7 @@
         <externalSystemTestTasks>
           <externalSystemTestTask>jsBrowserTest|engineEmi:jsTest|js</externalSystemTestTask>
           <externalSystemTestTask>jvmTest|engineEmi:jvmTest|jvm</externalSystemTestTask>
+          <externalSystemTestTask>linuxX64Test|engineEmi:linuxX64Test|linuxX64</externalSystemTestTask>
           <externalSystemTestTask>macosX64Test|engineEmi:macosX64Test|macosX64</externalSystemTestTask>
           <externalSystemTestTask>mingwX64Test|engineEmi:mingwX64Test|mingwX64</externalSystemTestTask>
         </externalSystemTestTasks>
