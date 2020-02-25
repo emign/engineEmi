@@ -35,5 +35,6 @@ jobs:
       - uses: actions/checkout@v1
       - run: ./gradlew publishLinuxX64PublicationToMavenRepository
         env:
-          BINTRAY_USER: ${{ secrets.bintrayUser }}
-          BINTRAY_KEY: ${{ secrets.bintrayApiKey }}
+          bintrayUser: ${{ secrets.bintrayUser }}
+          bintrayApiKey: ${{ secrets.bintrayApiKey }}
+          bintrayPassword: ${{ secrets.bintrayPassword }}
