@@ -2,8 +2,8 @@ import com.soywiz.klock.milliseconds
 import com.soywiz.korau.sound.AudioTone
 import com.soywiz.korau.sound.playAndWait
 import com.soywiz.korau.sound.toNativeSound
-import com.soywiz.korge.tests.ViewsForTesting
 import com.soywiz.korim.color.RGBA
+import com.soywiz.korio.async.suspendTest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -12,11 +12,9 @@ import me.emig.engineEmi.engine
 import me.emig.engineEmi.screenElements.canvasElements.Rechteck
 import kotlin.test.Test
 
-class Test : ViewsForTesting() {
+class Test {
     @Test
-    fun lektion18_test() = viewsTest {
-        val rect = Rechteck()
-
+    fun lektion18_test() = suspendTest {
         engine.run {
 
             /**
@@ -29,10 +27,9 @@ class Test : ViewsForTesting() {
                 view.width = 510
                 view.height = 250
                 ArrayController.arrayErzeugen(100)
-                ArrayController.wartezeit = 0
+                ArrayController.wartezeit = 120
                 ArrayController.sortieralgorithmus = SelectionSort
                 ArrayController.sortieren()
-
             }
 
             /**
@@ -43,7 +40,7 @@ class Test : ViewsForTesting() {
              * Code der VOR dem Aufbau des Views ausgeführt wird
              */
             viewWillLoad {
-                register(rect)
+
             }
 
             /**
@@ -59,13 +56,11 @@ class Test : ViewsForTesting() {
 
             start()
         }
-
-
     }
 }
 
 object ArrayController {
-    var didFinish = false
+
     lateinit var array: Array<Rechteck>
     var sortieralgorithmus: Sortieralgorithmus = SelectionSort
     var wartezeit = 50L
@@ -93,7 +88,6 @@ object ArrayController {
         CoroutineScope(Dispatchers.Default).launch {
             sortieralgorithmus.sortieren(array)
             positionenAktualisieren()
-            didFinish = true
         }
     }
 
@@ -137,7 +131,6 @@ object SelectionSort : Sortieralgorithmus() {
             array[minPos] = tmp
             ArrayController.positionenAktualisieren()
         }
-
     }
 }
 

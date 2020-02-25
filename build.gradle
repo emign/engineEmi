@@ -55,7 +55,6 @@ kotlin {
     iosArm64()
     iosX64()
     mingwX64()
-    linuxX64()
 
 
     // For ARM, should be changed to iosArm32 or iosArm64
