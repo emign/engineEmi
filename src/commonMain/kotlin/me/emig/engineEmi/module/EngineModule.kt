@@ -21,13 +21,9 @@ object EngineModule : Module() {
 
 
     override suspend fun AsyncInjector.configure() {
-
-
         mapPrototype { DefaultScene() }
-
         mapPrototype { MyScene1() }
         mapPrototype { MyScene2() }
-
     }
 }
 
