@@ -6,8 +6,8 @@
         <dependsOnModuleNames>engineEmi_commonTest</dependsOnModuleNames>
         <sourceSets>
           <sourceSet>me.emig.engineEmi.commonTest</sourceSet>
-          <sourceSet>me.emig.engineEmi.commonMain</sourceSet>
           <sourceSet>me.emig.engineEmi.macosX64Main</sourceSet>
+          <sourceSet>me.emig.engineEmi.commonMain</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>macosX64Test|engineEmi:macosX64Test|macosX64</externalSystemTestTasks>
