@@ -37,6 +37,7 @@ class Engine {
         get() {
             return canvasElements.plus(bodies).map { it }
         }
+
     var controllers = mutableListOf<Controller>()
     var map: VfsFile? = null
 
@@ -65,7 +66,6 @@ class Engine {
      */
     fun registerCanvasElement(canvasElement: CanvasElement) {
         canvasElements.add(canvasElement)
-
     }
 
     /**
@@ -111,8 +111,6 @@ class Engine {
         if (o is Controller)
             registerController(o)
     }
-
-
 }
 
 class ViewWindow {

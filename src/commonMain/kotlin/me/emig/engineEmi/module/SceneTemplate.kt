@@ -65,7 +65,6 @@ open class SceneTemplate : Scene(), Controller {
                 }
                 launch {
                     while (true) {
-
                         canvasElements.onEach { it.onEveryFrame() }
                         delay(engine.delay)
                     }
