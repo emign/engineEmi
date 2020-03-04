@@ -43,7 +43,7 @@ open class SceneTemplate : Scene(), Controller {
         views.clearColor = Colors.WHITE
         viewWillLoad()
 
-        camera = camera {
+        camera {
             map?.let { tiledMapView(it.readTiledMap()) }
 
             worldView {
