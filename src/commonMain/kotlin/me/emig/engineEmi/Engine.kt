@@ -5,6 +5,7 @@ import com.soywiz.korge.Korge
 import com.soywiz.korge.box2d.WorldView
 import com.soywiz.korge.scene.Module
 import com.soywiz.korge.view.Camera
+import com.soywiz.korge.view.Container
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
 import me.emig.engineEmi.module.EngineModule
@@ -39,6 +40,7 @@ class Engine {
         }
     var controllers = mutableListOf<Controller>()
     var map: VfsFile? = null
+    var sceneContainer: Container? = null
 
     fun init(initBody: () -> Unit) = this.apply {
         view.width = 1280

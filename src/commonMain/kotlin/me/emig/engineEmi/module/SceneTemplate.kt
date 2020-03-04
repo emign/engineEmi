@@ -24,7 +24,6 @@ import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
 open class SceneTemplate : Scene(), Controller {
 
     open val viewWillLoad: suspend () -> Unit = {}
-
     open val viewDidLoad: suspend () -> Unit = {}
 
     open var canvasElements = mutableListOf<CanvasElement>()
@@ -38,8 +37,7 @@ open class SceneTemplate : Scene(), Controller {
     open var camera = Camera()
 
     override suspend fun Container.sceneInit() {
-
-
+        engine.sceneContainer = this
         views.clearColor = Colors.WHITE
         viewWillLoad()
 
