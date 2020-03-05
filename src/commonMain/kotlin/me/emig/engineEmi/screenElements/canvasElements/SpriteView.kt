@@ -13,20 +13,16 @@ import com.soywiz.korim.bitmap.BmpSlice
  */
 class SpriteView : CanvasElement() {
     var sprite: BmpSlice = Bitmaps.transparent
-        set(value) {
-            field = value
-            updateGraphics()
-        }
     var image = image(sprite)
         set(value) {
             field = value
             position(x, y)
             scale(scale)
-            updateGraphics()
+           // updateGraphics()
         }
 
     init {
-        updateGraphics()
+        //  updateGraphics()
     }
 
     /**
@@ -44,7 +40,7 @@ class SpriteView : CanvasElement() {
     }
 
 
-    override fun updateGraphics() {
+    override suspend fun onEveryFrame() {
         image.bitmap = sprite
         image
     }

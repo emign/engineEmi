@@ -41,6 +41,7 @@ open class SceneTemplate : Scene(), Controller {
         views.clearColor = Colors.WHITE
         viewWillLoad()
 
+
         camera {
             map?.let { tiledMapView(it.readTiledMap()) }
 
@@ -138,3 +139,7 @@ open class SceneTemplate : Scene(), Controller {
         sceneContainer.changeToAsync<T>()
     }
 }
+
+
+
+

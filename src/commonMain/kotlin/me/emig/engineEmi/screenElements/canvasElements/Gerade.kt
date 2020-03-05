@@ -25,14 +25,8 @@ open class Gerade(
 ) : CanvasElement(x = x.toDouble(), y = y.toDouble()) {
 
     var fillColor: RGBA = fuellFarbe
-        set(value) {
-            field = value; updateGraphics()
-        }
 
     var strokeColor: RGBA = randFarbe
-        set(value) {
-            field = value; updateGraphics()
-        }
 
     init {
         updateGraphics()

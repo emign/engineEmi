@@ -53,7 +53,7 @@ abstract class CanvasElement(
     /**
      * Zeichnet das Objekt. Siehe Implementierung von [Kreis] oder [Rechteck] für Beispiele
      */
-    abstract fun updateGraphics()
+    open fun updateGraphics() {}
 
 
 }

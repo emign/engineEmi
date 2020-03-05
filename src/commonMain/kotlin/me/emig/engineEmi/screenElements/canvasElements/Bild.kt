@@ -21,10 +21,7 @@ open class Bild(
 
 
     init {
-        updateGraphics()
-    }
-
-    final override fun updateGraphics() {
+    //    updateGraphics()
     }
 
 
