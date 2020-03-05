@@ -22,7 +22,6 @@ val engine = Engine()
  *
  */
 class Engine {
-
     var title = "Engine Emi"
     var module: Module = EngineModule
     var view = ViewWindow()
