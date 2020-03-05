@@ -16,8 +16,8 @@ plugins {
     id "maven-publish"
 }
 
-//def engineEmiAndPluginVersion = 'https://emig.me/engineEmi/version.txt'.toURL().text
-def engineEmiAndPluginVersion = '0.46-SNAPSHOT'
+def engineEmiAndPluginVersion = 'https://emig.me/engineEmi/version.txt'.toURL().text
+//def engineEmiAndPluginVersion = '0.46-SNAPSHOT'
 
 apply plugin: 'maven-publish'
 apply plugin : "org.jetbrains.dokka"
