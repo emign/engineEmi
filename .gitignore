@@ -11,3 +11,4 @@
 /build/js/packages/engineEmi/kotlin/
 /src/commonMain/kotlin/Main.kt
 /src/commonMain/resources/testResources/
+*.log
