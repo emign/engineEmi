@@ -1,6 +1,7 @@
 # Project exclude paths
 /.gradle/
 # Project exclude paths
+.idea/
 /build/
 /build/classes/kotlin/iosArm32/main/
 /build/classes/kotlin/iosArm64/main/
