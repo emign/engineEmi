@@ -21,7 +21,7 @@ open class Bild(
 
 
     init {
-    //    updateGraphics()
+        updateGraphics()
     }
 
 
