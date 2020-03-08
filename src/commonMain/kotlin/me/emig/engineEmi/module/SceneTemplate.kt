@@ -39,6 +39,9 @@ open class SceneTemplate : Scene(), Controller {
     override suspend fun Container.sceneInit() {
         engine.sceneContainer = this
         views.clearColor = Colors.WHITE
+
+
+
         viewWillLoad()
 
 
@@ -139,7 +142,6 @@ open class SceneTemplate : Scene(), Controller {
         sceneContainer.changeToAsync<T>()
     }
 }
-
 
 
 

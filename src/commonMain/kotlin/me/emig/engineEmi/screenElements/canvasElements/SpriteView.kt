@@ -11,14 +11,14 @@ import com.soywiz.korim.bitmap.BmpSlice
  * benötigt, auf welchen die Animationen abgebildet werden.
  * @constructor
  */
-class SpriteView : CanvasElement() {
+open class SpriteView : CanvasElement() {
     var sprite: BmpSlice = Bitmaps.transparent
     var image = image(sprite)
         set(value) {
             field = value
             position(x, y)
             scale(scale)
-           // updateGraphics()
+            // updateGraphics()
         }
 
     init {

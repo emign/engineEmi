@@ -1,8 +1,8 @@
 package me.emig.engineEmi.screenElements.canvasElements
 
-import UiDefaults
+
 import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.uiTextButton
+import com.soywiz.korge.ui.textButton
 import com.soywiz.korge.view.position
 import com.soywiz.korio.async.launch
 import me.emig.engineEmi.engine
@@ -33,19 +33,12 @@ open class TextButton(
 
     override fun updateGraphics() {
         engine.sceneContainer?.stage?.launch {
-            uiTextButton(
-                width = breite, height = hoehe, text = text
-                , skin = UiDefaults.defaultUiSkin(), textFont = UiDefaults.defaultUiFont()
-            ) {
-                text = text
+            textButton(breite.toDouble(), hoehe.toDouble()) {
+                text = this@TextButton.text
                 position(x, y)
-                onClick {
-                    aktion()
-                }
+                onClick { aktion() }
                 enable(aktiv)
             }
         }
     }
-
-
 }

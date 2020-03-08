@@ -66,7 +66,6 @@ class Engine {
      */
     fun registerCanvasElement(canvasElement: CanvasElement) {
         canvasElements.add(canvasElement)
-
     }
 
     /**
