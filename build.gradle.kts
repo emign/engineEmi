@@ -1,3 +1,7 @@
+import java.io.PrintWriter
+import java.net.URL
+import java.util.*
+
 buildscript {
     repositories {
         maven { url = uri("https://plugins.gradle.org/m2/") }
@@ -28,9 +32,17 @@ repositories {
     }
 }
 
-val sourceSets: SourceSetContainer by project
-val publishing: PublishingExtension by project
 
+val GROUP_ID: String by project
+val ARTIFACT_ID: String by project
+val BINTRAY_ORGANIZATION: String by project
+val BINTRAY_REPOSITORY: String by project
+val engineVersion: String by project
+val korgeVersion: String by project
+val kotlinVersion: String by project
+
+group = GROUP_ID
+version = engineVersion
 
 
 tasks {
@@ -65,8 +77,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
-                api("com.soywiz.korlibs.korge:korge:${project.property("korgeVersion")}")
-                api("com.soywiz.korlibs.korge:korge-box2d:${project.property("korgeVersion")}")
+                api("com.soywiz.korlibs.korge:korge:${korgeVersion}")
+                api("com.soywiz.korlibs.korge:korge-box2d:${korgeVersion}")
             }
         }
         val commonTest by getting {
@@ -108,21 +120,56 @@ publishing.apply {
         maven {
             credentials {
                 username = "emign"
-                password = System.getenv("bintrayApiKey")
+                // password = System.getenv("bintrayApiKey")
+                password = "0608dea3bf94a911a75ed671ff88e5e8a2123bf3"
             }
             url = uri(
-                "https://api.bintray.com/maven/${project.property("BINTRAY_ORGANIZATION")}/${project.property("BINTRAY_REPOSITORY")}/${project.property(
-                    "ARTIFACT_ID"
-                )}/"
+                "https://api.bintray.com/maven/emign/engineEmi/engineEmi/"
             )
         }
     }
+
+
+
     publications {
         maybeCreate<MavenPublication>("maven").apply {
-            groupId = "${project.property("GROUP_ID")}"
-            artifactId = "${project.property("ARTIFACT_ID")}"
-            version = "${project.property("version")}"
-            from(components["java"])
+            groupId = GROUP_ID
+            artifactId = ARTIFACT_ID
+            version = engineVersion
+
+            pom {
+                name.set("engineEmi")
+                url.set("https://github.com/emign/engineEmi")
+            }
+        }
+    }
+}
+fun ByteArray.encodeBase64() = Base64.getEncoder().encodeToString(this)
+
+val release by tasks.creating {
+    dependsOn("publishAllPublicationsToMavenRepository")
+    group = "publishing"
+
+    doLast {
+        val subject = BINTRAY_ORGANIZATION
+        val repo = "engineEmi"
+        val _package = ARTIFACT_ID
+        val version = engineVersion
+
+        ((URL("https://bintray.com/api/v1/content/$subject/$repo/$version/publish")).openConnection() as java.net.HttpURLConnection).apply {
+            requestMethod = "POST"
+            doOutput = true
+
+
+            //setRequestProperty("Authorization", "Basic " + "$publishUser:$publishPassword".toByteArray().encodeBase64().toString())
+            setRequestProperty(
+                "Authorization",
+                "Basic " + "emign:0608dea3bf94a911a75ed671ff88e5e8a2123bf3".toByteArray().encodeBase64().toString()
+            )
+            PrintWriter(outputStream).use { printWriter ->
+                printWriter.write("""{"discard": false, "publish_wait_for_secs": -1}""")
+            }
+            println(inputStream.readBytes().toString(Charsets.UTF_8))
         }
     }
 }
