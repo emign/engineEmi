@@ -14,14 +14,20 @@ buildscript {
         classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.10.1")
         classpath("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4")
         //  classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:1.5.6.2") // REMOVE
+
     }
 }
+
 
 plugins {
     kotlin("multiplatform") version "1.3.70"
     id("maven-publish")
+    id("maven")
     id("org.jetbrains.dokka") version "0.10.1"
+    id("java")
 }
+
+
 
 
 repositories {
@@ -44,6 +50,7 @@ val kotlinVersion: String by project
 group = GROUP_ID
 version = engineVersion
 
+println("Group: $group, Version $version")
 
 tasks {
     val dokka by getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
@@ -113,7 +120,17 @@ kotlin {
         }
     }
 }
+val sourceSets: SourceSetContainer by project
+val publishing: PublishingExtension by project
 
+val sourcesJar by tasks.creating(Jar::class) {
+    archiveClassifier.set("sources")
+    from(sourceSets["main"].allSource)
+}
+
+val javadocJar by tasks.creating(Jar::class) {
+    archiveClassifier.set("javadoc")
+}
 
 publishing.apply {
     repositories {
@@ -132,13 +149,15 @@ publishing.apply {
 
 
     publications {
-        maybeCreate<MavenPublication>("maven").apply {
+        create<MavenPublication>("maven").apply {
             groupId = GROUP_ID
             artifactId = ARTIFACT_ID
             version = engineVersion
+            from(components["java"])
+            artifact(sourcesJar)
+            artifact(javadocJar)
 
             pom {
-                name.set("engineEmi")
                 url.set("https://github.com/emign/engineEmi")
             }
         }
@@ -156,7 +175,7 @@ val release by tasks.creating {
         val _package = ARTIFACT_ID
         val version = engineVersion
 
-        ((URL("https://bintray.com/api/v1/content/$subject/$repo/$version/publish")).openConnection() as java.net.HttpURLConnection).apply {
+        ((URL("https://bintray.com/api/v1/content/$subject/$repo/$_package/$version/publish")).openConnection() as java.net.HttpURLConnection).apply {
             requestMethod = "POST"
             doOutput = true
 
@@ -174,3 +193,4 @@ val release by tasks.creating {
     }
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "1.8" }
