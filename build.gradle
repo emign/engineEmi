@@ -112,12 +112,12 @@ publishing {
         maven {
             credentials {
                 username = "emign"
-               // password = "$System.env.bintrayApiKey"
-                password = "0608dea3bf94a911a75ed671ff88e5e8a2123bf3"
+                password = "$System.env.bintrayApiKey"
+
 
             }
             url = uri("https://api.bintray.com/maven/${BINTRAY_ORGANIZATION}/${BINTRAY_REPOSITORY}/${ARTIFACT_ID}/")
-            //url = uri("https://api.bintray.com/maven/${BINTRAY_ORGANIZATION}/${BINTRAY_REPOSITORY}/")
+
         }
     }
     publications {
@@ -150,8 +150,8 @@ task release(type: Task) {
         ((HttpURLConnection)new URL("https://bintray.com/api/v1/content/$BINTRAY_ORGANIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$engineVersion/publish").openConnection()).with({
             requestMethod = 'POST'
             doOutput = true
-            //setRequestProperty("Authorization", "Basic " + "emign:${System.env.bintrayApiKey}".bytes.encodeBase64().toString())
-            setRequestProperty("Authorization", "Basic " + "emign:0608dea3bf94a911a75ed671ff88e5e8a2123bf3".bytes.encodeBase64().toString())
+            setRequestProperty("Authorization", "Basic " + "emign:${System.env.bintrayApiKey}".bytes.encodeBase64().toString())
+
             outputStream.withPrintWriter({printWriter ->
                 printWriter.write('{"discard": false, "publish_wait_for_secs": -1}')
             })
