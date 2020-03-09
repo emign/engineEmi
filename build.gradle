@@ -18,7 +18,7 @@ plugins {
 }
 
 //def engineEmiAndPluginVersion = 'https://emig.me/engineEmi/version.txt'.toURL().text
-def engineEmiAndPluginVersion = '0.51'
+def engineEmiAndPluginVersion = '0.50'
 
 apply plugin: 'maven-publish'
 apply plugin : "org.jetbrains.dokka"
