@@ -27,12 +27,15 @@ plugins {
     id("java")
 }
 
+apply(plugin = "maven")
+apply(plugin = "maven-publish")
 
 
 
 repositories {
     jcenter()
     mavenCentral()
+    mavenLocal()
     maven {
         url = uri("https://dl.bintray.com/korlibs/korlibs")
     }
@@ -153,12 +156,19 @@ publishing.apply {
             groupId = GROUP_ID
             artifactId = ARTIFACT_ID
             version = engineVersion
+
             from(components["java"])
             artifact(sourcesJar)
             artifact(javadocJar)
 
             pom {
+                name.set("engineEmi")
+                description.set("Desc")
+                url.set("https.:emig.me")
                 url.set("https://github.com/emign/engineEmi")
+                scm {
+                    url.set("https://github.com/emign/engineEmi")
+                }
             }
         }
     }
