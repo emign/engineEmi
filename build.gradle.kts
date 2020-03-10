@@ -184,7 +184,7 @@ val release by tasks.creating {
         val _package = ARTIFACT_ID
         val version = engineVersion
 
-        ((URL("https://bintray.com/api/v1/content/$subject/$repo/$_package/$version/publish")).openConnection() as java.net.HttpURLConnection).apply {
+        ((URL("https://bintray.com/api/v1/content/$BINTRAY_ORGANIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$version/publish")).openConnection() as java.net.HttpURLConnection).apply {
             requestMethod = "POST"
             doOutput = true
 
