@@ -140,8 +140,7 @@ publishing.apply {
         maven {
             credentials {
                 username = "emign"
-                // password = System.getenv("bintrayApiKey")
-                password = "0608dea3bf94a911a75ed671ff88e5e8a2123bf3"
+                password = System.getenv("bintrayApiKey")
             }
             url = uri(
                 "https://api.bintray.com/maven/emign/engineEmi/engineEmi/"
@@ -193,7 +192,7 @@ val release by tasks.creating {
             //setRequestProperty("Authorization", "Basic " + "$publishUser:$publishPassword".toByteArray().encodeBase64().toString())
             setRequestProperty(
                 "Authorization",
-                "Basic " + "emign:0608dea3bf94a911a75ed671ff88e5e8a2123bf3".toByteArray().encodeBase64().toString()
+                "Basic " + "emign:${System.getenv("bintrayApiKey")}".toByteArray().encodeBase64().toString()
             )
             PrintWriter(outputStream).use { printWriter ->
                 printWriter.write("""{"discard": false, "publish_wait_for_secs": -1}""")
