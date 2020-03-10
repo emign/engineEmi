@@ -141,9 +141,11 @@ publishing.apply {
             credentials {
                 username = "emign"
                 password = System.getenv("bintrayApiKey")
+
             }
             url = uri(
                 "https://api.bintray.com/maven/emign/engineEmi/engineEmi/"
+
             )
         }
     }
@@ -152,13 +154,16 @@ publishing.apply {
 
     publications {
         create<MavenPublication>("maven").apply {
-            groupId = GROUP_ID
-            artifactId = ARTIFACT_ID
-            version = engineVersion
 
-            from(components["java"])
-            artifact(sourcesJar)
-            artifact(javadocJar)
+            /*
+             groupId = GROUP_ID
+             artifactId = ARTIFACT_ID
+             version = engineVersion
+
+             from(components["java"])
+             artifact(sourcesJar)
+             artifact(javadocJar)
+ */
 
             pom {
                 name.set("engineEmi")
@@ -185,6 +190,7 @@ val release by tasks.creating {
         val version = engineVersion
 
         ((URL("https://bintray.com/api/v1/content/$BINTRAY_ORGANIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$version/publish")).openConnection() as java.net.HttpURLConnection).apply {
+
             requestMethod = "POST"
             doOutput = true
 
@@ -193,6 +199,7 @@ val release by tasks.creating {
             setRequestProperty(
                 "Authorization",
                 "Basic " + "emign:${System.getenv("bintrayApiKey")}".toByteArray().encodeBase64().toString()
+
             )
             PrintWriter(outputStream).use { printWriter ->
                 printWriter.write("""{"discard": false, "publish_wait_for_secs": -1}""")
