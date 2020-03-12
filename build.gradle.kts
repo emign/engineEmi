@@ -138,6 +138,28 @@ val javadocJar by tasks.creating(Jar::class) {
 publishing {
     publications {
         val kotlinMultiplatform by getting {
+            repositories {
+                maven {
+                    credentials {
+                        username = "emign"
+                        password = System.getenv("bintrayApiKey")
+
+                    }
+                    url = uri(
+                        "https://api.bintray.com/maven/emign/engineEmi/engineEmi/"
+
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+/*
+publishing {
+    publications {
+        val kotlinMultiplatform by getting {
             create<MavenPublication>("maven").apply {
 
 
@@ -178,6 +200,7 @@ publishing {
         }
     }
 }
+*/
 /*
 
 publishing.apply {
