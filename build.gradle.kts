@@ -155,15 +155,16 @@ publishing.apply {
     publications {
         create<MavenPublication>("maven").apply {
 
-            /*
-             groupId = GROUP_ID
+
+            groupId = GROUP_ID
              artifactId = ARTIFACT_ID
              version = engineVersion
 
-             from(components["java"])
+
+            from(components["java"])
              artifact(sourcesJar)
              artifact(javadocJar)
- */
+
 
             pom {
                 name.set("engineEmi")
