@@ -251,7 +251,7 @@ publishing.apply {
 fun ByteArray.encodeBase64() = Base64.getEncoder().encodeToString(this)
 
 val release by tasks.creating {
-    dependsOn("publishAllPublicationsToMavenRepository")
+    dependsOn("publish")
     group = "publishing"
 
     doLast {
