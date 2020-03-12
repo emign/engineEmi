@@ -135,6 +135,51 @@ val javadocJar by tasks.creating(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
+publishing {
+    publications {
+        val kotlinMultiplatform by getting {
+            create<MavenPublication>("maven").apply {
+
+
+                groupId = GROUP_ID
+                artifactId = ARTIFACT_ID
+                version = engineVersion
+
+
+                from(components["java"])
+                artifact(sourcesJar)
+                artifact(javadocJar)
+
+
+                pom {
+                    name.set("engineEmi")
+                    description.set("Desc")
+                    url.set("https.:emig.me")
+                    url.set("https://github.com/emign/engineEmi")
+                    scm {
+                        url.set("https://github.com/emign/engineEmi")
+                    }
+                }
+
+                repositories {
+                    maven {
+                        credentials {
+                            username = "emign"
+                            password = System.getenv("bintrayApiKey")
+
+                        }
+                        url = uri(
+                            "https://api.bintray.com/maven/emign/engineEmi/engineEmi/"
+
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+/*
+
 publishing.apply {
     repositories {
         maven {
@@ -178,6 +223,8 @@ publishing.apply {
         }
     }
 }
+
+     */
 fun ByteArray.encodeBase64() = Base64.getEncoder().encodeToString(this)
 
 val release by tasks.creating {
