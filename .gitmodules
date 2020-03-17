@@ -1,0 +1,3 @@
+[submodule "engineEmi_GradlePlugin"]
+	path = engineEmi_GradlePlugin
+	url = https://github.com/emign/engineEmi_GradlePlugin.git
