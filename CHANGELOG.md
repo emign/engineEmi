@@ -2,6 +2,7 @@
 
 - switch to Kotlin DSL
 - Gradle Wrapper 6.2.2
+- Merged all artifacts to submodules (2020-03-17)
 
 # 0.50 - 2020-03-08
 
