@@ -44,7 +44,7 @@ abstract class Audio(val filePath: String, val streaming: Boolean = false) {
     private lateinit var sound: NativeSound
     private lateinit var channel: NativeSoundChannel
     suspend fun play() {
-        sound = resourcesVfs[filePath].readNativeSound()
+        sound = resourcesVfs[filePath].readSound()
         channel = sound.play()
         channel.await()
 

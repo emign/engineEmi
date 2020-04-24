@@ -5,6 +5,7 @@ import com.soywiz.korge.view.Graphics
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.vector.Context2d
+import com.soywiz.korim.vector.paint.ColorPaint
 import com.soywiz.korma.geom.vector.circle
 import org.jbox2d.collision.shapes.CircleShape
 import org.jbox2d.dynamics.BodyType
@@ -54,8 +55,10 @@ open class Circle(
         view = Graphics(autoScaling = true).apply {
             if (strokeThickness > 0) {
                 fillStroke(
-                    Context2d.Color(fillColor),
-                    Context2d.Color(strokeColor),
+                    //Context2d.Color(fillColor),
+                    //Context2d.Color(strokeColor),
+                    ColorPaint(strokeColor),
+                    ColorPaint(fillColor),
                     Context2d.StrokeInfo(thickness = strokeThickness)
                 ) {
                     circle(x, y, radius)

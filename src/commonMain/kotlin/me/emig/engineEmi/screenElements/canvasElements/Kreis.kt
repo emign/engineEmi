@@ -3,6 +3,7 @@ package me.emig.engineEmi.screenElements.canvasElements
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.vector.Context2d
+import com.soywiz.korim.vector.paint.ColorPaint
 import com.soywiz.korma.geom.vector.circle
 
 /**
@@ -55,8 +56,10 @@ open class Kreis(
         graphics.apply {
             clear()
             fillStroke(
-                Context2d.Color(fuellFarbe),
-                Context2d.Color(randFarbe),
+                //Context2d.Color(fuellFarbe),
+                //Context2d.Color(randFarbe),
+                ColorPaint(fuellFarbe),
+                ColorPaint(randFarbe),
                 Context2d.StrokeInfo(thickness = randDicke.toDouble())
             ) {
                 circle(x, y, radius)

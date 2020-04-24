@@ -23,6 +23,7 @@ open class SpriteView : CanvasElement() {
 
     init {
         //  updateGraphics()
+
     }
 
     /**

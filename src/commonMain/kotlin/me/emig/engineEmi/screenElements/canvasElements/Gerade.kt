@@ -3,6 +3,7 @@ package me.emig.engineEmi.screenElements.canvasElements
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.vector.Context2d
+import com.soywiz.korim.vector.paint.ColorPaint
 
 /**
  * @property x X-Koordinate des Ursprungs der Geraden (Standard-Koordinatensystem)
@@ -36,8 +37,10 @@ open class Gerade(
         graphics.apply {
             clear()
             fillStroke(
-                Context2d.Color(fillColor),
-                Context2d.Color(fillColor),
+                //Context2d.Color(fillColor),
+                //Context2d.Color(fillColor),
+                ColorPaint(fillColor),
+                ColorPaint(fillColor),
                 Context2d.StrokeInfo(thickness = dicke.toDouble())
             ) { moveTo(x, y); lineTo(x + toX.toDouble(), y + toY.toDouble()) }
         }
