@@ -1,3 +1,11 @@
+# 0.60 - 
+
+- Upgrade to Korge 1.12.2
+- Upgrade to Kotlin 1.3.72
+- Added Flappybirds sample in https://github.com/emign/engineEmi_Samples
+- Upgrades samples to gradle 6.2.2
+- Upgraded samples to gradle kotlin dsl
+
 # 0.57 - 2020-03-12
 
 - switch to Kotlin DSL

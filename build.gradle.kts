@@ -13,23 +13,25 @@ buildscript {
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
         classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.10.1")
         classpath("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4")
+
         //  classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:1.5.6.2") // REMOVE
+
 
     }
 }
 
 
 plugins {
-    kotlin("multiplatform") version "1.3.70"
+    kotlin("multiplatform") version "1.3.72"
     id("maven-publish")
     id("maven")
     id("org.jetbrains.dokka") version "0.10.1"
     id("java")
+    // id("com.moowork.node") version "1.2.0"
 }
 
-apply(plugin = "maven")
-apply(plugin = "maven-publish")
-
+//apply(plugin = "maven")
+//apply(plugin = "maven-publish")
 
 
 repositories {
@@ -89,6 +91,8 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 api("com.soywiz.korlibs.korge:korge:${korgeVersion}")
                 api("com.soywiz.korlibs.korge:korge-box2d:${korgeVersion}")
+                //  api("com.moowork.gradle:gradle-node-plugin:1.2.0")
+
             }
         }
         val commonTest by getting {
