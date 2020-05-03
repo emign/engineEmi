@@ -1,4 +1,4 @@
-package me.emig.engineEmi.screenElements.canvasElements
+package me.emig.engineEmi.canvasElemente.animationen
 
 import com.soywiz.klock.TimeSpan
 import com.soywiz.klock.measureTime

@@ -1,10 +1,11 @@
-package me.emig.engineEmi.screenElements.canvasElements
+package me.emig.engineEmi.canvasElemente.formen
 
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.vector.Context2d
 import com.soywiz.korim.vector.paint.ColorPaint
 import com.soywiz.korma.geom.vector.circle
+import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * Zeichnet einen Kreis

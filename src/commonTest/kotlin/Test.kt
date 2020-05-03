@@ -8,8 +8,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import me.emig.engineEmi.canvasElemente.formen.Rechteck
 import me.emig.engineEmi.engine
-import me.emig.engineEmi.screenElements.canvasElements.Rechteck
 import kotlin.test.Test
 
 class Test {

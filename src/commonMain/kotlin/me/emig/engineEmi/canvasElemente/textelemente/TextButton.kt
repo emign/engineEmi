@@ -1,11 +1,13 @@
-package me.emig.engineEmi.screenElements.canvasElements
+package me.emig.engineEmi.canvasElemente.textelemente
 
 
 import com.soywiz.korge.input.onClick
 import com.soywiz.korge.ui.textButton
 import com.soywiz.korge.view.position
-import com.soywiz.korio.async.launch
-import me.emig.engineEmi.engine
+import com.soywiz.korio.async.launchImmediately
+import me.emig.engineEmi.Engine
+import me.emig.engineEmi.canvasElemente.CanvasElement
+
 
 /**
  * Zeichnet einen Kreis
@@ -32,7 +34,7 @@ open class TextButton(
 
 
     override fun updateGraphics() {
-        engine.sceneContainer?.stage?.launch {
+        Engine.stage?.launchImmediately {
             textButton(breite.toDouble(), hoehe.toDouble()) {
                 text = this@TextButton.text
                 position(x, y)

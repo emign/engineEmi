@@ -1,11 +1,11 @@
-package me.emig.engineEmi.screenElements.canvasElements
+package me.emig.engineEmi.canvasElemente.formen
 
 import com.soywiz.korge.view.graphics
 import com.soywiz.korge.view.position
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korma.geom.vector.rect
-import me.emig.engineEmi.screenElements.canvasElements.CanvasElement
+import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * Zeichnet ein Rechteck

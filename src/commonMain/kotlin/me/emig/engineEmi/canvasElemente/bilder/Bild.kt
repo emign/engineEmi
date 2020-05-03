@@ -1,4 +1,4 @@
-package me.emig.engineEmi.screenElements.canvasElements
+package me.emig.engineEmi.canvasElemente.bilder
 
 import com.soywiz.korge.view.image
 import com.soywiz.korge.view.position
@@ -6,6 +6,7 @@ import com.soywiz.korge.view.scale
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
+import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * Lässt ein Bild anzeigen.

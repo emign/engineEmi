@@ -1,17 +1,15 @@
-package me.emig.engineEmi.screenElements.canvasElements
+package me.emig.engineEmi.canvasElemente
 
 
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.sgraphics
 import me.emig.engineEmi.Log
 
-import me.emig.engineEmi.screenElements.ScreenElement
-
 
 abstract class CanvasElement(
     x: Double = 0.0,
     y: Double = 0.0
-) : Container(), ScreenElement {
+) : Container() {
 
     init {
         super.x = x

@@ -1,9 +1,10 @@
-package me.emig.engineEmi.screenElements.canvasElements
+package me.emig.engineEmi.canvasElemente.animationen
 import com.soywiz.korge.view.image
 import com.soywiz.korge.view.position
 import com.soywiz.korge.view.scale
 import com.soywiz.korim.bitmap.Bitmaps
 import com.soywiz.korim.bitmap.BmpSlice
+import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * Ein SpriteView wird vor allem für Sprite-Animationen gebraucht

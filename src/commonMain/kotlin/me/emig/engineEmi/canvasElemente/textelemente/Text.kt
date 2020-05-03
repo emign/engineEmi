@@ -1,4 +1,4 @@
-package me.emig.engineEmi.screenElements.canvasElements
+package me.emig.engineEmi.canvasElemente.textelemente
 
 import com.soywiz.korge.view.Fonts
 import com.soywiz.korge.view.setText
@@ -6,6 +6,7 @@ import com.soywiz.korge.view.text
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.font.BitmapFont
+import me.emig.engineEmi.canvasElemente.CanvasElement
 
 open class Text(
     x: Number = 0,
