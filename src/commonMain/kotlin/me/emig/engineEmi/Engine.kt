@@ -5,9 +5,12 @@ import com.soywiz.korge.Korge
 import com.soywiz.korge.box2d.WorldView
 import com.soywiz.korge.scene.Module
 import com.soywiz.korge.view.Camera
+import com.soywiz.korge.view.Circle
 import com.soywiz.korge.view.Container
+import com.soywiz.korim.color.Colors
 import com.soywiz.korio.file.VfsFile
 import com.soywiz.korio.file.std.resourcesVfs
+import com.soywiz.korma.geom.degrees
 import me.emig.engineEmi.module.EngineModule
 import me.emig.engineEmi.screenElements.ScreenElement
 import me.emig.engineEmi.screenElements.bodies.Ebody
@@ -46,6 +49,15 @@ class Engine {
         view.height = 720
         view.scale = 100
         initBody()
+    }
+
+    suspend fun startKorge() = Korge(width = 512, height = 512, bgcolor = Colors["#2b2b2b"]) {
+        val minDegrees = (-16).degrees
+        val maxDegrees = (+16).degrees
+
+
+        val circle = Circle(radius = 32.0)
+        addChild(circle)
     }
 
     suspend fun start() = Korge(

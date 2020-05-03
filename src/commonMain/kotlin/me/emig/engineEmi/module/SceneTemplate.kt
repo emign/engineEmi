@@ -38,9 +38,9 @@ open class SceneTemplate : Scene(), Controller {
 
     override suspend fun Container.sceneInit() {
         engine.sceneContainer = this
+
+
         views.clearColor = Colors.WHITE
-
-
 
         viewWillLoad()
 
@@ -83,7 +83,7 @@ open class SceneTemplate : Scene(), Controller {
             onKeyUp { Keyboard.keyReleased(it.key); controllers.onEach { element -> element.reactToKeyEvent(it) } }
         }
 
-        engine.viewDidLoadBody()
+        viewDidLoad()
     }
 
     /**
