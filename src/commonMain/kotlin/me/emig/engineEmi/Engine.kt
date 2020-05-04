@@ -45,7 +45,9 @@ object Engine {
         icon = config.icon,
         iconPath = config.iconPath,
         iconDrawable = config.iconDrawable,
-        clipBorders = config.clipBorders
+        clipBorders = config.clipBorders,
+        debug = config.debug
+
     ) {
         Engine.stage = this
         Engine.config = config
@@ -72,6 +74,7 @@ data class EngineConfig(
     val scaleAnchor: Anchor = Anchor.MIDDLE_CENTER,
     val scaleMode: ScaleMode = ScaleMode.SHOW_ALL,
     val clipBorders: Boolean = true,
-    val fullscreen: Boolean = false
+    val fullscreen: Boolean = false,
+    val debug: Boolean = false
 )
 
