@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - '0.70'
 
 jobs:
   build-mac:
