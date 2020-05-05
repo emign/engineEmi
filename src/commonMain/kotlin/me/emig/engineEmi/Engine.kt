@@ -2,9 +2,6 @@ package me.emig.engineEmi
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.Korge
-import com.soywiz.korge.input.gamepad
-import com.soywiz.korge.input.keys
-import com.soywiz.korge.input.mouse
 import com.soywiz.korge.internal.KorgeInternal
 import com.soywiz.korge.time.delay
 import com.soywiz.korge.view.Stage
@@ -31,25 +28,6 @@ object Engine {
     var config = EngineConfig()
     lateinit var stage: Stage
 
-    var input: suspend Stage.() -> Unit = {
-        println("ADDED INPUT")
-        gamepad {
-            button.invoke { println("Gamepad button") }
-            stick.invoke { }
-        }
-
-        keys {
-            onKeyDown { println("Key ${it.key} DOWN") }
-            onKeyUp { println("Key ${it.key} UP") }
-        }
-
-        mouse {
-            onDown { println("Mouse Button $it DOWN") }
-            onUp { println("Mouse Button $it UP") }
-            onClick { println("Mouse Button $it CLICK") }
-        }
-    }
-
     @KorgeInternal
     suspend operator fun invoke(config: EngineConfig = Engine.config, code: suspend Stage.() -> Unit = {}) = Korge(
         width = config.width.toInt(), height = config.height.toInt(),
@@ -69,10 +47,8 @@ object Engine {
         Engine.stage = this
         Engine.config = config
         code()
-        input()
         loop()
     }
-
 
     @com.soywiz.korge.internal.KorgeInternal
     private suspend fun loop(): suspend Stage.() -> Unit = {
