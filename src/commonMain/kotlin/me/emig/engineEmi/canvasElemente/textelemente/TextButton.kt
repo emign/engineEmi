@@ -34,7 +34,7 @@ open class TextButton(
 
 
     override fun updateGraphics() {
-        Engine.stage?.launchImmediately {
+        Engine.stage.launchImmediately {
             textButton(breite.toDouble(), hoehe.toDouble()) {
                 text = this@TextButton.text
                 position(x, y)

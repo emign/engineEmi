@@ -2,8 +2,13 @@ package me.emig.engineEmi
 
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.Korge
+import com.soywiz.korge.input.gamepad
+import com.soywiz.korge.input.keys
+import com.soywiz.korge.input.mouse
+import com.soywiz.korge.internal.KorgeInternal
 import com.soywiz.korge.time.delay
 import com.soywiz.korge.view.Stage
+import com.soywiz.korge.view.View
 import com.soywiz.korgw.GameWindow
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.color.Colors
@@ -24,16 +29,28 @@ import me.emig.engineEmi.canvasElemente.CanvasElement
  */
 object Engine {
     var config = EngineConfig()
-    var stage: Stage? = null
-    val loop: suspend Stage.() -> Unit = {
-        while (true) {
-            this.children.filterIsInstance<CanvasElement>().onEach {
-                it.onEveryFrame()
-            }
-            delay(16.milliseconds)
+    lateinit var stage: Stage
+
+    var input: suspend Stage.() -> Unit = {
+        println("ADDED INPUT")
+        gamepad {
+            button.invoke { println("Gamepad button") }
+            stick.invoke { }
+        }
+
+        keys {
+            onKeyDown { println("Key ${it.key} DOWN") }
+            onKeyUp { println("Key ${it.key} UP") }
+        }
+
+        mouse {
+            onDown { println("Mouse Button $it DOWN") }
+            onUp { println("Mouse Button $it UP") }
+            onClick { println("Mouse Button $it CLICK") }
         }
     }
 
+    @KorgeInternal
     suspend operator fun invoke(config: EngineConfig = Engine.config, code: suspend Stage.() -> Unit = {}) = Korge(
         width = config.width.toInt(), height = config.height.toInt(),
         bgcolor = config.bgcolor,
@@ -47,14 +64,28 @@ object Engine {
         iconDrawable = config.iconDrawable,
         clipBorders = config.clipBorders,
         debug = config.debug
-
     ) {
+        println("Started")
         Engine.stage = this
         Engine.config = config
         code()
+        input()
         loop()
     }
 
+
+    @com.soywiz.korge.internal.KorgeInternal
+    private suspend fun loop(): suspend Stage.() -> Unit = {
+        while (true) {
+            this.children.filterIsInstance<CanvasElement>().onEach {
+                it.onEveryFrame()
+            }
+            delay(16.milliseconds)
+        }
+    }
+
+    @Deprecated("Deprecated", ReplaceWith("addchild(view)"))
+    fun register(view: View) = stage.addChild(view)
 
 }
 
@@ -77,4 +108,3 @@ data class EngineConfig(
     val fullscreen: Boolean = false,
     val debug: Boolean = false
 )
-
