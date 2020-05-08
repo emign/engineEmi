@@ -16,6 +16,16 @@ jobs:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
+      - run: ./gradlew publishIosArm64PublicationToMavenRepository
+          env:
+            bintrayUser: ${{ secrets.bintrayUser }}
+            bintrayApiKey: ${{ secrets.bintrayApiKey }}
+            bintrayPassword: ${{ secrets.bintrayPassword }}
+      - run: ./gradlew publishIosArm32PublicationToMavenRepository
+          env:
+            bintrayUser: ${{ secrets.bintrayUser }}
+            bintrayApiKey: ${{ secrets.bintrayApiKey }}
+            bintrayPassword: ${{ secrets.bintrayPassword }}
 
   build-windows:
     runs-on: windows-2019
@@ -34,8 +44,15 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - run: ./gradlew release
+      - run: ./gradlew publish
         env:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
+
+  publish-finalize:
+    needs: [build-windows, build-mac, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: ./gradlew release
