@@ -14,6 +14,10 @@ import me.emig.engineEmi.canvasElemente.CanvasElement
  */
 open class SpriteView : CanvasElement() {
     var sprite: BmpSlice = Bitmaps.transparent
+        set(value) {
+            image.bitmap = sprite
+            field = value
+        }
     var image = image(sprite)
         set(value) {
             field = value
@@ -40,7 +44,6 @@ open class SpriteView : CanvasElement() {
     override suspend fun prepareElement() {
         super.prepareElement()
     }
-
 
     override suspend fun onEveryFrame() {
         image.bitmap = sprite

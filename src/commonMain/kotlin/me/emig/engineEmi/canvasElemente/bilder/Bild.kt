@@ -1,12 +1,12 @@
 package me.emig.engineEmi.canvasElemente.bilder
 
-import com.soywiz.korge.view.image
+import com.soywiz.korge.view.Image
 import com.soywiz.korge.view.position
 import com.soywiz.korge.view.scale
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
-import me.emig.engineEmi.canvasElemente.CanvasElement
+import com.soywiz.korma.geom.vector.VectorPath
 
 /**
  * Lässt ein Bild anzeigen.
@@ -14,26 +14,50 @@ import me.emig.engineEmi.canvasElemente.CanvasElement
  * @property skalierung Skaliert das Bild um den angegebenen Faktor
  * @constructor
  */
+
 open class Bild(
-    x: Number = 100.0,
-    y: Number = 100.0,
-    var bildDatei: String = "",
-    var skalierung: Float = 1.0f,
-    val preInitializedBitmap: Bitmap? = null
-) : CanvasElement(x = x.toDouble(), y = y.toDouble()) {
+    x: Number,
+    y: Number,
+    bitmap: Bitmap,
+    anchorX: Double = 0.0,
+    anchorY: Double = anchorX,
+    hitShape: VectorPath? = null,
+    scale: Double = 1.0,
+    smoothing: Boolean = true
+) : Image(
+    bitmap = bitmap,
+    anchorX = anchorX,
+    anchorY = anchorY,
+    hitShape = hitShape,
+    smoothing = smoothing
+) {
+    companion object {
+        suspend operator fun invoke(
+            x: Number,
+            y: Number,
+            bitmap: String,
+            anchorX: Double = 0.0,
+            anchorY: Double = anchorX,
+            hitShape: VectorPath? = null,
+            scale: Double = 1.0,
+            smoothing: Boolean = true
+        ): Image {
+            val image = resourcesVfs[bitmap].readBitmap()
+            return Bild(
+                x = x,
+                y = y,
+                bitmap = image,
+                anchorX = anchorX,
+                anchorY = anchorY,
+                hitShape = hitShape,
+                smoothing = smoothing
+            )
+        }
+    }
+
 
     init {
-        updateGraphics()
-    }
-
-
-    override suspend fun prepareElement() {
-        super.prepareElement()
-        val image = preInitializedBitmap ?: resourcesVfs[bildDatei].readBitmap()
-        image(image) {
-            position(x, y)
-        }.scale(skalierung)
-
+        position(x, y)
+        scale(scale)
     }
 }
-

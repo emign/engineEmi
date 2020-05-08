@@ -4,8 +4,8 @@ import com.soywiz.korge.view.graphics
 import com.soywiz.korge.view.position
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
+import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.vector.rect
-import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * Zeichnet ein Rechteck
@@ -18,13 +18,13 @@ import me.emig.engineEmi.canvasElemente.CanvasElement
  * @constructor
  */
 open class Rechteck(
-    var hoehe: Number = 0.0,
-    var breite: Number = 0.0,
     x: Number = 0.0,
     y: Number = 0.0,
+    override var height: Number = 0.0,
+    override var width: Number = 0.0,
     var fuellFarbe: RGBA = Colors.GREEN,
     var randFarbe: RGBA = Colors.RED
-) : CanvasElement(x = x.toDouble(), y = y.toDouble()) {
+) : Rectangle(x = x.toDouble(), y = y.toDouble(), height = height.toDouble(), width = width.toDouble()) {
 
 
     var fillColor: RGBA = fuellFarbe
