@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 'master'
+      - '0.70'
 
 jobs:
   build-mac:
@@ -25,11 +26,7 @@ jobs:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
-      - run: ./gradlew release
-        env:
-          bintrayUser: ${{ secrets.bintrayUser }}
-          bintrayApiKey: ${{ secrets.bintrayApiKey }}
-          bintrayPassword: ${{ secrets.bintrayPassword }}
+
 
   build-windows:
     runs-on: windows-2019
@@ -53,3 +50,10 @@ jobs:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
+
+  publish-finalize:
+    needs: [build-windows, build-mac, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: ./gradlew release
