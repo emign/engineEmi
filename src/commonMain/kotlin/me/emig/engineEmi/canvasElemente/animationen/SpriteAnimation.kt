@@ -1,19 +1,5 @@
 package me.emig.engineEmi.canvasElemente.animationen
 
-import com.soywiz.klock.TimeSpan
-import com.soywiz.klock.measureTime
-import com.soywiz.klock.milliseconds
-import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.bitmap.Bitmaps
-import com.soywiz.korim.bitmap.BmpSlice
-import com.soywiz.korim.bitmap.sliceWithSize
-import com.soywiz.korim.format.readBitmap
-import com.soywiz.korio.async.delay
-import com.soywiz.korio.file.std.resourcesVfs
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
 /**
  * Verwaltet die Sprites für die Animation. Input ist eine SpriteMap (in der Regel PNG oder JPG), welche alle Phasen
  * der Animation enthält. Die einzelnen Sprites werden dann anhand der als Parameter übergebenen
@@ -36,7 +22,7 @@ import kotlinx.coroutines.launch
  * @constructor
  */
 
-
+/*
 class SpriteAnimation(
     var x: Number = 100.0,
     var y: Number = 100.0,
@@ -186,3 +172,5 @@ class SpriteAnimation(
     }
 
 }
+
+ */

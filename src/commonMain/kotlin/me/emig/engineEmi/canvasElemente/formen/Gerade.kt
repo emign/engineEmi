@@ -2,9 +2,6 @@ package me.emig.engineEmi.canvasElemente.formen
 
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
-import com.soywiz.korim.vector.Context2d
-import com.soywiz.korim.vector.paint.ColorPaint
-import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * @property x X-Koordinate des Ursprungs der Geraden (Standard-Koordinatensystem)
@@ -24,16 +21,16 @@ open class Gerade(
     var dicke: Number = 10,
     var fuellFarbe: RGBA = Colors.GREEN,
     var randFarbe: RGBA = Colors.GREEN
-) : CanvasElement(x = x.toDouble(), y = y.toDouble()) {
+) {
 
     var fillColor: RGBA = fuellFarbe
 
     var strokeColor: RGBA = randFarbe
 
     init {
-        updateGraphics()
+        // updateGraphics()
     }
-
+/*
     final override fun updateGraphics() {
         graphics.apply {
             clear()
@@ -46,6 +43,8 @@ open class Gerade(
             ) { moveTo(x, y); lineTo(x + toX.toDouble(), y + toY.toDouble()) }
         }
     }
+
+ */
 }
 
 

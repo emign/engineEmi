@@ -1,10 +1,4 @@
 package me.emig.engineEmi.canvasElemente.animationen
-import com.soywiz.korge.view.image
-import com.soywiz.korge.view.position
-import com.soywiz.korge.view.scale
-import com.soywiz.korim.bitmap.Bitmaps
-import com.soywiz.korim.bitmap.BmpSlice
-import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * Ein SpriteView wird vor allem für Sprite-Animationen gebraucht
@@ -12,7 +6,9 @@ import me.emig.engineEmi.canvasElemente.CanvasElement
  * benötigt, auf welchen die Animationen abgebildet werden.
  * @constructor
  */
-open class SpriteView : CanvasElement() {
+
+/*
+open class SpriteView  {
     var sprite: BmpSlice = Bitmaps.transparent
         set(value) {
             image.bitmap = sprite
@@ -50,3 +46,5 @@ open class SpriteView : CanvasElement() {
         image
     }
 }
+
+ */

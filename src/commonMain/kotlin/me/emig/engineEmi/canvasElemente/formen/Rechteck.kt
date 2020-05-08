@@ -1,10 +1,9 @@
 package me.emig.engineEmi.canvasElemente.formen
 
-import com.soywiz.korge.view.graphics
+import com.soywiz.korge.view.Graphics
 import com.soywiz.korge.view.position
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
-import com.soywiz.korma.geom.Rectangle
 import com.soywiz.korma.geom.vector.rect
 
 /**
@@ -17,40 +16,23 @@ import com.soywiz.korma.geom.vector.rect
  * @property randFarbe Randfarbe. Colors-Objekt
  * @constructor
  */
-open class Rechteck(
-    x: Number = 0.0,
-    y: Number = 0.0,
-    override var height: Number = 0.0,
-    override var width: Number = 0.0,
-    var fuellFarbe: RGBA = Colors.GREEN,
-    var randFarbe: RGBA = Colors.RED
-) : Rectangle(x = x.toDouble(), y = y.toDouble(), height = height.toDouble(), width = width.toDouble()) {
-
-
-    var fillColor: RGBA = fuellFarbe
-        set(value) {
-            field = value; updateGraphics()
-        }
-
-    var strokeColor: RGBA = randFarbe
-        set(value) {
-            field = value; updateGraphics()
-        }
-
-    init {
-        updateGraphics()
-        super.width = breite.toDouble()
-        super.height = hoehe.toDouble()
-    }
-
-    final override fun updateGraphics() {
-        graphics {
-            clear()
-            fill(fillColor) {
-                rect(-x, -y, width, height)
+open class Rechteck private constructor() {
+    companion object {
+        suspend operator fun invoke(
+            x: Number = 0.0,
+            y: Number = 0.0,
+            height: Double = 100.0,
+            width: Double = 100.0,
+            fillColor: RGBA = Colors.GREEN,
+            randFarbe: RGBA = Colors.RED
+        ) =
+            Graphics(true).apply {
+                clear()
+                fill(fillColor) {
+                    rect(-x.toDouble(), -y.toDouble(), width, height)
+                }
+                position(x, y)
             }
-            position(x, y)
-        }
     }
 }
 

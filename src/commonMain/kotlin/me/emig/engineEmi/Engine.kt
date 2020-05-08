@@ -1,9 +1,7 @@
 package me.emig.engineEmi
 
-import com.soywiz.klock.milliseconds
 import com.soywiz.korge.Korge
 import com.soywiz.korge.internal.KorgeInternal
-import com.soywiz.korge.time.delay
 import com.soywiz.korge.view.Stage
 import com.soywiz.korge.view.View
 import com.soywiz.korgw.GameWindow
@@ -16,7 +14,6 @@ import com.soywiz.korim.format.PNG
 import com.soywiz.korim.vector.SizedDrawable
 import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.ScaleMode
-import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * Die Game-Engine. Sie ist ein Singleton und wird mit [Engine.run] gestartet.
@@ -47,17 +44,6 @@ object Engine {
         Engine.stage = this
         Engine.config = config
         code()
-        loop()
-    }
-
-    @com.soywiz.korge.internal.KorgeInternal
-    private suspend fun loop(): suspend Stage.() -> Unit = {
-        while (true) {
-            this.children.filterIsInstance<CanvasElement>().onEach {
-                it.onEveryFrame()
-            }
-            delay(16.milliseconds)
-        }
     }
 
     @Deprecated("Deprecated", ReplaceWith("addchild(view)"))

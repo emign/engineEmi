@@ -1,11 +1,12 @@
 package me.emig.engineEmi.canvasElemente.formen
 
+import com.soywiz.korge.view.Circle
+import com.soywiz.korge.view.Graphics
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.vector.Context2d
 import com.soywiz.korim.vector.paint.ColorPaint
 import com.soywiz.korma.geom.vector.circle
-import me.emig.engineEmi.canvasElemente.CanvasElement
 
 /**
  * Zeichnet einen Kreis
@@ -20,51 +21,34 @@ open class Kreis(
     radius: Number = 10.0,
     x: Number = 100.0,
     y: Number = 100.0,
-    fuellFarbe: RGBA = Colors.GREEN,
-    randFarbe: RGBA = Colors.RED,
-    randDicke: Number = 0.0
-
-) : CanvasElement(x = x.toDouble(), y = y.toDouble()) {
-
-
-    var radius: Double = radius.toDouble()
-        set(value) {
-            field = value; updateGraphics()
-        }
-
-    var fuellFarbe: RGBA = fuellFarbe
-        set(value) {
-            field = value; updateGraphics()
-        }
-
-    var randFarbe: RGBA = randFarbe
-        set(value) {
-            field = value; updateGraphics()
-        }
-
-    var randDicke: Number = randDicke
-        set(value) {
-            field = value; updateGraphics()
-        }
-
-
+    fillColor: RGBA = Colors.GREEN,
+    strokeColor: RGBA = Colors.RED,
+    strokeThickness: Number = 0.0
+) : Circle(radius = radius.toDouble(), color = fillColor, autoScaling = true) {
     init {
-        updateGraphics()
+        stroke(strokeColor, Context2d.StrokeInfo(thickness = strokeThickness.toDouble())) {
+
+        }
     }
 
+    companion object {
+        suspend operator fun invoke(
+            radius: Number = 10.0,
+            x: Number = 100.0,
+            y: Number = 100.0,
+            fillColor: RGBA = Colors.GREEN,
+            strokeColor: RGBA = Colors.RED,
+            strokeThickness: Number = 0.0
+        ) = Graphics(true).apply {
 
-    final override fun updateGraphics() {
-        graphics.apply {
-            clear()
             fillStroke(
-                //Context2d.Color(fuellFarbe),
-                //Context2d.Color(randFarbe),
-                ColorPaint(fuellFarbe),
-                ColorPaint(randFarbe),
-                Context2d.StrokeInfo(thickness = randDicke.toDouble())
+                ColorPaint(fillColor),
+                ColorPaint(strokeColor),
+                Context2d.StrokeInfo(thickness = strokeThickness.toDouble())
             ) {
                 circle(x, y, radius)
             }
         }
     }
 }
+

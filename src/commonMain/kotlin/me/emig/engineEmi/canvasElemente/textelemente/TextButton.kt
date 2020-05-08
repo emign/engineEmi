@@ -1,14 +1,7 @@
 package me.emig.engineEmi.canvasElemente.textelemente
 
 
-import com.soywiz.korge.input.onClick
-import com.soywiz.korge.ui.textButton
-import com.soywiz.korge.view.position
-import com.soywiz.korio.async.launchImmediately
-import me.emig.engineEmi.Engine
-import me.emig.engineEmi.canvasElemente.CanvasElement
-
-
+/*
 /**
  * Zeichnet einen Kreis
  * @property radius Radius
@@ -44,3 +37,5 @@ open class TextButton(
         }
     }
 }
+
+ */
