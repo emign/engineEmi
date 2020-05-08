@@ -17,15 +17,15 @@ jobs:
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
       - run: ./gradlew publishIosArm64PublicationToMavenRepository
-          env:
-            bintrayUser: ${{ secrets.bintrayUser }}
-            bintrayApiKey: ${{ secrets.bintrayApiKey }}
-            bintrayPassword: ${{ secrets.bintrayPassword }}
+        env:
+          bintrayUser: ${{ secrets.bintrayUser }}
+          bintrayApiKey: ${{ secrets.bintrayApiKey }}
+          bintrayPassword: ${{ secrets.bintrayPassword }}
       - run: ./gradlew publishIosArm32PublicationToMavenRepository
-          env:
-            bintrayUser: ${{ secrets.bintrayUser }}
-            bintrayApiKey: ${{ secrets.bintrayApiKey }}
-            bintrayPassword: ${{ secrets.bintrayPassword }}
+        env:
+          bintrayUser: ${{ secrets.bintrayUser }}
+          bintrayApiKey: ${{ secrets.bintrayApiKey }}
+          bintrayPassword: ${{ secrets.bintrayPassword }}
 
   build-windows:
     runs-on: windows-2019
