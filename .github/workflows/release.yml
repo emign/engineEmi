@@ -11,7 +11,7 @@ jobs:
     runs-on: [macos-10.15]
     steps:
       - uses: actions/checkout@v1
-      - run: ./gradlew release
+      - run: ./gradlew publishMacosX64PublicationtoMavenRepository
         env:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - run: ./gradlew publishLinuxX64PublicationToMavenRepository
+      - run: ./gradlew release
         env:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
