@@ -57,3 +57,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: ./gradlew release
+        env:
+          bintrayUser: ${{ secrets.bintrayUser }}
+          bintrayApiKey: ${{ secrets.bintrayApiKey }}
+          bintrayPassword: ${{ secrets.bintrayPassword }}
