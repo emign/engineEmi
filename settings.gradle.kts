@@ -1,1 +1,1 @@
-rootProject.name = "engineEmi_Library"
+rootProject.name = "engineEmi"
