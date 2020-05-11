@@ -3,9 +3,10 @@ import java.net.URL
 import java.util.*
 
 buildscript {
+    val korgePluginVersion: String by project
     repositories {
         maven { url = uri("https://plugins.gradle.org/m2/") }
-        // maven { url = uri("https://dl.bintray.com/korlibs/korlibs") } // REMOVE
+        maven { url = uri("https://dl.bintray.com/korlibs/korlibs") } // REMOVE
         mavenCentral()
 
     }
@@ -13,10 +14,7 @@ buildscript {
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
         classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.10.1")
         classpath("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4")
-
-        //  classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:1.5.6.2") // REMOVE
-
-
+        classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
     }
 }
 
@@ -32,6 +30,9 @@ plugins {
 
 //apply(plugin = "maven")
 //apply(plugin = "maven-publish")
+
+apply<com.soywiz.korge.gradle.KorgeGradlePlugin>()
+
 
 
 repositories {

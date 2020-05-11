@@ -1,0 +1,1 @@
+rootProject.name = "engineEmi_Library"

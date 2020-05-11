@@ -1,4 +1,4 @@
-package me.emig.engineEmi.canvasElemente.animationen
+package me.emig.engineEmi.graphics.animationen
 
 /**
  * Verwaltet die Sprites für die Animation. Input ist eine SpriteMap (in der Regel PNG oder JPG), welche alle Phasen

@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import me.emig.engineEmi.canvasElemente.formen.Rechteck
+import me.emig.engineEmi.graphics.shapes.Rechteck
 import me.emig.engineEmi.engine
 import kotlin.test.Test
 

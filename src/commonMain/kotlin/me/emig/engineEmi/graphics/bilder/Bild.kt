@@ -1,4 +1,4 @@
-package me.emig.engineEmi.canvasElemente.bilder
+package me.emig.engineEmi.graphics.bilder
 
 import com.soywiz.korge.view.Image
 import com.soywiz.korge.view.position
