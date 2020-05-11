@@ -11,7 +11,7 @@ import com.soywiz.korge.view.text
 
 open class TextButton private constructor(){
     companion object{
-        suspend operator fun invoke(x: Number = 100.0,
+        operator fun invoke(x: Number = 100.0,
                                     y: Number = 100.0,
                                     width: Number = 256.0,
                                     height: Number = 32.0,
@@ -26,6 +26,7 @@ open class TextButton private constructor(){
             text,
             skin,
             font).apply {
+            position(x,y)
             onClick {
                 action()
             }

@@ -14,6 +14,7 @@ import com.soywiz.korim.vector.paint.Paint
 
 open class Text private constructor() {
     companion object {
+        @com.soywiz.korge.annotations.KorgeExperimental
         suspend operator fun invoke(
             x: Number = 0,
             y: Number = 0,
