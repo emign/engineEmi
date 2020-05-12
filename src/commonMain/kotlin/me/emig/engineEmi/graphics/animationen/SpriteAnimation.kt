@@ -1,176 +1,96 @@
 package me.emig.engineEmi.graphics.animationen
 
-/**
- * Verwaltet die Sprites für die Animation. Input ist eine SpriteMap (in der Regel PNG oder JPG), welche alle Phasen
- * der Animation enthält. Die einzelnen Sprites werden dann anhand der als Parameter übergebenen
- * Koordinaten ausgelesen.
- * @property x x-Koordinate
- * @property y y-Koordinate
- * @property spriteWidth Breite des Einzelsprites in der Spritemap in Pixeln
- * @property spriteHeight Höhe des Einzelsprites in der Spritemap in Pixeln
- * @property marginTop Abstand des ersten Sprites von der oberen Grenze der Spritemap
- * @property marginLeft Abstand des ersten Sprites von der linken Grenze der Spritemap
- * @property columns Anzahl der Sprites in einer Zeile (von links nach rechts)
- * @property lines Anzahl der Sprites in einer Reihe (von oben nach unten)
- * @property offsetBetweenColumns Abstand zwischen den Spalten in Pixeln
- * @property offsetBetweenLines Abstand zwischen den Zeilen in Pixeln
- * @property skalierung Skalierung
- * @property bildDatei Der String zur Bilddatei in Resources-Ordner
- * @property bitmap Alternativ zur bildDatei kann auch direkt ein Bitmap übergeben werden. Dies ist
- * insbesondere dann sinnvoll, wenn mehrere Animationen die gleiche Spritemap verwenden, um Ressourcen zu schonen
- * @property spriteView Der View des Sprites. Muss vor der Initialisierung manuell erstellt werden
- * @constructor
- */
+import com.soywiz.klock.TimeSpan
+import com.soywiz.klock.measureTime
+import com.soywiz.klock.milliseconds
+import com.soywiz.korge.view.Image
+import com.soywiz.korge.view.image
+import com.soywiz.korim.bitmap.Bitmap
+import com.soywiz.korim.bitmap.Bitmaps
+import com.soywiz.korim.bitmap.BmpSlice
+import com.soywiz.korim.bitmap.sliceWithSize
+import com.soywiz.korio.async.delay
+import com.soywiz.korio.file.std.resourcesVfs
 
-/*
 class SpriteAnimation(
-    var x: Number = 100.0,
-    var y: Number = 100.0,
-    var spriteWidth: Int = 16,
-    var spriteHeight: Int = 16,
-    var marginTop: Int = 0,
-    var marginLeft: Int = 0,
-    var columns: Int = 1,
-    var lines: Int = 1,
-    var offsetBetweenColumns: Int = 0,
-    var offsetBetweenLines: Int = 0,
-    var skalierung: Double = 1.0,
-    var bildDatei: String = "",
-    val bitmap: Bitmap? = null,
-    var spriteView: SpriteView
-) {
+    var spriteView : Image,
+    val spriteMap: Bitmap,
+    val spriteWidth: Int = 16,
+    val spriteHeight: Int = 16,
+    val marginTop: Int = 0,
+    val marginLeft: Int = 0,
+    val columns: Int = 1,
+    val lines: Int = 1,
+    val offsetBetweenColumns: Int = 0,
+    val offsetBetweenLines: Int = 0,
+    val scale: Number = 1.0) {
 
-    private val defaultSprite = Bitmaps.transparent
-    private var sprites: MutableList<BmpSlice> = mutableListOf(defaultSprite)
-    private var currentSpriteIndex = 0
-    private val currentSprite: BmpSlice
-        get() = sprites[currentSpriteIndex]
-
+    private var spriteStack: MutableList<BmpSlice> = mutableListOf(spriteView.bitmap)
     private var cycles = 0
+    private var currentSpriteIndex = 0
     private var stop = false
 
-    init {
-        CoroutineScope(Dispatchers.Default).launch {
-            prepareElement()
-        }
-        updateSpriteView()
-    }
-
-    private fun updateSpriteView() {
-        spriteView.apply {
-            x = x
-            y = y
-            refreshViewWithSprite(currentSprite, skalierung)
-        }
-    }
-
-    private suspend fun prepareElement() {
+    init{
+        spriteStack.removeAt(0) //remove transparent initializer
         var line = 0
-        repeat(columns) { spalte ->
-            val resourceBitmap = bitmap ?: resourcesVfs[bildDatei].readBitmap()
-            addSpriteToList(
+        repeat(columns) { col ->
+            val resourceBitmap = spriteMap
+            spriteStack.add(
                 resourceBitmap.sliceWithSize(
-                    marginLeft + (spriteWidth + offsetBetweenColumns) * spalte,
+                    marginLeft + (spriteWidth + offsetBetweenColumns) * col,
                     marginTop + (spriteHeight + offsetBetweenLines) * line,
                     spriteWidth,
                     spriteHeight
                 )
             )
-            if (spalte % columns == 0 && spalte != 0) {
+            if (col % columns == 0 && col != 0) {
                 line++
             }
         }
-        updateSpriteView()
-    }
-
-    private fun addSpriteToList(sprite: BmpSlice) {
-        sprites.add(sprite)
-        if (sprites.first() == defaultSprite) {
-            sprites.removeAt(0)
-        }
-    }
-
-    private fun nextSprite() {
-        currentSpriteIndex = (currentSpriteIndex + 1) % sprites.size
-        cycles++
-        updateSpriteView()
-    }
-
-    private fun previousSprite() {
-        currentSpriteIndex = (currentSpriteIndex - 1) % sprites.size
-        updateSpriteView()
+        spriteView.bitmap=spriteStack[0]
     }
 
 
-    /**
-     * Spielt die Animation für die Dauer von [duration] ab. Jedes Frame der Animation wird dabei [spriteDisplayTime] lang
-     * angezeigt. Die Animation wird immer wieder von vorne begonnen und beginnt am aktuellen Animationsschritt
-     * @param spriteDisplayTime Dauer der Anzeige jedes einzelnen Frames (Animationsschrittes)
-     * @param duration Dauer der gesamten Animation
-     */
-    fun playForDuration(duration: TimeSpan, spriteDisplayTime: TimeSpan = 25.milliseconds) {
+    fun nextSprite(){
+        spriteView.bitmap=spriteStack[(++currentSpriteIndex % spriteStack.size)]
+    }
+
+    fun previousSprite(){
+        spriteView.bitmap=spriteStack[(--currentSpriteIndex % spriteStack.size)]
+    }
+
+    suspend fun playForDuration(duration: TimeSpan, spriteDisplayTime: TimeSpan = 25.milliseconds) {
         if (duration > 0.milliseconds) {
-            CoroutineScope(Dispatchers.Default).launch {
-                var timeCounter = duration
-                while (timeCounter > 0.milliseconds) {
-                    val measuredTime = measureTime {
-                        nextSprite()
-                        delay(spriteDisplayTime)
-                    }
-                    timeCounter -= measuredTime
+            var timeCounter = duration
+            while (timeCounter > 0.milliseconds && !stop ) {
+                val measuredTime = measureTime {
+                    nextSprite()
+                    delay(spriteDisplayTime)
                 }
+                timeCounter -= measuredTime
             }
         }
     }
 
-
-    /**
-     * Spielt die Animation so oft ab, wie in [times] bestimmt
-     * @param times Anzahl der Animationen
-     * @param spriteDisplayTime So lange wird ein Animationsschritt angezeigt
-     */
-    fun play(times: Int = 1, spriteDisplayTime: TimeSpan = 25.milliseconds) {
-        CoroutineScope(Dispatchers.Default).launch {
-            val currentCycles = cycles
-            while (cycles < currentCycles + times) {
-                nextSprite()
-                delay(spriteDisplayTime)
-            }
+    suspend fun play(times: Int = 1, spriteDisplayTime: TimeSpan = 25.milliseconds) {
+        val cycleCount = times*spriteStack.size
+        var cycles = 0
+        while (cycles < cycleCount && !stop) {
+            nextSprite()
+            delay(spriteDisplayTime)
+            cycles++
         }
     }
 
-    /**
-     * Spielt die Animation für immer ab
-     * @param spriteDisplayTime So lange wird ein Animationsschritt angezeigt
-     */
-    fun playLooped(spriteDisplayTime: TimeSpan = 25.milliseconds) {
+    suspend fun playLooped(spriteDisplayTime: TimeSpan = 25.milliseconds) {
         stop = false
-        CoroutineScope(Dispatchers.Default).launch {
-            while (!stop) {
-                nextSprite()
-                delay(spriteDisplayTime)
-            }
-        }
-    }
-
-    /**
-     * Spielt die Animation ab
-     * @param spriteDisplayTime So lange wird ein Animationsschritt angezeigt
-     */
-    fun play(spriteDisplayTime: TimeSpan = 25.milliseconds) {
-        CoroutineScope(Dispatchers.Default).launch {
+        while (!stop) {
             nextSprite()
             delay(spriteDisplayTime)
         }
     }
 
-    /**
-     * Stoppt Animationen, die mit [playLooped] gestartet wurden
-     */
     fun stop() {
         stop = true
     }
-
 }
-
- */

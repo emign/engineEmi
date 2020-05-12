@@ -55,9 +55,10 @@ open class Bild(
         }
     }
 
-
     init {
         position(x, y)
         scale(scale)
     }
+
+
 }
