@@ -60,6 +60,7 @@ class SpriteAnimation(
     }
 
     suspend fun playForDuration(duration: TimeSpan, spriteDisplayTime: TimeSpan = 25.milliseconds) {
+        stop = false
         if (duration > 0.milliseconds) {
             var timeCounter = duration
             while (timeCounter > 0.milliseconds && !stop ) {
@@ -73,6 +74,7 @@ class SpriteAnimation(
     }
 
     suspend fun play(times: Int = 1, spriteDisplayTime: TimeSpan = 25.milliseconds) {
+        stop = false
         val cycleCount = times*spriteStack.size
         var cycles = 0
         while (cycles < cycleCount && !stop) {
