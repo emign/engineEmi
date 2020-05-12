@@ -51,7 +51,7 @@ class Sprite(vararg var animations: SpriteAnimation) : Image(animations[0].first
         }
     }
 
-    fun stop() {
+    fun stopAnimation() {
         stop = true
     }
 
