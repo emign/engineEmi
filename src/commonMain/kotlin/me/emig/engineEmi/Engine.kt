@@ -51,6 +51,7 @@ object Engine {
 
     suspend operator fun invoke(module : Module) = Korge(Korge.Config(module))
 
+
     @Deprecated("Deprecated", ReplaceWith("addchild(view)"))
     fun register(view: View) = stage.addChild(view)
 }
