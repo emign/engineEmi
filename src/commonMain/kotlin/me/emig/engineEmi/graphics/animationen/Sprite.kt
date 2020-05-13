@@ -1,13 +1,13 @@
 package me.emig.engineEmi.graphics.animationen
 
 import com.soywiz.klock.TimeSpan
-import com.soywiz.klock.measureTime
 import com.soywiz.klock.milliseconds
 import com.soywiz.korge.view.Image
+import com.soywiz.korge.view.addUpdater
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.bitmap.Bitmaps
 import com.soywiz.korim.bitmap.BmpSlice
-import com.soywiz.korio.async.delay
+import com.soywiz.korio.async.Signal
 
 class Sprite(bitmap : Bitmap) : Image(bitmap) {
     constructor(bmpSlice : BmpSlice) : this(bmpSlice.bmp)
@@ -15,62 +15,95 @@ class Sprite(bitmap : Bitmap) : Image(bitmap) {
         currentAnimation = initialAnimation
         bitmap = currentAnimation?.firstSprite ?: Bitmaps.transparent
     }
-
-    var stop = false
+    var animationRequested = false
+    var animationCyclesRequested = 0
+        set(value) {
+            if (value == 0)
+                currentAnimation?.let {
+                    animationCompleted(it)
+                }
+            field = value
+        }
+    var animationCompleted = Signal<SpriteAnimation>()
+    var animationLooped = false
+    var lastAnimationFrameTime  : TimeSpan = 0.milliseconds
+    var animationRequestedDuration : TimeSpan = 0.milliseconds
+    var spriteDisplayTime : TimeSpan = 25.milliseconds
     var currentAnimation : SpriteAnimation? = null
     var currentSpriteIndex = 0
 
-    suspend fun playAnimationForDuration(duration: TimeSpan, spriteAnimation: SpriteAnimation, spriteDisplayTime: TimeSpan = currentAnimation?.frameTime ?: 25.milliseconds) {
-        currentAnimation = spriteAnimation
-        stop = false
-        if (duration > 0.milliseconds) {
-            var timeCounter = duration
-            while (timeCounter > 0.milliseconds && !stop ) {
-                val measuredTime = measureTime {
-                    nextSprite()
-                    delay(spriteDisplayTime)
+    init {
+        addUpdater { frameTime ->
+            if (animationRequested){
+                    nextSprite(frameTime)
                 }
-                timeCounter -= measuredTime
             }
         }
+
+    fun playAnimationForDuration(duration: TimeSpan, spriteAnimation: SpriteAnimation, spriteDisplayTime: TimeSpan = 25.milliseconds) {
+        this.spriteDisplayTime = spriteDisplayTime
+        currentAnimation = spriteAnimation
+        animationRequested = true
+        animationRequestedDuration = duration
     }
 
-    suspend fun playAnimation(spriteAnimation: SpriteAnimation) {
-        currentAnimation = spriteAnimation
-        nextSprite()
-       }
-
-    suspend fun playAnimation(times: Int = 1, spriteAnimation: SpriteAnimation, spriteDisplayTime: TimeSpan = currentAnimation?.frameTime ?: 25.milliseconds) {
-        currentAnimation = spriteAnimation
-        stop = false
-        val cycleCount = times*(currentAnimation?.spriteStackSize ?: 0)
-        var cycles = 0
-        while (cycles < cycleCount && !stop) {
-            nextSprite()
-            delay(spriteDisplayTime)
-            cycles++
-        }
+    fun playAnimation(spriteAnimation: SpriteAnimation) {
+        updateCurrentAnimation(
+                spriteAnimation = spriteAnimation)
     }
 
-    suspend fun playAnimationLooped( spriteAnimation: SpriteAnimation, spriteDisplayTime: TimeSpan = currentAnimation?.frameTime ?: 25.milliseconds) {
-        currentAnimation = spriteAnimation
-        stop = false
-        while (!stop) {
-            nextSprite()
-            delay(spriteDisplayTime)
-        }
+    fun playAnimation(times: Int = 1, spriteAnimation: SpriteAnimation, spriteDisplayTime: TimeSpan = 25.milliseconds) {
+       updateCurrentAnimation(
+               spriteAnimation = spriteAnimation,
+               spriteDisplayTime = spriteDisplayTime,
+               animationCyclesRequested = times*(currentAnimation?.spriteStackSize ?: 0)
+       )
+    }
+
+    fun playAnimationLooped(spriteAnimation: SpriteAnimation, spriteDisplayTime: TimeSpan = 25.milliseconds) {
+        updateCurrentAnimation(
+                spriteAnimation = spriteAnimation,
+                spriteDisplayTime = spriteDisplayTime,
+                looped = true
+        )
+
     }
 
     fun stopAnimation() {
-        stop = true
+        animationRequested = false
     }
 
-    fun nextSprite(){
-        bitmap = currentAnimation?.getSprite(++currentSpriteIndex) ?: Bitmaps.transparent
+    private fun nextSprite(frameTime : TimeSpan){
+        lastAnimationFrameTime+=frameTime
+        if ((animationCyclesRequested > 0 || animationRequestedDuration > 0.milliseconds || animationLooped) && lastAnimationFrameTime+frameTime >= this.spriteDisplayTime){
+            bitmap = currentAnimation?.getSprite(++currentSpriteIndex) ?: Bitmaps.transparent
+            animationCyclesRequested--
+            animationRequestedDuration-=frameTime
+            lastAnimationFrameTime = 0.milliseconds
+        }
     }
 
-    fun previousSprite(){
+
+    private fun updateCurrentAnimation(
+            spriteAnimation: SpriteAnimation,
+            spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
+            animationCyclesRequested : Int = 1,
+            looped : Boolean = false
+            ){
+
+
+        this.spriteDisplayTime = spriteDisplayTime
+        currentAnimation = spriteAnimation
+        animationRequested = true
+        animationLooped = looped
+        this.animationCyclesRequested = if (!looped) animationCyclesRequested else 1
+
+    }
+
+
+    private fun previousSprite(){
         bitmap = currentAnimation?.getSprite(--currentSpriteIndex) ?: Bitmaps.transparent
     }
+
 
 }
