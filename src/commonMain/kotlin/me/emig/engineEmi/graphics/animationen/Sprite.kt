@@ -43,19 +43,19 @@ open class Sprite(
         anchorX: Double = 0.0,
         anchorY: Double = anchorX,
         hitShape: VectorPath? = null,
-        smoothing: Boolean = true) : Image(bitmap) {
+        smoothing: Boolean = true) : Image(bitmap, anchorX, anchorY, hitShape, smoothing) {
     constructor(
             bmpSlice : BmpSlice,
             anchorX: Double = 0.0,
             anchorY: Double = anchorX,
             hitShape: VectorPath? = null,
-            smoothing: Boolean = true) : this(bmpSlice.bmp)
+            smoothing: Boolean = true) : this(bmpSlice.bmp, anchorX, anchorY, hitShape, smoothing)
     constructor(
             initialAnimation : SpriteAnimation,
             anchorX: Double = 0.0,
             anchorY: Double = anchorX,
             hitShape: VectorPath? = null,
-            smoothing: Boolean = true) : this(initialAnimation.firstSprite){
+            smoothing: Boolean = true) : this(initialAnimation.firstSprite, anchorX, anchorY, hitShape, smoothing){
         currentAnimation = initialAnimation
         bitmap = currentAnimation?.firstSprite ?: Bitmaps.transparent
     }
