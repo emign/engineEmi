@@ -1,5 +1,6 @@
 package me.emig.engineEmi.graphics.text
 
+import com.soywiz.korge.annotations.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
@@ -12,25 +13,21 @@ import com.soywiz.korim.vector.paint.LinearGradientPaint
 import com.soywiz.korim.vector.paint.Paint
 
 
-open class Text private constructor() {
-    companion object {
-        @com.soywiz.korge.annotations.KorgeExperimental
-        suspend operator fun invoke(
-            x: Number = 0,
-            y: Number = 0,
-            text: String = "Text",
-            size: Number = 16.0,
-            color: RGBA = Colors.RED,
-            font: BitmapFont =  BitmapFont(DefaultTtfFont, size, paint = ColorPaint(color)),
-            horizontalAlign: HorizontalAlign = HorizontalAlign.LEFT,
-            verticalAlign: VerticalAlign = VerticalAlign.BOTTOM
-        ) =
-            Graphics(true).apply {
-                text2(text,size.toDouble(),color,font, horizontalAlign, verticalAlign)
+@KorgeExperimental
+open class Text(x: Number = 0,
+                y: Number = 0,
+                text: String = "Text",
+                size: Number = 16.0,
+                color: RGBA = Colors.RED,
+                font: BitmapFont =  BitmapFont(DefaultTtfFont, size, paint = ColorPaint(color)),
+                horizontalAlign: HorizontalAlign = HorizontalAlign.LEFT,
+                verticalAlign: VerticalAlign = VerticalAlign.BOTTOM) : Graphics(true) {
+    init {
+        apply {
+            text2(text, size.toDouble(), color, font, horizontalAlign, verticalAlign)
                     .apply {
-                position(x,y)
-                }
-
-            }
+                        position(x, y)
+                    }
+        }
     }
 }

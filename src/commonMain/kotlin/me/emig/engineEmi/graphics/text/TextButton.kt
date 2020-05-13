@@ -9,31 +9,29 @@ import com.soywiz.korge.view.position
 import com.soywiz.korge.view.text
 
 
-open class TextButton private constructor(){
-    companion object{
-        operator fun invoke(x: Number = 100.0,
-                                    y: Number = 100.0,
-                                    width: Number = 256.0,
-                                    height: Number = 32.0,
-                                    text: String = "Button",
-                                    active: Boolean = true,
-                                    skin : UISkin = DefaultUISkin,
-                                    font : Html.FontFace = DefaultUIFont,
-                                    action: () -> Any = {}
-        )= TextButton(
-            width.toDouble(),
-            height.toDouble(),
-            text,
-            skin,
-            font).apply {
-            position(x,y)
+open class TextButton(x: Number = 100.0,
+                      y: Number = 100.0,
+                      width: Number = 256.0,
+                      height: Number = 32.0,
+                      text: String = "Button",
+                      active: Boolean = true,
+                      skin : UISkin = DefaultUISkin,
+                      font : Html.FontFace = DefaultUIFont,
+                      action: () -> Any = {}) :
+        TextButton(
+                width.toDouble(),
+                height.toDouble(),
+                text,
+                skin,
+                font) {
+    init {
+        apply {
+            position(x, y)
             onClick {
                 action()
             }
             if (active)
                 enable()
         }
-        }
     }
-
-
+}

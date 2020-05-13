@@ -8,23 +8,19 @@ import com.soywiz.korim.vector.Context2d
 import com.soywiz.korim.vector.paint.ColorPaint
 import com.soywiz.korma.geom.vector.circle
 
-open class Kreis private constructor(){
-    companion object {
-        suspend operator fun invoke(
-            x: Number = 100.0,
-            y: Number = 100.0,
-            radius: Number = 10.0,
-            fillColor: RGBA = Colors.GREEN,
-            strokeColor: RGBA = Colors.RED,
-            strokeThickness: Number = 0.0
-        ) = Graphics(true).apply {
-            fillStroke(
+open class Kreis(x: Number = 100.0,
+                 y: Number = 100.0,
+                 radius: Number = 10.0,
+                 fillColor: RGBA = Colors.GREEN,
+                 strokeColor: RGBA = Colors.RED,
+                 strokeThickness: Number = 0.0) : Graphics(true){
+    init {
+        fillStroke(
                 ColorPaint(fillColor),
                 ColorPaint(strokeColor),
                 Context2d.StrokeInfo(thickness = strokeThickness.toDouble())
-            ) {
-                circle(x, y, radius)
-            }
+        ) {
+            circle(x, y, radius)
         }
     }
 }

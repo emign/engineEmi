@@ -14,7 +14,7 @@ buildscript {
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
         classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.10.1")
         classpath("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4")
-        classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
+       // classpath("com.soywiz.korlibs.korge.plugins:korge-gradle-plugin:$korgePluginVersion")
     }
 }
 
@@ -27,7 +27,7 @@ plugins {
 }
 
 
-apply<com.soywiz.korge.gradle.KorgeGradlePlugin>()
+//apply<com.soywiz.korge.gradle.KorgeGradlePlugin>()
 
 repositories {
     jcenter()
