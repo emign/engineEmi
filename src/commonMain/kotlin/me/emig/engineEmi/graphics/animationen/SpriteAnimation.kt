@@ -47,9 +47,10 @@ class SpriteAnimation(
         //spriteView.bitmap=spriteStack[0]
     }
 
-    fun nextSprite() = spriteStack[(++currentSpriteIndex % spriteStack.size)]
+    fun getSprite(index : Int) = spriteStack[(index % spriteStack.size)]
+    //fun nextSprite() = spriteStack[(++currentSpriteIndex % spriteStack.size)]
 
-    fun previousSprite() =spriteStack[(--currentSpriteIndex % spriteStack.size)]
+    //fun previousSprite() =spriteStack[(--currentSpriteIndex % spriteStack.size)]
 
 
 

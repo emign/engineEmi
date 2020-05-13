@@ -9,7 +9,7 @@ import com.soywiz.korio.async.delay
 class Sprite(vararg var animations: SpriteAnimation) : Image(animations[0].firstSprite) {
     var stop = false
     var currentAnimation : SpriteAnimation = animations[0]
-
+    var currentSpriteIndex = 0
     suspend fun playAnimationForDuration(duration: TimeSpan, id : String = "", spriteDisplayTime: TimeSpan = currentAnimation.frameTime) {
         renewCurrentAnimation(id)
         stop = false
@@ -56,11 +56,11 @@ class Sprite(vararg var animations: SpriteAnimation) : Image(animations[0].first
     }
 
     fun nextSprite(){
-        bitmap = currentAnimation.nextSprite()
+        bitmap = currentAnimation.getSprite(++currentSpriteIndex)
     }
 
     fun previousSprite(){
-        bitmap = currentAnimation.previousSprite()
+        bitmap = currentAnimation.getSprite(--currentSpriteIndex)
     }
 
     private fun renewCurrentAnimation(id : String){

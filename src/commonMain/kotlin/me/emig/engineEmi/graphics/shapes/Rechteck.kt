@@ -9,7 +9,7 @@ import com.soywiz.korim.vector.paint.ColorPaint
 import com.soywiz.korma.geom.vector.circle
 import com.soywiz.korma.geom.vector.rect
 
-open class Rechteck private constructor() {
+open class Rechteck private constructor(){
     companion object {
         operator fun invoke(
             x: Number = 0.0,
@@ -28,7 +28,6 @@ open class Rechteck private constructor() {
                 ) {
                     rect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
                 }
-
             }
     }
 }
