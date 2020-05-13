@@ -66,7 +66,6 @@ class Sprite(bitmap : Bitmap) : Image(bitmap) {
                 spriteDisplayTime = spriteDisplayTime,
                 looped = true
         )
-
     }
 
     fun stopAnimation() {
@@ -90,20 +89,10 @@ class Sprite(bitmap : Bitmap) : Image(bitmap) {
             animationCyclesRequested : Int = 1,
             looped : Boolean = false
             ){
-
-
-        this.spriteDisplayTime = spriteDisplayTime
-        currentAnimation = spriteAnimation
-        animationRequested = true
-        animationLooped = looped
-        this.animationCyclesRequested = if (!looped) animationCyclesRequested else 1
-
-    }
-
-
-    private fun previousSprite(){
-        bitmap = currentAnimation?.getSprite(--currentSpriteIndex) ?: Bitmaps.transparent
-    }
-
-
+                this.spriteDisplayTime = spriteDisplayTime
+                currentAnimation = spriteAnimation
+                animationRequested = true
+                animationLooped = looped
+                this.animationCyclesRequested = if (!looped) animationCyclesRequested else 1
+             }
 }
