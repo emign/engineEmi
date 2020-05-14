@@ -26,6 +26,11 @@ jobs:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
+      - run: ./gradlew publishIosX64PublicationToMavenRepository
+        env:
+          bintrayUser: ${{ secrets.bintrayUser }}
+          bintrayApiKey: ${{ secrets.bintrayApiKey }}
+          bintrayPassword: ${{ secrets.bintrayPassword }}
 
 
   build-windows:
