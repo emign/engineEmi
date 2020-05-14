@@ -30,6 +30,7 @@ object Engine {
     @KorgeInternal
     suspend operator fun invoke(config: EngineConfig = Engine.config, code: suspend Stage.() -> Unit = {}) =
              Korge(
+                 title = config.title,
                 width = config.width.toInt(), height = config.height.toInt(),
                 bgcolor = config.bgcolor,
                 quality = config.quality,
@@ -43,9 +44,8 @@ object Engine {
                 clipBorders = config.clipBorders,
                 debug = config.debug
             ) {
-                println("Started")
-                Engine.stage = this
-                Engine.config = Engine.config
+                //Engine.stage = this // Cannot change this on macos
+                //Engine.config = Engine.config // Cannot change this on macos
                 code()
             }
 
