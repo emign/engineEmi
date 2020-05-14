@@ -19,7 +19,7 @@ buildscript {
 }
 
 plugins {
-    kotlin("multiplatform") version "1.3.72"
+    kotlin("multiplatform") version "1.3.70"
     id("maven-publish")
     id("maven")
     id("org.jetbrains.dokka") version "0.10.1"
