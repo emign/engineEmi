@@ -17,7 +17,7 @@ open class TextButton(x: Number = 100.0,
                       active: Boolean = true,
                       skin : UISkin = DefaultUISkin,
                       font : Html.FontFace = DefaultUIFont,
-                      action: () -> Any = {}) :
+                      action: suspend () -> Any = {}) :
         TextButton(
                 width.toDouble(),
                 height.toDouble(),
