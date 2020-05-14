@@ -87,7 +87,6 @@ open class Sprite(
         }
     }
 
-
     fun playAnimation(spriteAnimation: SpriteAnimation, spriteDisplayTime: TimeSpan = this.spriteDisplayTime) = updateCurrentAnimation(spriteAnimation = spriteAnimation, spriteDisplayTime = spriteDisplayTime)
 
     fun playAnimation(times: Int = 1, spriteAnimation: SpriteAnimation, spriteDisplayTime: TimeSpan = this.spriteDisplayTime) =
