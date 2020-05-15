@@ -1,4 +1,5 @@
 package me.emig.engineEmi.graphics.animationen
+
 import com.soywiz.klock.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
@@ -56,7 +57,7 @@ open class Sprite(
         hitShape: VectorPath? = null,
         smoothing: Boolean = true) : this(initialAnimation.firstSprite, anchorX, anchorY, hitShape, smoothing){
         currentAnimation = initialAnimation
-        bitmap = currentAnimation?.firstSprite ?: Bitmaps.transparent
+        showBitmapAtIndex(0)
     }
 
     private var animationRequested = false
@@ -87,33 +88,54 @@ open class Sprite(
         }
     }
 
-
-    fun playAnimation(spriteAnimation: SpriteAnimation? = currentAnimation, spriteDisplayTime: TimeSpan = this.spriteDisplayTime, reversed : Boolean = false) =
+    fun playAnimation(
+        spriteAnimation: SpriteAnimation? = currentAnimation,
+        spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
+        startFrameIndex : Int = 0,
+        reversed : Boolean = false) =
         updateCurrentAnimation(
             spriteAnimation = spriteAnimation,
             spriteDisplayTime = spriteDisplayTime,
+            startFrameIndex = startFrameIndex,
             reversed = reversed)
 
-    fun playAnimation(times: Int = 1, spriteAnimation: SpriteAnimation? = currentAnimation, spriteDisplayTime: TimeSpan = this.spriteDisplayTime, reversed : Boolean = false) =
+    fun playAnimation(
+        times: Int = 1,
+        spriteAnimation: SpriteAnimation? = currentAnimation,
+        spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
+        startFrameIndex: Int = 0,
+        reversed : Boolean = false) =
         updateCurrentAnimation(
             spriteAnimation = spriteAnimation,
             spriteDisplayTime = spriteDisplayTime,
             animationCyclesRequested = times*(currentAnimation?.spriteStackSize ?: 0),
+            startFrameIndex = startFrameIndex,
             reversed = reversed
         )
 
-    fun playAnimationForDuration(duration: TimeSpan, spriteAnimation: SpriteAnimation? = currentAnimation, spriteDisplayTime: TimeSpan = this.spriteDisplayTime, reversed : Boolean = false) =
+    fun playAnimationForDuration(
+        duration: TimeSpan,
+        spriteAnimation: SpriteAnimation? = currentAnimation,
+        spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
+        startFrameIndex: Int = 0,
+        reversed : Boolean = false) =
         updateCurrentAnimation(
             spriteAnimation = spriteAnimation,
             spriteDisplayTime = spriteDisplayTime,
             duration = duration,
+            startFrameIndex = startFrameIndex,
             reversed = reversed
         )
 
-    fun playAnimationLooped(spriteAnimation: SpriteAnimation? = currentAnimation, spriteDisplayTime: TimeSpan = this.spriteDisplayTime, reversed : Boolean = false) =
+    fun playAnimationLooped(
+        spriteAnimation: SpriteAnimation? = currentAnimation,
+        spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
+        startFrameIndex: Int = 0,
+        reversed : Boolean = false) =
         updateCurrentAnimation(
             spriteAnimation = spriteAnimation,
             spriteDisplayTime = spriteDisplayTime,
+            startFrameIndex = startFrameIndex,
             looped = true,
             reversed = reversed
         )
@@ -126,7 +148,7 @@ open class Sprite(
     private fun nextSprite(frameTime : TimeSpan){
         lastAnimationFrameTime+=frameTime
         if ((animationNumberOfFramesRequested > 0 || animationRequestedDuration > 0.milliseconds || animationLooped) && lastAnimationFrameTime+frameTime >= this.spriteDisplayTime){
-            bitmap = currentAnimation?.getSprite(if (reversed) --currentSpriteIndex else ++currentSpriteIndex) ?: Bitmaps.transparent
+            showBitmapAtIndex(if (reversed) --currentSpriteIndex else ++currentSpriteIndex)
             animationNumberOfFramesRequested--
             animationRequestedDuration-=(frameTime+spriteDisplayTime)
             lastAnimationFrameTime = 0.milliseconds
@@ -138,6 +160,7 @@ open class Sprite(
         spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
         animationCyclesRequested : Int = 1,
         duration : TimeSpan = 0.milliseconds,
+        startFrameIndex: Int = 0,
         looped : Boolean = false,
         reversed : Boolean = false
     ){
@@ -147,10 +170,15 @@ open class Sprite(
         animationRequested = true
         animationLooped = looped
         animationRequestedDuration = duration
+        currentSpriteIndex = startFrameIndex
         this.reversed = reversed
         currentAnimation?.let {
             this.animationNumberOfFramesRequested = if (!looped) it.spriteStackSize-1 else 1
         }
+    }
+
+    fun showBitmapAtIndex(index : Int)  {
+        bitmap = currentAnimation?.getSprite(index) ?:  bitmap
     }
 
     private fun triggerEvent(signal : Signal<SpriteAnimation>) = currentAnimation?.let { signal.invoke(it) }
