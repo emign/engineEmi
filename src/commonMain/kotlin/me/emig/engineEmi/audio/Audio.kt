@@ -35,30 +35,29 @@ class Tone(val frequency: Double, val duration: TimeSpan) {
  * Unterstützt werden WAV und MP3 Dateien
  * @constructor
  */
-class Sound(filePath: String, looped: Boolean = false) : Audio(filePath = filePath)
+class Sound(filePath: String) : Audio(filePath = filePath)
 
 /**
  * Spielt Musik aus der Datei [filePath] ab.
  * Unterstützt werden WAV und MP3 Dateien
  * @constructor
  */
-class Music(filePath: String, looped: Boolean = false) : Audio(filePath = filePath, streaming = true)
+class Music(filePath: String) : Audio(filePath = filePath, streaming = true)
 
 abstract class Audio(val filePath: String, val streaming: Boolean = false) {
     private lateinit var sound: NativeSound
     private lateinit var channel: NativeSoundChannel
-    suspend fun play(playbackTimes: PlaybackTimes) : NativeSoundChannel {
+    suspend fun play(playbackTimes: PlaybackTimes = 1.playbackTimes) : NativeSoundChannel {
             sound = resourcesVfs[filePath].readSound()
-            val test = PlaybackTimes
-            return sound.play(playbackTimes)
+            channel = sound.play(playbackTimes)
+            return channel
     }
 
     suspend fun play(times : Int) = play(times.playbackTimes)
 
-    fun stop() {
-        if (::channel.isInitialized){
+    suspend fun stop() {
+        if (::channel.isInitialized)
             channel.stop()
-        }
 
     }
 
