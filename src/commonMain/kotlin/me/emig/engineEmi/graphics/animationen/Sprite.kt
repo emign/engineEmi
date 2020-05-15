@@ -8,17 +8,7 @@ import com.soywiz.korim.bitmap.BmpSlice
 import com.soywiz.korio.async.Signal
 import com.soywiz.korma.geom.vector.VectorPath
 
-inline fun Container.sprite(
-    initialAnimation: SpriteAnimation, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
-): Sprite = Sprite(initialAnimation, anchorX, anchorY).addTo(this).apply(callback)
 
-inline fun Container.sprite(
-    texture: BmpSlice, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
-): Sprite = Sprite(texture, anchorX, anchorY).addTo(this).apply(callback)
-
-inline fun Container.sprite(
-    texture: Bitmap, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
-): Sprite = Sprite(texture, anchorX, anchorY).addTo(this).apply(callback)
 
 /**
  * A [Sprite] is basically an [Image] with added abilities to display a [SpriteAnimation]
@@ -183,3 +173,14 @@ open class Sprite(
 
     private fun triggerEvent(signal : Signal<SpriteAnimation>) = currentAnimation?.let { signal.invoke(it) }
 }
+inline fun Container.sprite(
+    initialAnimation: SpriteAnimation, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
+): Sprite = Sprite(initialAnimation, anchorX, anchorY).addTo(this).apply(callback)
+
+inline fun Container.sprite(
+    texture: BmpSlice, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
+): Sprite = Sprite(texture, anchorX, anchorY).addTo(this).apply(callback)
+
+inline fun Container.sprite(
+    texture: Bitmap, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
+): Sprite = Sprite(texture, anchorX, anchorY).addTo(this).apply(callback)

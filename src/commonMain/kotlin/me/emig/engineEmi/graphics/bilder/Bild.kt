@@ -1,12 +1,12 @@
 package me.emig.engineEmi.graphics.bilder
 
-import com.soywiz.korge.view.Image
-import com.soywiz.korge.view.position
-import com.soywiz.korge.view.scale
+import com.soywiz.kmem.*
+import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.vector.VectorPath
+import me.emig.engineEmi.graphics.animationen.*
 
 /**
  * Lässt ein Bild anzeigen.
@@ -15,9 +15,10 @@ import com.soywiz.korma.geom.vector.VectorPath
  * @constructor
  */
 
+
 open class Bild(
-    x: Number,
-    y: Number,
+    x: Number = 0,
+    y: Number = 0,
     bitmap: Bitmap,
     anchorX: Double = 0.0,
     anchorY: Double = anchorX,
@@ -41,7 +42,7 @@ open class Bild(
             hitShape: VectorPath? = null,
             scale: Double = 1.0,
             smoothing: Boolean = true
-        ): Image {
+        ): Bild {
             val image = resourcesVfs[bitmap].readBitmap()
             return Bild(
                 x = x,
@@ -59,6 +60,44 @@ open class Bild(
         position(x, y)
         scale(scale)
     }
-
-
 }
+
+inline fun Container.bild(
+    x: Number = 0,
+    y: Number = 0,
+    bitmap: Bitmap,
+    anchorX: Double = 0.0,
+    anchorY: Double = anchorX,
+    hitShape: VectorPath? = null,
+    scale: Double = 1.0,
+    smoothing: Boolean = true,
+    callback: @ViewsDslMarker Bild.() -> Unit = {}
+): Bild = Bild(
+    bitmap = bitmap,
+    x = x,
+    y = y,
+    anchorX = anchorX,
+    anchorY = anchorY,
+    hitShape = hitShape,
+    scale = scale,
+    smoothing = smoothing).addTo(this).apply(callback)
+
+suspend inline fun Container.bild(
+    x: Number = 0 ,
+    y: Number = 0,
+    bitmap: String,
+    anchorX: Double = 0.0,
+    anchorY: Double = anchorX,
+    hitShape: VectorPath? = null,
+    scale: Double = 1.0,
+    smoothing: Boolean = true,
+    callback: @ViewsDslMarker Bild.() -> Unit = {}
+): Bild = Bild(
+    bitmap = bitmap,
+    x = x,
+    y = y,
+    anchorX = anchorX,
+    anchorY = anchorY,
+    hitShape = hitShape,
+    scale = scale,
+    smoothing = smoothing).addTo(this).apply(callback)

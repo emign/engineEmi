@@ -31,3 +31,24 @@ open class Text(x: Number = 0,
         }
     }
 }
+
+@KorgeExperimental
+suspend inline fun Container.text(
+    x: Number = 0,
+    y: Number = 0,
+    text: String = "Text",
+    size: Number = 16.0,
+    color: RGBA = Colors.RED,
+    font: BitmapFont =  BitmapFont(DefaultTtfFont, size, paint = ColorPaint(color)),
+    horizontalAlign: HorizontalAlign = HorizontalAlign.LEFT,
+    verticalAlign: VerticalAlign = VerticalAlign.BOTTOM,
+    callback : @ViewsDslMarker Text.() -> Unit = {}
+) : Text = Text(
+    x = x,
+    y = y,
+    text = text,
+    size = size,
+    color = color,
+    font = font,
+    horizontalAlign = horizontalAlign,
+    verticalAlign = verticalAlign).addTo(this).apply(callback)

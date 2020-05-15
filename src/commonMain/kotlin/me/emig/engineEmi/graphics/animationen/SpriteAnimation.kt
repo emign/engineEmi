@@ -1,4 +1,5 @@
 package me.emig.engineEmi.graphics.animationen
+
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.bitmap.BmpSlice
 import com.soywiz.korim.bitmap.sliceWithSize
@@ -39,7 +40,6 @@ class SpriteAnimation(
     }
 
     fun getSprite(index : Int) : BmpSlice = spriteStack[index.realMod(spriteStack.size)]
-
 }
 
 // Kotlin % does produce mathematically wrong values vor % of negative Numbers
