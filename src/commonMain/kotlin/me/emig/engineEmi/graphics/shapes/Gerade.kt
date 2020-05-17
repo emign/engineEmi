@@ -14,7 +14,7 @@ open class Gerade(x: Number = 0.0,
                   toX: Number = 0.0,
                   toY: Number = 0.0,
                   fillColor: RGBA = Colors.GREEN,
-                  thickness: Number = 10) : Graphics(true) {
+                  thickness: Number = 10) : Shape(x,y) {
     init {
         apply {
             fillStroke(
@@ -22,7 +22,7 @@ open class Gerade(x: Number = 0.0,
                     ColorPaint(fillColor),
                     Context2d.StrokeInfo(thickness = thickness.toDouble())
             ) {
-                moveTo(x.toDouble(), y.toDouble()); lineTo(
+                moveTo(0, 0); lineTo(
                     x.toDouble() + toX.toDouble(),
                     y.toDouble() + toY.toDouble()
             )

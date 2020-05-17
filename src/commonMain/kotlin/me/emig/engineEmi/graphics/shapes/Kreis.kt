@@ -12,14 +12,14 @@ open class Kreis(x: Number = 100.0,
                  radius: Number = 10.0,
                  fillColor: RGBA = Colors.GREEN,
                  strokeColor: RGBA = Colors.RED,
-                 strokeThickness: Number = 0.0) : Graphics(true){
+                 strokeThickness: Number = 0.0) : Shape(x,y){
     init {
         fillStroke(
                 ColorPaint(fillColor),
                 ColorPaint(strokeColor),
                 Context2d.StrokeInfo(thickness = strokeThickness.toDouble())
         ) {
-            circle(x, y, radius)
+            circle(0, 0, radius)
         }
     }
 }

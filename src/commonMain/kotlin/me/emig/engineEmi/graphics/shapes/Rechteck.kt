@@ -14,7 +14,7 @@ open class Rechteck( x: Number = 0.0,
                      width: Number = 100.0,
                      fillColor: RGBA = Colors.GREEN,
                      strokeColor: RGBA = Colors.RED,
-                     strokeThickness : Number = 0.0) : Graphics(true) {
+                     strokeThickness : Number = 0.0) : Shape(x,y) {
     init {
         apply {
             fillStroke(
@@ -22,7 +22,7 @@ open class Rechteck( x: Number = 0.0,
                     ColorPaint(strokeColor),
                     Context2d.StrokeInfo(thickness = strokeThickness.toDouble())
             ) {
-                rect(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+                rect(0,0, width.toDouble(), height.toDouble())
             }
         }
     }
