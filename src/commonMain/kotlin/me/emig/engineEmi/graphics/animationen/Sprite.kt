@@ -1,6 +1,5 @@
 package me.emig.engineEmi.graphics.animationen
 
-import SpriteAnimation
 import com.soywiz.klock.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
