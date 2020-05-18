@@ -1,14 +1,24 @@
 package me.emig.engineEmi.graphics.animationen
 
+import SpriteAnimation
 import com.soywiz.klock.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
-import com.soywiz.korim.bitmap.Bitmaps
 import com.soywiz.korim.bitmap.BmpSlice
 import com.soywiz.korio.async.Signal
 import com.soywiz.korma.geom.vector.VectorPath
 
+inline fun Container.sprite(
+    initialAnimation: SpriteAnimation, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
+): Sprite = Sprite(initialAnimation, anchorX, anchorY).addTo(this).apply(callback)
 
+inline fun Container.sprite(
+    texture: BmpSlice, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
+): Sprite = Sprite(texture, anchorX, anchorY).addTo(this).apply(callback)
+
+inline fun Container.sprite(
+    texture: Bitmap, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
+): Sprite = Sprite(texture, anchorX, anchorY).addTo(this).apply(callback)
 
 /**
  * A [Sprite] is basically an [Image] with added abilities to display a [SpriteAnimation]
@@ -47,7 +57,7 @@ open class Sprite(
         hitShape: VectorPath? = null,
         smoothing: Boolean = true) : this(initialAnimation.firstSprite, anchorX, anchorY, hitShape, smoothing){
         currentAnimation = initialAnimation
-        showBitmapAtIndex(0)
+        setFrame(0)
     }
 
     private var animationRequested = false
@@ -81,25 +91,25 @@ open class Sprite(
     fun playAnimation(
         spriteAnimation: SpriteAnimation? = currentAnimation,
         spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
-        startFrameIndex : Int = 0,
+        startFrame : Int? = null,
         reversed : Boolean = false) =
         updateCurrentAnimation(
             spriteAnimation = spriteAnimation,
             spriteDisplayTime = spriteDisplayTime,
-            startFrameIndex = startFrameIndex,
+            startFrame = startFrame ?: currentSpriteIndex,
             reversed = reversed)
 
     fun playAnimation(
         times: Int = 1,
         spriteAnimation: SpriteAnimation? = currentAnimation,
         spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
-        startFrameIndex: Int = 0,
+        startFrame: Int? = null,
         reversed : Boolean = false) =
         updateCurrentAnimation(
             spriteAnimation = spriteAnimation,
             spriteDisplayTime = spriteDisplayTime,
             animationCyclesRequested = times*(currentAnimation?.spriteStackSize ?: 0),
-            startFrameIndex = startFrameIndex,
+            startFrame = startFrame ?: currentSpriteIndex,
             reversed = reversed
         )
 
@@ -107,25 +117,25 @@ open class Sprite(
         duration: TimeSpan,
         spriteAnimation: SpriteAnimation? = currentAnimation,
         spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
-        startFrameIndex: Int = 0,
+        startFrame: Int? = null,
         reversed : Boolean = false) =
         updateCurrentAnimation(
             spriteAnimation = spriteAnimation,
             spriteDisplayTime = spriteDisplayTime,
             duration = duration,
-            startFrameIndex = startFrameIndex,
+            startFrame = startFrame ?: currentSpriteIndex,
             reversed = reversed
         )
 
     fun playAnimationLooped(
         spriteAnimation: SpriteAnimation? = currentAnimation,
         spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
-        startFrameIndex: Int = 0,
+        startFrame: Int? = null,
         reversed : Boolean = false) =
         updateCurrentAnimation(
             spriteAnimation = spriteAnimation,
             spriteDisplayTime = spriteDisplayTime,
-            startFrameIndex = startFrameIndex,
+            startFrame = startFrame ?: currentSpriteIndex,
             looped = true,
             reversed = reversed
         )
@@ -138,7 +148,7 @@ open class Sprite(
     private fun nextSprite(frameTime : TimeSpan){
         lastAnimationFrameTime+=frameTime
         if ((animationNumberOfFramesRequested > 0 || animationRequestedDuration > 0.milliseconds || animationLooped) && lastAnimationFrameTime+frameTime >= this.spriteDisplayTime){
-            showBitmapAtIndex(if (reversed) --currentSpriteIndex else ++currentSpriteIndex)
+            setFrame(if (reversed) --currentSpriteIndex else ++currentSpriteIndex)
             animationNumberOfFramesRequested--
             animationRequestedDuration-=(frameTime+spriteDisplayTime)
             lastAnimationFrameTime = 0.milliseconds
@@ -150,7 +160,7 @@ open class Sprite(
         spriteDisplayTime: TimeSpan = this.spriteDisplayTime,
         animationCyclesRequested : Int = 1,
         duration : TimeSpan = 0.milliseconds,
-        startFrameIndex: Int = 0,
+        startFrame: Int = 0,
         looped : Boolean = false,
         reversed : Boolean = false
     ){
@@ -160,27 +170,16 @@ open class Sprite(
         animationRequested = true
         animationLooped = looped
         animationRequestedDuration = duration
-        currentSpriteIndex = startFrameIndex
+        currentSpriteIndex = startFrame
         this.reversed = reversed
         currentAnimation?.let {
             this.animationNumberOfFramesRequested = if (!looped) it.spriteStackSize-1 else 1
         }
     }
 
-    fun showBitmapAtIndex(index : Int)  {
+    fun setFrame(index : Int)  {
         bitmap = currentAnimation?.getSprite(index) ?:  bitmap
     }
 
     private fun triggerEvent(signal : Signal<SpriteAnimation>) = currentAnimation?.let { signal.invoke(it) }
 }
-inline fun Container.sprite(
-    initialAnimation: SpriteAnimation, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
-): Sprite = Sprite(initialAnimation, anchorX, anchorY).addTo(this).apply(callback)
-
-inline fun Container.sprite(
-    texture: BmpSlice, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
-): Sprite = Sprite(texture, anchorX, anchorY).addTo(this).apply(callback)
-
-inline fun Container.sprite(
-    texture: Bitmap, anchorX: Double = 0.0, anchorY: Double = 0.0, callback: @ViewsDslMarker Sprite.() -> Unit = {}
-): Sprite = Sprite(texture, anchorX, anchorY).addTo(this).apply(callback)

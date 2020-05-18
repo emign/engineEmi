@@ -1,12 +1,8 @@
 package me.emig.engineEmi.audio
 
-import com.soywiz.klock.TimeSpan
+import com.soywiz.klock.*
 import com.soywiz.korau.sound.*
-import com.soywiz.korge.view.*
-import com.soywiz.korio.async.*
-import com.soywiz.korio.file.std.resourcesVfs
-import kotlinx.coroutines.*
-import me.emig.engineEmi.graphics.animationen.*
+import com.soywiz.korio.file.std.*
 
 /**
  * Erzeugt Töne mit entsprechender Frequenz für die entsprechende Dauer
@@ -48,9 +44,14 @@ abstract class Audio(val filePath: String, val streaming: Boolean = false) {
     private lateinit var sound: NativeSound
     private lateinit var channel: NativeSoundChannel
     suspend fun play(playbackTimes: PlaybackTimes = 1.playbackTimes) : NativeSoundChannel {
-            sound = resourcesVfs[filePath].readSound()
-            channel = sound.play(playbackTimes)
-            return channel
+        sound = resourcesVfs[filePath].let {
+            if (streaming)
+                it.readMusic()
+            else
+                it.readSound()
+        }
+        channel = sound.play(playbackTimes)
+        return channel
     }
 
     suspend fun play(times : Int) = play(times.playbackTimes)
@@ -60,5 +61,4 @@ abstract class Audio(val filePath: String, val streaming: Boolean = false) {
             channel.stop()
 
     }
-
 }
