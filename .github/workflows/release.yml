@@ -15,21 +15,21 @@ jobs:
       - run: CALL gradlew.bat --no-daemon jvmTest
         shell: cmd
 
-    test-mac:
-      runs-on: macos-latest
-      steps:
-        - uses: actions/checkout@v2.1.0
-          with:
-            ref: snapshots
-        - run: ./gradlew --no-daemon jvmTest
+  test-mac:
+    runs-on: macos-latest
+     steps:
+      - uses: actions/checkout@v2.1.0
+        with:
+          ref: snapshots
+      - run: ./gradlew --no-daemon jvmTest
 
-    test-linux:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2.1.0
-          with:
-            ref: snapshots
-        - run: ./gradlew --no-daemon jvmTest
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+        with:
+          ref: snapshots
+      - run: ./gradlew --no-daemon jvmTest
 
   build-mac:
     needs: [test-mac]
