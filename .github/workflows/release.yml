@@ -17,7 +17,7 @@ jobs:
 
   test-mac:
     runs-on: macos-latest
-     steps:
+    steps:
       - uses: actions/checkout@v2.1.0
         with:
           ref: snapshots
