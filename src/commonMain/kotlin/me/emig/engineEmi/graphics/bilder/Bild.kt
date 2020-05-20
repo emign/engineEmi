@@ -6,7 +6,6 @@ import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.vector.VectorPath
-import me.emig.engineEmi.graphics.animationen.*
 
 /**
  * Lässt ein Bild anzeigen.
