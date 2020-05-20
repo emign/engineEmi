@@ -49,7 +49,7 @@ object Engine {
                 //Engine.stage = this // Cannot change this on macos
                 //Engine.config = Engine.config // Cannot change this on macos
                 code()
-            }
+             }
 
     suspend operator fun invoke(module : Module) = Korge(Korge.Config(module))
 

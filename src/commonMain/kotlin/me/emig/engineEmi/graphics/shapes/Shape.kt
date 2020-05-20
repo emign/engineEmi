@@ -10,4 +10,6 @@ abstract class Shape(x : Number, y : Number) : Graphics(true) {
 	}
 
 	override fun toString(): String = "x=$x, y=$y, width=$width, height=$height"
+
+
 }
