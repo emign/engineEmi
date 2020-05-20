@@ -6,7 +6,33 @@ on:
       - 'master'
 
 jobs:
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2.1.0
+        with:
+          ref: snapshots
+      - run: CALL gradlew.bat --no-daemon jvmTest
+        shell: cmd
+
+    test-mac:
+      runs-on: macos-latest
+      steps:
+        - uses: actions/checkout@v2.1.0
+          with:
+            ref: snapshots
+        - run: ./gradlew --no-daemon jvmTest
+
+    test-linux:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2.1.0
+          with:
+            ref: snapshots
+        - run: ./gradlew --no-daemon jvmTest
+
   build-mac:
+    needs: [test-mac]
     runs-on: [macos-10.15]
     steps:
       - uses: actions/checkout@v1
@@ -33,6 +59,7 @@ jobs:
 
 
   build-windows:
+    needs: [test-windows]
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v1
@@ -46,6 +73,7 @@ jobs:
         shell: cmd
 
   build-linux:
+    needs: [test-linux]
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
