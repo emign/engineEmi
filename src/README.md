@@ -6,22 +6,28 @@ Am einfachsten ist es, wenn man sich das Template Projekte von [https://github.c
 Dieses sorgt für die komplette Einrichtung der Engine.
 
 ## Einbinden des Gradle Plugins
-In die Datei `build.gradle` eines beliebigen gradle-Projekts einfach die folgenden Zeilen übernehmen
+In die Datei `build.gradle.kts` eines beliebigen gradle-Projekts einfach die folgenden Zeilen übernehmen
 ```
 buildscript {
+    val engineEmiVersion = "ENGINEEMIVERSION"
+
     repositories {
-        maven { url = uri("https://dl.bintray.com/emign/engineEmi") }
+        maven {
+            url = uri("https://dl.bintray.com/emign/engineEmi")
+        }
+        maven { url = uri("https://dl.bintray.com/korlibs/korlibs") }
         maven { url = uri("https://plugins.gradle.org/m2/") }
+        mavenCentral()
+        mavenLocal()
     }
     dependencies {
-        classpath("me.emig:engineEmiGradlePlugin:ENGINEEMIVERSION")
+        classpath("me.emig:engineEmiGradlePlugin:$engineEmiVersion")
     }
 }
 
-apply plugin: me.emig.engineEmi.gradle.EngineEmiGradlePlugin
+apply<me.emig.engineEmi.gradle.EngineEmiGradlePlugin>()
 ```
-Der String ENGINEEMIVERSION ist mit der aktuellen Version zu ersetzen. Diese kann auf 
-der [https://bintray.com/beta/#/emign/engineEmi/engineEmi](Bintray Seite des Maven-Repositories) der Engine eingesehen werden.
+Der String ENGINEEMIVERSION ist mit der aktuellen Version zu ersetzen. Diese ist zur Zeit ![version](https://img.shields.io/bintray/v/emign/engineEmi/engineEmi?color=blue&label=latest%20version&style=flat-square)
 
 ## Direktes einbinden der Engine-Library
 Es ist auch möglich, die Engine direkt als Library einzubinden: [https://bintray.com/beta/#/emign/engineEmi/engineEmi](Bintray Seite des Maven-Repositories)
