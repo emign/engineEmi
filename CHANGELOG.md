@@ -1,5 +1,10 @@
+# 0.81a - 2020-05-23
+- Added Korge 1.12.7
+    - This version includes a lot of optimizations, specially for Kotlin/Native
+    - Allow to have TileSets with several textures
+    - Allows to update Textures from Bitmaps without creating newbitmaps
+    
 # 0.81 - 2020-05-20
-
 - Added Korge 1.12.5 with several bugfixes and optimizations 
     - includes some shader optimizations
     - Adds a BlurFilter
