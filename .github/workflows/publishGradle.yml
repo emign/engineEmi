@@ -38,6 +38,7 @@ jobs:
           git config --global user.email "nicolai.emig@amseegym.de"
           git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.version
+          git add gradle.properties
           git commit -m "Bumped version number"
 
       - name: Create PR
