@@ -28,7 +28,7 @@ jobs:
 
       - name: print version number
         run:  |
-          echo "Version:
+          echo "Version:"
           echo ${{ env.ENGINE_VERSION_NUMBER }}
 
       - name: Bump Version Number
