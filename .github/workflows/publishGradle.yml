@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Pull and retrieve version number
         uses: actions/checkout@v2
-      - name: Get Version number
+      #- name: Get Version number
         #run: echo ::set-env name=ENGINE_VERSION_NUMBER::$( echo $(./gradlew properties -q | grep "version:" | awk '{print $2}') )
         #run: echo ::set-env name=ENGINE_VERSION_NUMBER::$( cat gradle.properties | awk -F '=' '/engineVersion=/{print $2}' )
       - name: Export Number
