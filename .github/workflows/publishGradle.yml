@@ -12,41 +12,32 @@ jobs:
     steps:
       - name: Pull and retrieve version number
         uses: actions/checkout@v2
-      #- name: Get Version number
-        #run: echo ::set-env name=ENGINE_VERSION_NUMBER::$( echo $(./gradlew properties -q | grep "version:" | awk '{print $2}') )
-        #run: echo ::set-env name=ENGINE_VERSION_NUMBER::$( cat gradle.properties | awk -F '=' '/engineVersion=/{print $2}' )
+
       - name: Export Number
         run: |
             export ENGINE_VERSION_NUMBER=$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
             echo "::set-env name=ENGINE_VERSION::$ENGINE_VERSION_NUMBER"
             echo "Version2:"
             echo "$ENGINE_VERSION_NUMBER"
+
       - name: Print Version
         run: |
             echo "Version:"
             echo $ENGINE_VERSION
 
-
-  publish-gradlePlugin:
-    needs: [get-version-number]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull
+      - name: Pull GradlePlugin
         uses: actions/checkout@v2
         with:
           repository: emign/engineEmi_GradlePlugin
           token: ${{ secrets.engineEmiGradlePluginRepoToken }}
 
-
-
       - name: Bump Version Number
         run: |
-         touch engineEmiLibVersion.ver
+         echo $ENGINE_VERSION >> engineEmiLibVersion.version
           git config --global user.email "nicolai.emig@amseegym.de"
           git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.ver
           git commit -m "Bumped version number"
-
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v2
