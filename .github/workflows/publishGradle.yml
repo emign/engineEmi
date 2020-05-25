@@ -26,6 +26,11 @@ jobs:
           repository: emign/engineEmi_GradlePlugin
           token: ${{ secrets.engineEmiGradlePluginRepoToken }}
 
+      - name: print version number
+        run:  |
+          echo "Version:
+          echo ${{ env.ENGINE_VERSION_NUMBER }}
+
       - name: Bump Version Number
         run: |
          touch engineEmiLibVersion.ver
@@ -33,7 +38,7 @@ jobs:
           git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.ver
           git commit -m "Bumped version number"
-          echo ${{ env.ENGINE_VERSION_NUMBER }}
+
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v2
