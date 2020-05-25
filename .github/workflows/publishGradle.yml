@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Pull
         uses: actions/checkout@v2
+      - name: Get Version number
         run:  echo awk '/engineVersion=/{print $NF}' gradle.properties
         shell: bash
 
