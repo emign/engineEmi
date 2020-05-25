@@ -7,7 +7,7 @@ on:
       - 'github_actions_publish_all'
 
 jobs:
-  Refresh Version Numbers:
+  refresh-version-numbers:
     runs-on: ubuntu-latest
     steps:
       - name: Pull and retrieve version number
