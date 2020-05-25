@@ -7,6 +7,14 @@ on:
       - 'github_actions_publish_all'
 
 jobs:
+  checkOut-EngineEmi
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull
+        uses: actions/checkout@v2
+        run:  echo awk '/engineVersion=/{print $NF}' gradle.properties
+          shell: bash
+
   publish-gradlePlugin:
     #needs: [publish-finalize]
     runs-on: ubuntu-latest
