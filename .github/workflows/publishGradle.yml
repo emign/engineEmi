@@ -19,7 +19,10 @@ jobs:
       - name: Bump Version Number
         run: |
          touch engineEmiLibVersion.ver
-         git add engineEmiLibVersion.ver
-         git commit -m "Bumped version number"
+          git config --global user.email "nicolai.emig@amseegym.de"
+          git config --global user.name "Nicolai Emig
+          git add engineEmiLibVersion.ver
+          git commit -m "Bumped version number"
+
       - name: Create PR
         uses: peter-evans/create-pull-request@v2
