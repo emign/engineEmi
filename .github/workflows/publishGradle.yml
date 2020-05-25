@@ -24,7 +24,7 @@ jobs:
           repository: emign/engineEmi_GradlePlugin
           token: ${{ secrets.engineEmiGradlePluginRepoToken }}
 
-      - name: Bump Version Number
+      - name: Bump version number
         run: |
           sed -i "s/pluginVersion=\"[^\"]*\"/version=\"${ENGINE_VERSION}\"/g" gradle.properties
           echo $ENGINE_VERSION >> engineEmiLibVersion.version
