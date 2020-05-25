@@ -11,10 +11,12 @@ jobs:
     #needs: [publish-finalize]
     runs-on: ubuntu-latest
     steps:
-      - name: Pull and change Version
+      - name: Pull
         uses: actions/checkout@v2
         with:
           repository: emign/engineEmi_GradlePlugin
+
+      - name: Bump Version Number
         run: |
          touch engineEmiLibVersion.ver
          git add engineEmiLibVersion.ver
