@@ -13,7 +13,7 @@ jobs:
       - name: Pull
         uses: actions/checkout@v2
       - name: Get Version number
-        run:  awk '/engineVersion=/{print $0}' gradle.properties
+        run:  awk -F '=' '/engineVersion=/{print $1}' gradle.properties
         shell: bash
 
   publish-gradlePlugin:
