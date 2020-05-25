@@ -13,8 +13,9 @@ jobs:
       - name: Pull
         uses: actions/checkout@v2
       - name: Get Version number
-        run:  awk -F '=' '/engineVersion=/{print $2}' gradle.properties
+        run:  echo ::set-env name=ENGINE_VERSION_NUMBER::$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
         shell: bash
+
 
   publish-gradlePlugin:
     #needs: [publish-finalize]
@@ -33,6 +34,7 @@ jobs:
           git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.ver
           git commit -m "Bumped version number"
+          echo $ENGINE_VERSION_NUMBER
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v2
