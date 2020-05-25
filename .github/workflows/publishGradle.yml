@@ -22,7 +22,7 @@ jobs:
           echo "$ENGINE_VERSION_NUMBER"
         - run:  |
           echo "Version:"
-          echo "ENGINE_VERSION"
+          echo $ENGINE_VERSION
 
 
   publish-gradlePlugin:
