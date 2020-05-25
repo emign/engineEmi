@@ -1,0 +1,23 @@
+name: Publish GradlePlugin
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'github_actions_publish_all'
+
+jobs:
+  publish-gradlePlugin:
+    #needs: [publish-finalize]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and change Version
+        uses: actions/checkout@v2
+        with:
+          repository: emign/engineEmi_GradlePlugin
+       run: |
+         touch engineEmiLibVersion.ver
+         git add engineEmiLibVersion.ver
+         git commit -m "Bumped version number"
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v2
