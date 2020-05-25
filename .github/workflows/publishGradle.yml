@@ -44,8 +44,8 @@ jobs:
           repository: emign/engineEmi_Template
           token: ${{ secrets.engineEmiGradlePluginRepoToken }}
 
-      -name: Bump version number for Template
-       run: |
+      - name: Bump version number for Template
+        run: |
          sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' build.gradle.kts
          git config --global user.email "nicolai.emig@amseegym.de"
          git config --global user.name "Nicolai Emig"
@@ -63,8 +63,8 @@ jobs:
            repository: emign/engineEmi_Samples
            token: ${{ secrets.engineEmiGradlePluginRepoToken }}
 
-      -name: Bump version number for Samples
-       run: |
+      - name: Bump version number for Samples
+        run: |
          sed -i 's/engineEmiGradlePluginVersion=.*/engineEmiGradlePluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
          git config --global user.email "nicolai.emig@amseegym.de"
          git config --global user.name "Nicolai Emig"
