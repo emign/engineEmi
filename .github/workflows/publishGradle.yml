@@ -15,15 +15,14 @@ jobs:
       - name: Get Version number
         #run: echo ::set-env name=ENGINE_VERSION_NUMBER::$( echo $(./gradlew properties -q | grep "version:" | awk '{print $2}') )
         #run: echo ::set-env name=ENGINE_VERSION_NUMBER::$( cat gradle.properties | awk -F '=' '/engineVersion=/{print $2}' )
-        run: |
+        - run: |
           export ENGINE_VERSION_NUMBER=$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
-          echo "::set-env name=ENGINE_VERSION_NUMBER::ENGINE_VERSION_NUMBER"
+          echo "::set-env name=ENGINE_VERSION::ENGINE_VERSION_NUMBER"
           echo "Version2:"
           echo "$ENGINE_VERSION_NUMBER"
-      - name: print version number
-        run:  |
+        - run:  |
           echo "Version:"
-          echo $ENGINE_VERSION_NUMBER
+          echo "ENGINE_VERSION"
 
 
   publish-gradlePlugin:
