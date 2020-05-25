@@ -27,7 +27,7 @@ jobs:
       - name: Bump version number
         run: |
           sed -i 's/pluginVersion=.*/pluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
-          sed -i 's/val engineEmiVersion=".*/val engineEmiVersion='"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
+          sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
           cat gradle.properties
           git config --global user.email "nicolai.emig@amseegym.de"
           git config --global user.name "Nicolai Emig"
