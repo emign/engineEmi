@@ -10,11 +10,12 @@ jobs:
   get-version-number:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull
+      - name: Pull and retrieve version number
         uses: actions/checkout@v2
-      #- name: Get Version number
+      - name: Get Version number
       #  run:  echo ::set-env name=ENGINE_VERSION_NUMBER::$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
-      #  shell: bash
+         run: ./gradlew properties -q | grep "version:" | awk '{print $2}'
+         shell: bash
 
   publish-gradlePlugin:
     needs: [get-version-number]
