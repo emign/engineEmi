@@ -20,11 +20,6 @@ jobs:
             echo "Version2:"
             echo "$ENGINE_VERSION_NUMBER"
 
-      - name: Print Version
-        run: |
-            echo "Version:"
-            echo $ENGINE_VERSION
-
       - name: Pull GradlePlugin
         uses: actions/checkout@v2
         with:
