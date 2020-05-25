@@ -22,13 +22,13 @@ open class Rechteck( x: Number = 0.0,
                     ColorPaint(strokeColor),
                     Context2d.StrokeInfo(thickness = strokeThickness.toDouble())
             ) {
-                rect(0,0, width.toDouble(), height.toDouble())
+                rect(0.0,0.0, width.toDouble(), height.toDouble())
             }
         }
     }
 }
 
-suspend inline fun Container.rechteck(
+inline fun Container.rechteck(
     x: Number = 0.0,
     y: Number = 0.0,
     height: Number = 100.0,

@@ -19,12 +19,12 @@ open class Kreis(x: Number = 100.0,
                 ColorPaint(strokeColor),
                 Context2d.StrokeInfo(thickness = strokeThickness.toDouble())
         ) {
-            circle(0, 0, radius)
+            circle(0.0, 0.0, radius.toDouble())
         }
     }
 }
 
-suspend inline fun Container.kreis(
+inline fun Container.kreis(
     x: Number = 100.0,
     y: Number = 100.0,
     radius: Number = 10.0,

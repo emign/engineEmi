@@ -22,15 +22,14 @@ open class Gerade(x: Number = 0.0,
                     ColorPaint(fillColor),
                     Context2d.StrokeInfo(thickness = thickness.toDouble())
             ) {
-                moveTo(0,0)
-                line(0,0,toX,toY)
-               // lineTo(toX.toDouble(), toY.toDouble())
+                moveTo(0.0,0.0)
+                line(0.0,0.0,toX.toDouble(),toY.toDouble())
             }
         }
     }
 }
 
-suspend fun Container.gerade(
+fun Container.gerade(
     x: Number = 0.0,
     y: Number = 0.0,
     toX: Number = 0.0,

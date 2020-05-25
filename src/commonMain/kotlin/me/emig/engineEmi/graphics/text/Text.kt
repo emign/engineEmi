@@ -26,14 +26,14 @@ open class Text(x: Number = 0,
         apply {
             text2(text, size.toDouble(), color, font, horizontalAlign, verticalAlign)
                     .apply {
-                        position(x, y)
+                        position(x.toDouble(), y.toDouble())
                     }
         }
     }
 }
 
 @KorgeExperimental
-suspend inline fun Container.text(
+inline fun Container.text(
     x: Number = 0,
     y: Number = 0,
     text: String = "Text",

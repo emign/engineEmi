@@ -5,7 +5,7 @@ import com.soywiz.korge.view.*
 abstract class Shape(x : Number, y : Number) : Graphics(true) {
 	init {
 		apply {
-			xy(x,y)
+			xy(x.toDouble(),y.toDouble())
 		}
 	}
 

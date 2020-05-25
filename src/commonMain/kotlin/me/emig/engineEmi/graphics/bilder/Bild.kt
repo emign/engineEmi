@@ -7,14 +7,6 @@ import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
 import com.soywiz.korma.geom.vector.VectorPath
 
-/**
- * Lässt ein Bild anzeigen.
- * @property bildDatei Dateiname des Bildes (ggf. mit Pfadangabe). Wurzel ist das "resoures" Verzeichnis
- * @property skalierung Skaliert das Bild um den angegebenen Faktor
- * @constructor
- */
-
-
 open class Bild(
     x: Number = 0,
     y: Number = 0,
@@ -51,13 +43,13 @@ open class Bild(
                 anchorY = anchorY,
                 hitShape = hitShape,
                 smoothing = smoothing
-            )
+            ).scale(scale)
         }
     }
 
     init {
-        position(x, y)
         scale(scale)
+        position(x.toDouble(), y.toDouble())
     }
 }
 
