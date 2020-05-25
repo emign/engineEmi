@@ -28,6 +28,7 @@ jobs:
         run: |
           sed -i "s/pluginVersion=\"[^\"]*\"/version=\"${ENGINE_VERSION}\"/g" gradle.properties
           echo $ENGINE_VERSION >> engineEmiLibVersion.version
+          cat gradle.properties
           git config --global user.email "nicolai.emig@amseegym.de"
           git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.version
