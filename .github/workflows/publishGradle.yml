@@ -21,6 +21,10 @@ jobs:
           echo "Version2:"
           echo "$ENGINE_VERSION_NUMBER"
           shell: bash
+      - name: print version number
+        run:  |
+          echo "Version:"
+          echo $ENGINE_VERSION_NUMBER
 
 
   publish-gradlePlugin:
@@ -33,10 +37,7 @@ jobs:
           repository: emign/engineEmi_GradlePlugin
           token: ${{ secrets.engineEmiGradlePluginRepoToken }}
 
-      - name: print version number
-        run:  |
-          echo "Version:"
-          echo $ENGINE_VERSION_NUMBER
+
 
       - name: Bump Version Number
         run: |
