@@ -33,7 +33,8 @@ jobs:
 
       - name: Bump Version Number
         run: |
-         echo $ENGINE_VERSION >> engineEmiLibVersion.version
+          sed -i 's/^engineVersion=(....)/^engineVersion=$($ENGINE_VERSION)/g' gradle.properties
+          echo $ENGINE_VERSION >> engineEmiLibVersion.version
           git config --global user.email "nicolai.emig@amseegym.de"
           git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.version
