@@ -20,7 +20,7 @@ jobs:
         run: |
          touch engineEmiLibVersion.ver
           git config --global user.email "nicolai.emig@amseegym.de"
-          git config --global user.name "Nicolai Emig
+          git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.ver
           git commit -m "Bumped version number"
 
