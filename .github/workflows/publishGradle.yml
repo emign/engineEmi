@@ -7,7 +7,7 @@ on:
       - 'github_actions_publish_all'
 
 jobs:
-  get-version-number:
+  Refresh Version Numbers:
     runs-on: ubuntu-latest
     steps:
       - name: Pull and retrieve version number
@@ -28,8 +28,8 @@ jobs:
         run: |
           sed -i 's/pluginVersion=.*/pluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
           sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
-          git config --global user.email $secrets.gitEmail
-          git config --global user.name $secrets.gitName
+          git config --global user.email ${{ secrets.gitEmail }}
+          git config --global user.name ${{ secrets.gitName }}
           git add gradle.properties
           git commit -m "Bumped version number to $ENGINE_VERSION"
 
@@ -47,8 +47,8 @@ jobs:
       - name: Bump version number for Template
         run: |
          sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' build.gradle.kts
-         git config --global user.email $secrets.gitEmail
-         git config --global user.name $secrets.gitName
+         git config --global user.email ${{ secrets.gitEmail }}
+         git config --global user.name ${{ secrets.gitName }}
          git add build.gradle.kts
          git commit -m "Bumped version number to $ENGINE_VERSION"
 
@@ -66,8 +66,8 @@ jobs:
       - name: Bump version number for Samples
         run: |
          sed -i 's/engineEmiGradlePluginVersion=.*/engineEmiGradlePluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
-         git config --global user.email $secrets.gitEmail
-         git config --global user.name $secrets.gitName
+         git config --global user.email ${{ secrets.gitEmail }}
+         git config --global user.name ${{ secrets.gitName }}
          git add gradle.properties
          git commit -m "Bumped version number to $ENGINE_VERSION"
 
