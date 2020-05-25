@@ -17,8 +17,6 @@ jobs:
         run: |
             export ENGINE_VERSION_NUMBER=$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
             echo "::set-env name=ENGINE_VERSION::$ENGINE_VERSION_NUMBER"
-            echo "Version2:"
-            echo "$ENGINE_VERSION_NUMBER"
 
       - name: Pull GradlePlugin
         uses: actions/checkout@v2
