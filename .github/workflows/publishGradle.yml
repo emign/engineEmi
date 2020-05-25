@@ -39,7 +39,7 @@ jobs:
           git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.version
           git add gradle.properties
-          git commit -m "Bumped version number"
+          git commit -m "Bumped version number to $ENGINE_VERSION"
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v2
