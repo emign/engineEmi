@@ -7,7 +7,7 @@ on:
       - 'github_actions_publish_all'
 
 jobs:
-  checkOut-EngineEmi
+  checkOut-EngineEmi:
     runs-on: ubuntu-latest
     steps:
       - name: Pull
