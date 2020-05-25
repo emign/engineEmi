@@ -34,7 +34,7 @@ jobs:
           git config --global user.name "Nicolai Emig"
           git add engineEmiLibVersion.ver
           git commit -m "Bumped version number"
-          echo $ENGINE_VERSION_NUMBER
+          echo ${{ env.ENGINE_VERSION_NUMBER }}
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v2
