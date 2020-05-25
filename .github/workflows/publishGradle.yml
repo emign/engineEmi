@@ -13,7 +13,7 @@ jobs:
       - name: Pull
         uses: actions/checkout@v2
         run:  echo awk '/engineVersion=/{print $NF}' gradle.properties
-          shell: bash
+        shell: bash
 
   publish-gradlePlugin:
     #needs: [publish-finalize]
