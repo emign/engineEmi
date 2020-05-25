@@ -13,9 +13,8 @@ jobs:
       - name: Pull
         uses: actions/checkout@v2
       - name: Get Version number
-        run:  echo ::set-env name=ENGINE_VERSION_NUMBER::$(echo awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
+        run:  echo ::set-env name=ENGINE_VERSION_NUMBER::$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
         shell: bash
-
 
   publish-gradlePlugin:
     needs: [get-version-number]
