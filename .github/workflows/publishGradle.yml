@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: emign/engineEmi_GradlePlugin
+          token: ${{ secrets.engineEmiGradlePluginRepoToken }}
 
       - name: Bump Version Number
         run: |
