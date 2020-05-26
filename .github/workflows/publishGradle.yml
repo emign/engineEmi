@@ -38,6 +38,7 @@ jobs:
         uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+          labels: automerge
 
       - name: Checkout Template
         uses: actions/checkout@v2
@@ -51,13 +52,13 @@ jobs:
          git config --global user.email ${{ secrets.gitEmail }}
          git config --global user.name ${{ secrets.gitName }}
          git add build.gradle.kts
-         git tag automerge
          git commit -m "Bumped version number to $ENGINE_VERSION"
 
       - name: Create PR for Template
         uses: peter-evans/create-pull-request@v2
         with:
          token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+         labels: automerge
 
       - name: Checkout Samples
         uses: actions/checkout@v2
@@ -78,3 +79,4 @@ jobs:
         uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+          labels: automerge
