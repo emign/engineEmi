@@ -1,4 +1,4 @@
-![version](https://img.shields.io/bintray/v/emign/engineEmi/engineEmi?color=blue&label=latest%20version&style=flat-square)
+![version](https://img.shields.io/bintray/v/emign/engineEmi/engineEmi?color=blue&label=latest%20version&style=flat-square) ![release](https://github.com/emign/engineEmi/workflows/release/badge.svg)
 # Installation/Setup
 
 ## Template Projekt
