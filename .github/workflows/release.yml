@@ -93,3 +93,78 @@ jobs:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
+
+  refresh-version-numbers-on-repos:
+    needs: [publish-finalize]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and retrieve version number
+        uses: actions/checkout@v2
+
+      - name: Export Number
+        run: |
+          export ENGINE_VERSION_NUMBER=$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
+          echo "::set-env name=ENGINE_VERSION::$ENGINE_VERSION_NUMBER"
+
+      - name: Checkout GradlePlugin
+        uses: actions/checkout@v2
+        with:
+          repository: emign/engineEmi_GradlePlugin
+          token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+
+      - name: Bump version number for GradlePlugin
+        run: |
+          sed -i 's/pluginVersion=.*/pluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
+          sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
+          git config --global user.email ${{ secrets.gitEmail }}
+          git config --global user.name ${{ secrets.gitName }}
+          git add gradle.properties
+          git tag automerge
+          git commit -m "Bumped version number to $ENGINE_VERSION"
+
+      - name: Create PR for Gradle Plugin
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+          labels: automerge
+
+      - name: Checkout Template
+        uses: actions/checkout@v2
+        with:
+          repository: emign/engineEmi_Template
+          token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+
+      - name: Bump version number for Template
+        run: |
+          sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' build.gradle.kts
+          git config --global user.email ${{ secrets.gitEmail }}
+          git config --global user.name ${{ secrets.gitName }}
+          git add build.gradle.kts
+          git commit -m "Bumped version number to $ENGINE_VERSION"
+
+      - name: Create PR for Template
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+          labels: automerge
+
+      - name: Checkout Samples
+        uses: actions/checkout@v2
+        with:
+          repository: emign/engineEmi_Samples
+          token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+
+      - name: Bump version number for Samples
+        run: |
+          sed -i 's/engineEmiGradlePluginVersion=.*/engineEmiGradlePluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
+          git config --global user.email ${{ secrets.gitEmail }}
+          git config --global user.name ${{ secrets.gitName }}
+          git add gradle.properties
+          git tag automerge
+          git commit -m "Bumped version number to $ENGINE_VERSION"
+
+      - name: Create PR for Samples
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ secrets.engineEmiGradlePluginRepoToken }}
+          labels: automerge
