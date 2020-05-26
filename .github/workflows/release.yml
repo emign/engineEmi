@@ -98,13 +98,19 @@ jobs:
     needs: [publish-finalize]
     runs-on: ubuntu-latest
     steps:
-      - name: Pull and retrieve version number
+      - name: Pull and retrieve version numbers
         uses: actions/checkout@v2
 
-      - name: Export Number
+      - name: Export Numbers
         run: |
           export ENGINE_VERSION_NUMBER=$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
           echo "::set-env name=ENGINE_VERSION::$ENGINE_VERSION_NUMBER"
+          export KORGE_VERSION=$(awk -F '=' '/korgeVersion=/{print $2}' gradle.properties)
+          echo "::set-env name=KORGE_VERSION::KORGE_VERSION"
+          export KORGE_PLUGIN_VERSION=$(awk -F '=' '/korgePluginVersion=/{print $2}' gradle.properties)
+          echo "::set-env name=KORGE_PLUGIN_VERSION::KORGE_PLUGIN_VERSION"
+          export KOTLIN_VERSION=$(awk -F '=' '/kotlinVersion=/{print $2}' gradle.properties)
+          echo "::set-env name=KOTLIN_VERSION::KOTLIN_VERSION"
 
       - name: Checkout GradlePlugin
         uses: actions/checkout@v2
@@ -116,6 +122,9 @@ jobs:
         run: |
           sed -i 's/pluginVersion=.*/pluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
           sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
+          sed -i 's/kotlinVersion=".*/kotlinVersion="'"$KOTLIN_VERSION"'"/g' gradle.properties
+          sed -i 's/korgeVersion=".*/korgeVersion="'"$KORGE_PLUGIN_VERSION"'"/g' gradle.properties
+          sed -i 's/kotlin("jvm") version .*/kotlin("jvm") version ="'"$KOTLIN_VERSION"'"/g' build.gradle.kts
           git config --global user.email ${{ secrets.gitEmail }}
           git config --global user.name ${{ secrets.gitName }}
           git add gradle.properties
