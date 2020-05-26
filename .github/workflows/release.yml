@@ -87,9 +87,8 @@ jobs:
     needs: [build-windows, build-mac, build-linux]
     runs-on: ubuntu-latest
     steps:
-      - name: Release on bintray
       - uses: actions/checkout@v2
-        run: ./gradlew release
+      - run: ./gradlew release
         env:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
