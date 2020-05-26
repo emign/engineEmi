@@ -31,6 +31,7 @@ jobs:
           git config --global user.email ${{ secrets.gitEmail }}
           git config --global user.name ${{ secrets.gitName }}
           git add gradle.properties
+          git tag automerge
           git commit -m "Bumped version number to $ENGINE_VERSION"
 
       - name: Create PR for Gradle Plugin
@@ -50,6 +51,7 @@ jobs:
          git config --global user.email ${{ secrets.gitEmail }}
          git config --global user.name ${{ secrets.gitName }}
          git add build.gradle.kts
+         git tag automerge
          git commit -m "Bumped version number to $ENGINE_VERSION"
 
       - name: Create PR for Template
@@ -69,6 +71,7 @@ jobs:
          git config --global user.email ${{ secrets.gitEmail }}
          git config --global user.name ${{ secrets.gitName }}
          git add gradle.properties
+         git tag automerge
          git commit -m "Bumped version number to $ENGINE_VERSION"
 
       - name: Create PR for Samples
