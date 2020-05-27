@@ -19,7 +19,7 @@ open class TextButton(x: Number = 100.0,
                       active: Boolean = true,
                       skin : UISkin = DefaultUISkin,
                       font : Html.FontFace = DefaultUIFont,
-                      action: suspend () -> Any = {}) :
+                      action: suspend () -> Unit = {}) :
         TextButton(
                 width.toDouble(),
                 height.toDouble(),
@@ -48,7 +48,7 @@ fun Container.textbutton(
     active: Boolean = true,
     skin : UISkin = DefaultUISkin,
     font : Html.FontFace = DefaultUIFont,
-    action:  suspend () -> Any = {},
+    action:  suspend () -> Unit = {},
     callback : @ViewsDslMarker TextButton.() -> Unit = {}
 ) : TextButton = TextButton(
     x = x,
