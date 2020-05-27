@@ -124,7 +124,7 @@ jobs:
           sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
           sed -i 's/kotlinVersion=".*/kotlinVersion="'"$KOTLIN_VERSION"'"/g' gradle.properties
           sed -i 's/korgeVersion=".*/korgeVersion="'"$KORGE_PLUGIN_VERSION"'"/g' gradle.properties
-          sed -i 's/kotlin("jvm") version .*/kotlin("jvm") version ="'"$KOTLIN_VERSION"'"/g' build.gradle.kts
+          sed -i 's/kotlin("jvm") version .*/kotlin("jvm") version "'"$KOTLIN_VERSION"'"/g' build.gradle.kts
           git config --global user.email ${{ secrets.gitEmail }}
           git config --global user.name ${{ secrets.gitName }}
           git add gradle.properties
