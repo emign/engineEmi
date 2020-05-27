@@ -7,7 +7,6 @@ on:
 
 jobs:
   refresh-version-numbers-on-repos:
-    #needs: [publish-finalize]
     runs-on: ubuntu-latest
     steps:
       - name: Pull and retrieve version numbers
@@ -33,7 +32,7 @@ jobs:
 
       - name: Bump version number for GradlePlugin
         run: |
-          sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
+          sed -i 's/val engineEmiVersion=.*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
           sed -i 's/pluginVersion=.*/pluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
           sed -i 's/kotlinVersion=.*/kotlinVersion='"$KOTLIN_VERSION"'/g' gradle.properties
           sed -i 's/korgeVersion=.*/korgeVersion='"$KORGE_PLUGIN_VERSION"'/g' gradle.properties
