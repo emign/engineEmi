@@ -6,96 +6,8 @@ on:
       - 'master'
 
 jobs:
-  test-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2.1.0
-        with:
-          ref: snapshots
-      - run: CALL gradlew.bat --no-daemon jvmTest
-        shell: cmd
-
-  test-mac:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2.1.0
-        with:
-          ref: snapshots
-      - run: ./gradlew --no-daemon jvmTest
-
-  test-linux:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.1.0
-        with:
-          ref: snapshots
-      - run: ./gradlew --no-daemon jvmTest
-
-  build-mac:
-    needs: [test-mac]
-    runs-on: [macos-10.15]
-    steps:
-      - uses: actions/checkout@v1
-      - run: ./gradlew publishMacosX64PublicationtoMavenRepository
-        env:
-          bintrayUser: ${{ secrets.bintrayUser }}
-          bintrayApiKey: ${{ secrets.bintrayApiKey }}
-          bintrayPassword: ${{ secrets.bintrayPassword }}
-      - run: ./gradlew publishIosArm64PublicationToMavenRepository
-        env:
-          bintrayUser: ${{ secrets.bintrayUser }}
-          bintrayApiKey: ${{ secrets.bintrayApiKey }}
-          bintrayPassword: ${{ secrets.bintrayPassword }}
-      - run: ./gradlew publishIosArm32PublicationToMavenRepository
-        env:
-          bintrayUser: ${{ secrets.bintrayUser }}
-          bintrayApiKey: ${{ secrets.bintrayApiKey }}
-          bintrayPassword: ${{ secrets.bintrayPassword }}
-      - run: ./gradlew publishIosX64PublicationToMavenRepository
-        env:
-          bintrayUser: ${{ secrets.bintrayUser }}
-          bintrayApiKey: ${{ secrets.bintrayApiKey }}
-          bintrayPassword: ${{ secrets.bintrayPassword }}
-
-
-  build-windows:
-    needs: [test-windows]
-    runs-on: windows-2019
-    steps:
-      - uses: actions/checkout@v1
-      - run: CALL gradlew.bat publishMingwX64PublicationToMavenRepository
-        shell: cmd
-        env:
-          bintrayUser: ${{ secrets.bintrayUser }}
-          bintrayApiKey: ${{ secrets.bintrayApiKey }}
-          bintrayPassword: ${{ secrets.bintrayPassword }}
-      - run: CALL gradlew.bat --stop
-        shell: cmd
-
-  build-linux:
-    needs: [test-linux]
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v1
-      - run: ./gradlew publish
-        env:
-          bintrayUser: ${{ secrets.bintrayUser }}
-          bintrayApiKey: ${{ secrets.bintrayApiKey }}
-          bintrayPassword: ${{ secrets.bintrayPassword }}
-
-  publish-finalize:
-    needs: [build-windows, build-mac, build-linux]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./gradlew release
-        env:
-          bintrayUser: ${{ secrets.bintrayUser }}
-          bintrayApiKey: ${{ secrets.bintrayApiKey }}
-          bintrayPassword: ${{ secrets.bintrayPassword }}
-
   refresh-version-numbers-on-repos:
-    needs: [publish-finalize]
+    #needs: [publish-finalize]
     runs-on: ubuntu-latest
     steps:
       - name: Pull and retrieve version numbers
@@ -121,10 +33,10 @@ jobs:
 
       - name: Bump version number for GradlePlugin
         run: |
-          sed -i 's/pluginVersion=.*/pluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
           sed -i 's/val engineEmiVersion=".*/val engineEmiVersion="'"$ENGINE_VERSION"'"/g' src/main/kotlin/me/emig/engineEmi/gradle/EngineEmiGradlePlugin.kt
-          sed -i 's/kotlinVersion.*/kotlinVersion="'"$KOTLIN_VERSION"'"/g' gradle.properties
-          sed -i 's/korgeVersion.*/korgeVersion="'"$KORGE_PLUGIN_VERSION"'"/g' gradle.properties
+          sed -i 's/pluginVersion=.*/pluginVersion='"$ENGINE_VERSION"'/g' gradle.properties
+          sed -i 's/kotlinVersion=.*/kotlinVersion='"$KOTLIN_VERSION"'/g' gradle.properties
+          sed -i 's/korgeVersion=.*/korgeVersion='"$KORGE_PLUGIN_VERSION"'/g' gradle.properties
           sed -i 's/kotlin("jvm") version .*/kotlin("jvm") version "'"$KOTLIN_VERSION"'"/g' build.gradle.kts
           git config --global user.email ${{ secrets.gitEmail }}
           git config --global user.name ${{ secrets.gitName }}
