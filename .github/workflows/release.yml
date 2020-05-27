@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Pull and retrieve version numbers
         uses: actions/checkout@v2
-        with:
-          ref: dev
       - name: Export Numbers
         run: |
           export ENGINE_VERSION_NUMBER=$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
