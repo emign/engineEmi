@@ -92,8 +92,10 @@ jobs:
           bintrayUser: ${{ secrets.bintrayUser }}
           bintrayApiKey: ${{ secrets.bintrayApiKey }}
           bintrayPassword: ${{ secrets.bintrayPassword }}
+
   refresh-version-numbers-on-repos:
     runs-on: ubuntu-latest
+    needs: [publish-finalize]
     steps:
       - name: Pull and retrieve version numbers
         uses: actions/checkout@v2
