@@ -106,11 +106,11 @@ jobs:
           export ENGINE_VERSION_NUMBER=$(awk -F '=' '/engineVersion=/{print $2}' gradle.properties)
           echo "::set-env name=ENGINE_VERSION::$ENGINE_VERSION_NUMBER"
           export KORGE_VERSION=$(awk -F '=' '/korgeVersion=/{print $2}' gradle.properties)
-          echo "::set-env name=KORGE_VERSION::KORGE_VERSION"
+          echo "::set-env name=KORGE_VERSION::$KORGE_VERSION"
           export KORGE_PLUGIN_VERSION=$(awk -F '=' '/korgePluginVersion=/{print $2}' gradle.properties)
-          echo "::set-env name=KORGE_PLUGIN_VERSION::KORGE_PLUGIN_VERSION"
+          echo "::set-env name=KORGE_PLUGIN_VERSION::$KORGE_PLUGIN_VERSION"
           export KOTLIN_VERSION=$(awk -F '=' '/kotlinVersion=/{print $2}' gradle.properties)
-          echo "::set-env name=KOTLIN_VERSION::KOTLIN_VERSION"
+          echo "::set-env name=KOTLIN_VERSION::$KOTLIN_VERSION"
 
       - name: Checkout GradlePlugin
         uses: actions/checkout@v2
