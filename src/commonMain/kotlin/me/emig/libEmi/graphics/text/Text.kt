@@ -1,4 +1,4 @@
-package me.emig.engineEmi.graphics.text
+package me.emig.libEmi.graphics.text
 
 import com.soywiz.korge.annotations.*
 import com.soywiz.korge.view.*
@@ -9,8 +9,6 @@ import com.soywiz.korim.font.DefaultTtfFont
 import com.soywiz.korim.vector.HorizontalAlign
 import com.soywiz.korim.vector.VerticalAlign
 import com.soywiz.korim.vector.paint.ColorPaint
-import com.soywiz.korim.vector.paint.LinearGradientPaint
-import com.soywiz.korim.vector.paint.Paint
 
 
 @KorgeExperimental

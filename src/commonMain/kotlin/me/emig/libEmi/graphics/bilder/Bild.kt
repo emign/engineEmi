@@ -1,6 +1,5 @@
-package me.emig.engineEmi.graphics.bilder
+package me.emig.libEmi.graphics.bilder
 
-import com.soywiz.kmem.*
 import com.soywiz.korge.view.*
 import com.soywiz.korim.bitmap.Bitmap
 import com.soywiz.korim.format.readBitmap

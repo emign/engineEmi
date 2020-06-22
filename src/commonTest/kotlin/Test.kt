@@ -1,21 +1,9 @@
-import com.soywiz.klock.*
 import com.soywiz.korge.tests.*
-import com.soywiz.korge.tiled.*
 import com.soywiz.korge.view.*
-import com.soywiz.korim.bitmap.*
 import com.soywiz.korim.color.*
-import com.soywiz.korim.format.readBitmap
-import com.soywiz.korim.format.writeBitmap
-import com.soywiz.korio.async.*
-import com.soywiz.korio.file.std.*
 import com.soywiz.korio.lang.*
-import com.soywiz.korma.geom.*
-import kotlinx.coroutines.*
-import me.emig.engineEmi.addChildren
-import me.emig.engineEmi.graphics.shapes.*
-import me.emig.engineEmi.graphics.text.*
-import me.emig.engineEmi.graphics.text.Text
-import kotlin.jvm.*
+import me.emig.libEmi.graphics.shapes.*
+import me.emig.libEmi.graphics.text.*
 import kotlin.test.*
 
 class ViewsTest : ViewsForTesting() {

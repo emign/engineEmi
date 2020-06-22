@@ -1,13 +1,11 @@
-package me.emig.engineEmi.graphics.shapes
+package me.emig.libEmi.graphics.shapes
 
 import com.soywiz.korge.view.*
-import com.soywiz.korim.bitmap.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.vector.Context2d
 import com.soywiz.korim.vector.paint.ColorPaint
 import com.soywiz.korma.geom.vector.*
-import me.emig.engineEmi.graphics.bilder.*
 
 open class Gerade(x: Number = 0.0,
                   y: Number = 0.0,

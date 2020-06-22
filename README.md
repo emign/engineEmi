@@ -19,7 +19,7 @@ buildscript {
     }
 }
 
-apply plugin: me.emig.engineEmi.gradle.EngineEmiGradlePlugin
+apply plugin: me.emig.libEmi.gradle.EngineEmiGradlePlugin
 ```
 Der String ENGINEEMIVERSION ist mit der aktuellen Version zu ersetzen. Diese kann auf 
 der https://bintray.com/beta/#/emign/engineEmi/engineEmi eingesehen werden.

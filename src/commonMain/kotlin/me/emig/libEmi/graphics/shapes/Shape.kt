@@ -1,4 +1,4 @@
-package me.emig.engineEmi.graphics.shapes
+package me.emig.libEmi.graphics.shapes
 
 import com.soywiz.korge.view.*
 

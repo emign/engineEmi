@@ -1,4 +1,4 @@
-package me.emig.engineEmi.audio
+package me.emig.libEmi.audio
 
 import com.soywiz.klock.*
 import com.soywiz.korau.sound.*
@@ -56,7 +56,7 @@ abstract class Audio(val filePath: String, val streaming: Boolean = false) {
 
     suspend fun play(times : Int) = play(times.playbackTimes)
 
-    suspend fun stop() {
+    fun stop() {
         if (::channel.isInitialized)
             channel.stop()
 

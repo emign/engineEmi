@@ -1,12 +1,9 @@
-package me.emig.engineEmi
+package me.emig.libEmi
 
 import com.soywiz.klock.TimeProvider
-import com.soywiz.klock.seconds
 import com.soywiz.korge.Korge
 import com.soywiz.korge.internal.KorgeInternal
-import com.soywiz.korge.scene.EmptyScene
 import com.soywiz.korge.scene.Module
-import com.soywiz.korge.scene.SceneContainer
 import com.soywiz.korge.view.*
 import com.soywiz.korgw.GameWindow
 import com.soywiz.korim.bitmap.Bitmap
@@ -15,10 +12,8 @@ import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.format.ImageFormat
 import com.soywiz.korim.format.ImageFormats
 import com.soywiz.korim.format.PNG
-import com.soywiz.korim.format.RegisteredImageFormats
 import com.soywiz.korim.vector.SizedDrawable
 import com.soywiz.korinject.AsyncInjector
-import com.soywiz.korio.async.*
 import com.soywiz.korio.net.*
 import com.soywiz.korma.geom.Anchor
 import com.soywiz.korma.geom.ScaleMode
@@ -84,8 +79,8 @@ data class EngineConfig(
     //suspend fun Stage.alert(message : String) =  this.views.alert(message)
     //suspend fun Stage.confirm(message : String) : Boolean =  this.views.confirm(message)
     //suspend fun Stage.openFileDialog(filter: String? = null, write: Boolean = false, multi: Boolean = false) = views.gameWindow.openFileDialog(filter, write, multi)
-    suspend fun Stage.browse(url: URL) = views.gameWindow.browse(url)
-    suspend fun Stage.close() = views.gameWindow.close()
+    fun Stage.browse(url: URL) = views.gameWindow.browse(url)
+    fun Stage.close() = views.gameWindow.close()
 
 fun Container.addChildren(vararg views : View){
     views.forEach {view ->

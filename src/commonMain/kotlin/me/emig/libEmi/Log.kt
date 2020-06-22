@@ -1,4 +1,4 @@
-package me.emig.engineEmi
+package me.emig.libEmi
 
 import com.soywiz.klogger.Logger
 

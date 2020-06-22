@@ -1,11 +1,10 @@
-package me.emig.engineEmi.graphics.shapes
+package me.emig.libEmi.graphics.shapes
 
 import com.soywiz.korge.view.*
 import com.soywiz.korim.color.Colors
 import com.soywiz.korim.color.RGBA
 import com.soywiz.korim.vector.Context2d
 import com.soywiz.korim.vector.paint.ColorPaint
-import com.soywiz.korma.geom.vector.circle
 import com.soywiz.korma.geom.vector.rect
 
 open class Rechteck( x: Number = 0.0,
