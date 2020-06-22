@@ -79,7 +79,7 @@ data class EngineConfig(
     //suspend fun Stage.alert(message : String) =  this.views.alert(message)
     //suspend fun Stage.confirm(message : String) : Boolean =  this.views.confirm(message)
     //suspend fun Stage.openFileDialog(filter: String? = null, write: Boolean = false, multi: Boolean = false) = views.gameWindow.openFileDialog(filter, write, multi)
-    fun Stage.browse(url: URL) = views.gameWindow.browse(url)
+    suspend fun Stage.browse(url: URL) = views.gameWindow.browse(url)
     fun Stage.close() = views.gameWindow.close()
 
 fun Container.addChildren(vararg views : View){

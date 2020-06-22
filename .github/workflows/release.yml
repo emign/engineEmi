@@ -56,7 +56,7 @@ jobs:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v1
-      - run: CALL gradlew.bat publishMingwX64
+      - run: CALL gradlew.bat publishMingwX64PublicationToMavenRepository
         shell: cmd
         env:
           bintrayUser: ${{ secrets.bintrayUser }}
