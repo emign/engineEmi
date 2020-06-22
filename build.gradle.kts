@@ -19,7 +19,7 @@ buildscript {
 }
 
 plugins {
-    kotlin("multiplatform") version "1.3.70"
+    kotlin("multiplatform") version "1.3.72"
     id("maven-publish")
     id("maven")
     id("org.jetbrains.dokka") version "0.10.1"
@@ -44,12 +44,12 @@ val GROUP_ID: String by project
 val ARTIFACT_ID: String by project
 val BINTRAY_ORGANIZATION: String by project
 val BINTRAY_REPOSITORY: String by project
-val engineVersion: String by project
+val libVersion: String by project
 val korgeVersion: String by project
 val kotlinVersion: String by project
 
 group = GROUP_ID
-version = engineVersion
+version = libVersion
 
 println("Group: $group, Version $version")
 
@@ -146,7 +146,7 @@ publishing {
 
                     }
                     url = uri(
-                        "https://api.bintray.com/maven/emign/engineEmi/engineEmi/"
+                        "https://api.bintray.com/maven/emign/libEmi/libEmi/"
 
                     )
                 }
@@ -162,9 +162,9 @@ val release by tasks.creating {
 
     doLast {
         val subject = BINTRAY_ORGANIZATION
-        val repo = "engineEmi"
+        val repo = "libEmi"
         val _package = ARTIFACT_ID
-        val version = engineVersion
+        val version = libVersion
 
         ((URL("https://bintray.com/api/v1/content/$BINTRAY_ORGANIZATION/$BINTRAY_REPOSITORY/$BINTRAY_REPOSITORY/$version/publish")).openConnection() as java.net.HttpURLConnection).apply {
 
